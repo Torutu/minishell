@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_handler.c                                     :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdessoy- <fdessoy-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdessoy- <fdessoy-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 13:49:55 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/05/13 14:43:50 by fdessoy-         ###   ########.fr       */
+/*   Created: 2023/11/08 09:21:04 by fdessoy-          #+#    #+#             */
+/*   Updated: 2023/11/08 09:21:44 by fdessoy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	error_exit(int num)
+void	ft_putchar_fd(char c, int fd)
 {
-	if (num == 1)
-		ft_putstr_fd(ERR, 2);
-	else if (num == 69)
-		ft_putstr_fd(EXIT, 2);
-	exit(1);
+	write(fd, &c, 1);
 }
-
-// // this is the error handler for allocations later
-// void	error_alloc(char **array, int num)
