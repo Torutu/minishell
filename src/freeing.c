@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freeing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: fdessoy- <fdessoy-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 22:21:18 by bposa             #+#    #+#             */
-/*   Updated: 2024/08/23 22:49:02 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/25 10:00:31 by fdessoy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,6 @@ void	free_my_boi(char **paths)
 	}
 	free_null(paths);
 }
-
-// void	free_path(t_token *head)
-// {
-// 	t_token	*current;
-// 	t_token	*next;
-
-// 	current = head;
-// 	next = NULL;
-// 	while (current != NULL)
-// 	{
-// 		next = current->next;
-// 		if (current->path)
-// 			free(current->path);
-// 		current = next;
-// 	}
-// }
 
 void	free_gang(t_data *data)
 {
@@ -70,4 +54,27 @@ void	free_tokens(t_token *head)
 		head = head->next;
 		free_null(tmp);
 	}
+}
+
+void	*free_arr_retnull(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		array[i] = NULL;
+		i++;
+	}
+	free(array);
+	array = NULL;
+	return (NULL);
+}
+
+int	free_retstatus(char *array, int status)
+{
+	free(array);
+	array = NULL;
+	return (status);
 }

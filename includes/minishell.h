@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bposa <bposa@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 10:13:01 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/25 17:18:11 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/25 00:42:18 by bposa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@
 /*************************************************/
 /* global variable *******************************/
 /*************************************************/
-extern int g_exit_code;
+extern int	g_exit_code;
 
 /*************************************************/
 /* structs ***************************************/
@@ -157,12 +157,13 @@ void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array);
 
 /* in execution2.c */
 bool	builtin_filter(t_token *token, char *command);
-t_token *find_token_exec(t_token *token, char **array);
+t_token	*find_token_exec(t_token *token, char **array);
 void	ft_builtin_exec(t_data *data, t_token *token, t_env **env_ll);
 int		check_path_unset(t_env **env_ll);
+void	handle_pipefd_readend(t_data *data);
 
 /* in syntax.c */
-int	syntax_check(t_token *token);
+int		syntax_check(t_token *token);
 
 /* in redirections.c */
 int		find_redirection(char **array);
@@ -184,6 +185,8 @@ void	execution_absolute_path(t_data *data, char **array);
 
 /* in execution_utils2.c */
 char	**cl_to_array(t_token *token);
+int		alloc_memory(char ***pipe_array, char **instruction, t_token **token);
+int		fill_instr_loop(char **instruction, t_token **head);
 int		checking_access(t_data *data, char *instruction);
 char	*get_binary(char *instruction);
 
@@ -245,18 +248,25 @@ int		shell_cd(t_token *token, t_data *data);
 int		export(t_token *token, t_env **env_ll);
 int		print_export(t_env **env_ll);
 int		unset(t_token *token, t_env **env_ll);
-void 	alphabetical_printer(char **env_array);
+void	alphabetical_printer(char **env_array);
 
 /* signals.c */
 void	handler(int sig);
 
+/* in freeing.c */
+void	*free_arr_retnull(char **array);
+int		free_retstatus(char *array, int status);
+void	free_tokens(t_token *head);
+void	free_gang(t_data *data);
+void	free_path(t_token *head);
+
 /* DEPRECATED FUNCTIONS */
 // int		built_in_or_garbage(t_data *data, t_env **env_ll, t_token *token);
-// int		single_execution(t_data *data, t_token *token, t_env **env_ll); DEPRECATED
-// void		single_child(t_data *data, t_token *token, t_env **env_ll); DEPRECRATED
-// int		single_parent(pid_t pid, int status); DEPRECATED
+// int		single_execution(t_data *data, t_token *token, t_env **env_ll);
+// void		single_child(t_data *data, t_token *token, t_env **env_ll);
+// int		single_parent(pid_t pid, int status);
 // int 		lonely_execution(t_data *data, t_token *token, t_env **env_ll);
-// int		how_many_children(t_token *token); DEPRECATED
-// void		handle_heredoc(t_data *data, char *delimiter); DEPRECATED
+// int		how_many_children(t_token *token);
+// void		handle_heredoc(t_data *data, char *delimiter);
 
 #endif

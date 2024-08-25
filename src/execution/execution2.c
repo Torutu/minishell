@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bposa <bposa@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 13:30:29 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/25 04:09:56 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/25 00:44:56 by bposa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ bool	builtin_filter(t_token *token, char *command)
 	{
 		if (!ft_strncmp(command, tmp->value, ft_strlen(command))
 			&& tmp->type == BUILTIN)
-				return (true);
+			return (true);
 		tmp = tmp->next;
 	}
 	tmp = NULL;
 	return (false);
 }
 
-t_token *find_token_exec(t_token *token, char **array)
+t_token	*find_token_exec(t_token *token, char **array)
 {
 	int		i;
 	t_token	*tmp;
@@ -66,7 +66,7 @@ t_token *find_token_exec(t_token *token, char **array)
 		{
 			if (!ft_strncmp(array[i], tmp->value, ft_strlen(array[i]))
 				&& tmp->type == BUILTIN)
-					return (tmp);
+				return (tmp);
 			tmp = tmp->next;
 		}
 		i++;
@@ -77,7 +77,7 @@ t_token *find_token_exec(t_token *token, char **array)
 
 void	ft_builtin_exec(t_data *data, t_token *token, t_env **env_ll)
 {
-	int status;
+	int	status;
 
 	status = 0;
 	if (token == NULL)
@@ -88,7 +88,7 @@ void	ft_builtin_exec(t_data *data, t_token *token, t_env **env_ll)
 
 int	check_path_unset(t_env **env_ll)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = (*env_ll);
 	while (tmp->next != NULL)
@@ -98,4 +98,11 @@ int	check_path_unset(t_env **env_ll)
 		tmp = tmp->next;
 	}
 	return (FAILURE);
+}
+void	handle_pipefd_readend(t_data *data)
+{
+	close(data->pipe_fd[1]);
+	if (data->index > 0)
+		close(data->read_end);
+	data->read_end = data->pipe_fd[0];
 }

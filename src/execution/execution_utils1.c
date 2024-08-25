@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bposa <bposa@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:29:42 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/25 05:20:44 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/24 23:18:42 by bposa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,25 +55,25 @@ int	err_msg(char *obj, char *msg, int err_code)
 
 void	close_fds(t_data *data)
 {
-    if (data->pipe_fd[0] != 0)
-        close(data->pipe_fd[0]);
-    if (data->pipe_fd[1] != 0)
-        close(data->pipe_fd[1]);
-    if (data->fd_in != 0)
-        close(data->fd_in);
-    if (data->fd_out != 0)
-        close(data->fd_out);
-    if (data->read_end != 0)
-        close(data->read_end);
-    if (data->sync_pipe[1] != 0)
-        close(data->sync_pipe[1]);
-    if (data->sync_pipe[0] != 0)
-        close(data->sync_pipe[0]);
+	if (data->pipe_fd[0] != 0)
+		close(data->pipe_fd[0]);
+	if (data->pipe_fd[1] != 0)
+		close(data->pipe_fd[1]);
+	if (data->fd_in != 0)
+		close(data->fd_in);
+	if (data->fd_out != 0)
+		close(data->fd_out);
+	if (data->read_end != 0)
+		close(data->read_end);
+	if (data->sync_pipe[1] != 0)
+		close(data->sync_pipe[1]);
+	if (data->sync_pipe[0] != 0)
+		close(data->sync_pipe[0]);
 }
 
 void	execution_with_path(t_data *data, char **array, char *path)
 {
-	if (execve(path, array, data->env) == -1)	
+	if (execve(path, array, data->env) == -1)
 	{
 		err_msg(array[0], NO_EXEC, 127);
 		free_data(data, path, array);
@@ -83,7 +83,7 @@ void	execution_with_path(t_data *data, char **array, char *path)
 
 void	execution_absolute_path(t_data *data, char **array)
 {
-	if (execve(array[0], array, data->env) == -1)	
+	if (execve(array[0], array, data->env) == -1)
 	{
 		err_msg(array[0], NO_EXEC, 127);
 		free_data(data, NULL, array);

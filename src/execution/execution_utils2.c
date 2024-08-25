@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdessoy- <fdessoy-@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bposa <bposa@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 10:19:57 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/22 16:56:18 by fdessoy-         ###   ########.fr       */
+/*   Updated: 2024/08/24 22:52:44 by bposa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,61 +26,81 @@
  * pipe_array[1] = "grep Makefile"
  * pipe_array[2] = "cat > outfile"
  * 
- * ***NOTE: I dont think we need malloc checks after strdup, as its taken care of inside the function
- * 			that should save a few lines at least***
+ * ***NOTE: I dont think we need malloc checks after strdup, as its taken care of
+ *  inside the function that should save a few lines at least***
  */
 char	**cl_to_array(t_token *token)
 {
 	t_token	*head;
 	char	**pipe_array;
 	char	*instruction;
-	char	*tmp;
 	int		i;
-	int		nb_of_instructions;
-	
-	nb_of_instructions = count_token(token, PIPE) + 1;
-	pipe_array = (char **)malloc(sizeof(char *) * (nb_of_instructions + 1));
-	if (!pipe_array)
-		return (NULL);
+
 	i = 0;
 	head = token;
-	instruction = ft_strdup("");
-	if (!instruction)
+	if (alloc_memory(&pipe_array, &instruction, &token) == FAILURE)
 		return (NULL);
 	while (head)
 	{
-		instruction[0] = '\0';
-		while (head && head->type != PIPE)
-		{
-			tmp = ft_strjoin(instruction, head->value);
-			if (!tmp)
-				return (NULL);
-			free(instruction);
-			instruction = tmp;
- 			tmp = ft_strjoin(instruction, " ");
-			if (!tmp)
-				return (NULL);
-            free(instruction);
-            instruction = tmp;
-			if(head->next && head->next->value) 
-            	head = head->next;
-			else
-				break;
-        }
-        if (instruction[ft_strlen(instruction) - 1] == ' ')
-            instruction[ft_strlen(instruction) - 1] = '\0';
-        pipe_array[i++] = ft_strdup(instruction);
-        if (!pipe_array[i - 1])
-            return (NULL);
-        if (head && head->type == PIPE)
-            head = head->next;
-		else
-			break;
-    }
-    free(instruction);
+		if (fill_instr_loop(&instruction, &head) == FAILURE)
+			return (free_arr_retnull(pipe_array));
+		pipe_array[i] = ft_strdup(instruction);
+		if (!pipe_array[i])
+			return (NULL);
+		i++;
+		if (!head || head->type != PIPE)
+			break ;
+		head = head->next;
+	}
+	free(instruction);
 	instruction = NULL;
-    pipe_array[i] = NULL;
-    return (pipe_array);
+	pipe_array[i] = NULL;
+	return (pipe_array);
+}
+
+int	fill_instr_loop(char **instruction, t_token **head)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	(*instruction)[0] = '\0';
+	while ((*head) && (*head)->type != PIPE)
+	{
+		tmp = ft_strjoin(*instruction, (*head)->value);
+		free(*instruction);
+		if (!tmp)
+			return (FAILURE);
+		*instruction = tmp;
+		tmp = ft_strjoin(*instruction, " ");
+		free(*instruction);
+		if (!tmp)
+			return (FAILURE);
+		*instruction = tmp;
+		if (!(*head)->next || !(*head)->next->value)
+			break ;
+		(*head) = (*head)->next;
+	}
+	if ((*instruction)[ft_strlen(*instruction) - 1] == ' ')
+		(*instruction)[ft_strlen(*instruction) - 1] = '\0';
+	return (SUCCESS);
+}
+
+int	alloc_memory(char ***pipe_array, char **instruction, t_token **token)
+{
+	int		nb_of_instructions;
+
+	nb_of_instructions = count_token((*token), PIPE) + 1;
+	(*pipe_array) = (char **)malloc(sizeof(char *) * (nb_of_instructions + 1));
+	if (!(*pipe_array))
+		return (FAILURE);
+	(*instruction) = ft_strdup("");
+	if (!instruction)
+	{
+		free_null((*pipe_array));
+		pipe_array = NULL;
+		return (FAILURE);
+	}
+	return (SUCCESS);
 }
 
 /** checking_access() is mainly a last check for general binaries that
@@ -100,32 +120,25 @@ int	checking_access(t_data *data, char *instruction)
 	int		i;
 	char	*binary_path;
 	char	*binary;
-	
+
 	i = 0;
 	binary = get_binary(instruction);
-	while (data->binary_paths[i++])
+	while (data->binary_paths[i])
 	{
-		binary_path = ft_strsjoin(data->binary_paths[i], binary, '/');
+		binary_path = ft_strsjoin(data->binary_paths[i++], binary, '/');
 		if (!access(binary_path, F_OK))
 		{
-			if(!access(binary_path, X_OK))
+			if (!access(binary_path, X_OK))
 			{
 				free(binary);
-				free(binary_path);
-				return (SUCCESS);
+				return (free_retstatus(binary_path, SUCCESS));
 			}
-			else
-			{
-				ft_putstr_fd(binary, 2);
-				ft_putstr_fd(": ", 2);
-				ft_putstr_fd("command not found\n", 2);
-				free(binary);
-				free(binary_path);
-				return (FAILURE);
-			}
+			ft_putstr_fd(binary, 2);
+			ft_putstr_fd(": command not found\n", 2);
+			free(binary);
+			return (free_retstatus(binary_path, FAILURE));
 		}
-		else
-			free(binary_path);
+		free(binary_path);
 	}
 	free(binary);
 	return (FAILURE);

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bposa <bposa@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:27:10 by walnaimi          #+#    #+#             */
 /*   Updated: 2024/08/25 18:44:09 by walnaimi         ###   ########.fr       */
@@ -105,15 +105,10 @@ typedef struct s_index
 	int	j;
 }	t_index;
 
-void	print_tokens(t_data *data);
-
-//* ---------------------------------------------- */
-//              src/parse/freeing.c                //
-//* ---------------------------------------------- */
-void	free_path(t_token *head);
-void	free_gang(t_data *data);
-void	free_tokens(t_token *head);
-void	free_my_boi(char **paths);
+char	*ft_strncpy(char *s1, const char *s2, int n);
+/*****************************************
+ * modify_str.c
+ *****************************************/
 
 //* ---------------------------------------------- */
 //              src/parse/helper.c                 //
