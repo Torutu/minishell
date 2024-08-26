@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 10:13:01 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/27 00:10:07 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/27 02:05:41 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define NO_PERMISSION "Permission denied"
 # define HEREDOC_FAILURE "Unable to create temporary for here_doc"
 # define HEREDOC_FAILURE2 "Unable to read temporary for here_doc"
-# define FILE_ERROR "No such file or directory"
+# define FILE_ERROR " No such file or directory"
 # define SYNTAX "syntax error near unexpected token "
 # define ERR_ARG "Wrong number of arguments, Karen\n"
 # define ERR_EXP "export: not a valid identifier\n"
@@ -99,6 +99,7 @@ typedef struct s_data
 	char		*bin;
 	int			index;
 	char		*path;
+	int			last_heredoc_index;
 	char		**binary_paths;
 	int			pipe_fd[2];
 	int			sync_pipe[2];
@@ -188,8 +189,10 @@ void	execution_absolute_path(t_data *data, char **array);
 
 /* in execution_utils2.c */
 char	**cl_to_array(t_token *token);
-char	*build_instruction(t_token **head);
-int		checking_access(t_data *data, char *instruction);
+int		fill_instr_loop(char **instruction, t_token **head);
+int		alloc_memory(char ***pipe_array, char **instruction, \
+					t_token **token);
+t_token	*find_redtok(t_token *token);
 char	*get_binary(char *instruction);
 
 /* in fd_dups.c */

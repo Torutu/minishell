@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:38:16 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/25 04:26:07 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/27 01:05:26 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	initializer(t_data *data, t_env **env_ll, char **env)
 	ll_env(env_ll, env);
 	find_bin(env_ll, data);
 	heredoc_fds_init(data);
+	data->home_pwd = get_home((*env_ll));
 	data->binary_paths = ft_split(data->bin, ':');
 	if (!data->binary_paths)
 	{

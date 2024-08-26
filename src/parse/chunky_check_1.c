@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 04:40:41 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/23 23:00:06 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/27 02:40:48 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	check_echo_flag(char *token, t_token *current_token, t_data *data)
 		if (token[i] == '\0')
 		{
 			current_token->type = FLAG;
+			current_token->echo = true;
 			current_token->value = ft_strdup(token);
 			free_null(token);
 			return (0);

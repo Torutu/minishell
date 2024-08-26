@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 10:58:07 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/27 00:38:05 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/27 01:59:33 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,88 @@
 
 // this function turns space into underscore,
 // better used after echo and before cmd
-// void	replace_spaces_with_underscores(t_token *token_list)
-// {
-// 	t_token	*current_token;
-// 	int		i;
-//
-// 	current_token = token_list;
-// 	while (current_token != NULL && current_token->value != NULL)
-// 	{
-// 		i = 0;
-// 		while (current_token->value[i] != '\0')
-// 		{
-// 			if (current_token->value[i] == ' ')
-// 				current_token->value[i] = '_';
-// 			i++;
-// 		}
-// 		current_token = current_token->next;
-// 	}
-// }
+void	replace_spaces_with_underscores(t_token *token_list)
+{
+	t_token	*current_token;
+	int		i;
+
+	current_token = token_list;
+	while (current_token != NULL && current_token->value != NULL)
+	{
+		current_token->value_us = ft_strdup(current_token->value);
+		if (!current_token->value_us)
+			exit(err_msg(NULL, "Memory allocation failed", 1));
+
+		i = 0;
+		while (current_token->value_us[i] != '\0')
+		{
+			if (current_token->value_us[i] == ' ')
+				current_token->value_us[i] = '_';
+			i++;
+		}
+		current_token = current_token->next;
+	}
+}
+
+/**
+ * Prints the tokens in the linked list,
+ * including their values, types, and other properties.
+ * 
+ * @param data A pointer to the t_data structure
+ * containing the token linked list.
+ * 
+ * 
+ * @return None
+ */
+void    print_tokens(t_data *data)
+{
+    t_token    *token;
+    t_token    *last_token;
+
+    const char *type_names[]
+    = {
+        "UNKNOWN",
+        "BUILTIN",
+        "COMMAND",
+        "ARGUMENT",
+        "PIPE",
+        "FLAG",
+        "ENVVAR",
+        "RED_IN",
+        "RED_OUT",
+        "HEREDOC",
+        "APPEND",
+    };
+
+    token = data->token;
+    last_token = NULL;
+    while (token != NULL)
+    {
+        if (token->value != NULL)
+        {
+            printf("--------------[%d]--------------\n", token->id);
+            printf("token value    :[%s]\n", token->value);
+			printf("token value_us :[%s]\n", token->value_us);
+            if (token->value[0] == '\0')
+                printf("empty string\n");
+            printf("token type     :[%s]\n", type_names[token->type]);
+            if (token->empty == true)
+                printf("empty?         :[%d]\n", token->empty);
+            if (token->in_q == true)
+                printf("in quotes      :[%d]\n", token->in_q);
+            if (token->echo == true)
+                printf("echo?          :[%d]\n", token->echo);
+            if (token->path != NULL)
+                printf("token path     :[%s]\n", token->path);
+            printf("\n");
+            if (token->next == NULL)
+                last_token = token;
+        }
+        token = token->next;
+    }
+    printf("#####################################\n");
+    token = last_token;
+}
 
 /**
  * Execution and execution prepping are just the same function broke
@@ -47,17 +111,21 @@ int	execution(t_data *data, t_env **env_ll)
 	t_token	*token;
 
 	token = data->token;
+	if (token->value == NULL)
+		return (0);
 	data->nb_cmds = count_token(token, PIPE) + 1;
 	if (data->nb_cmds == 0)
 		data->nb_cmds = 1;
-	if ((token->type == BUILTIN) && (!find_token(token, PIPE))
-		&& (ft_strncmp(token->value, "cd", 2)
-			|| ft_strncmp(token->value, "exit", 4)
-			|| ft_strncmp(token->value, "export", 6)))
+	if (!ft_strncmp(token->value, "cd", 3)
+		|| !ft_strncmp(token->value, "export", 7)
+		|| !ft_strncmp(token->value, "unset", 6)
+		|| !ft_strncmp(token->value, "exit", 5))
 		data->status = built_ins(data, token, env_ll);
 	else
 	{
-		//replace_spaces_with_underscores(data->token);
+		replace_spaces_with_underscores(token);
+		// if (data->token)
+		// 	print_tokens(data);
 		data->status = execution_prepping(data, token, env_ll);
 	}
 	return (data->status);

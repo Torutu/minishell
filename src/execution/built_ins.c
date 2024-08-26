@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:18:24 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/25 22:56:24 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/27 02:40:37 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	built_ins(t_data *data, t_token *token, t_env **env_ll)
 	int	status;
 
 	status = 0;
-	if(token->value == NULL)
+	if (token->value == NULL)
 		return (status);
 	data->home_pwd = get_home((*env_ll));
 	if (token->value == NULL)
@@ -30,7 +30,7 @@ int	built_ins(t_data *data, t_token *token, t_env **env_ll)
 	else if (!ft_strncmp(token->value, "exit", 5))
 		get_the_hell_out(data, token, env_ll);
 	else if (!ft_strncmp(token->value, "echo", 5))
-		status = yodeling(token);
+		status = yodeling(data->token);
 	else if (!ft_strncmp(token->value, "cd", 3))
 		status = shell_cd(token, data);
 	else if (!ft_strncmp(token->value, "export", 7))
@@ -38,7 +38,7 @@ int	built_ins(t_data *data, t_token *token, t_env **env_ll)
 	else if (!ft_strncmp(token->value, "unset", 6))
 		status = unset(token, env_ll);
 	else
-		return(err_msg(token->value, NO_EXEC, 127));
+		return (err_msg(token->value, NO_EXEC, 127));
 	return (status);
 }
 
@@ -77,7 +77,8 @@ int	print_pwd(void)
 an exit code that was manually inserted after exit */
 void	get_the_hell_out(t_data *data, t_token *token, t_env **env_ll)
 {
-	int status;
+	int	status;
+
 	status = 0;
 	free_all_ll(env_ll);
 	ft_printf("exit\n");
@@ -114,7 +115,7 @@ int	handle_flag_type(t_token *head)
 		if (head->value != NULL && head->value[0] != '\0')
 		{
 			if (head->type == RED_IN || head->type == RED_OUT
-				|| head->type == APP || head->type == HEREDOC)
+				|| head->type == APPEND || head->type == HEREDOC)
 				break ;
 			printf("%s", head->value);
 		}
@@ -135,7 +136,7 @@ int	handle_arg_type(t_token *head)
 		if (head->value != NULL && head->value[0] != '\0')
 		{
 			if (head->type == RED_IN || head->type == RED_OUT
-				|| head->type == APP || head->type == HEREDOC)
+				|| head->type == APPEND || head->type == HEREDOC)
 				break ;
 			printf("%s", head->value);
 		}
@@ -152,11 +153,16 @@ int	yodeling(t_token *token)
 	t_token	*head;
 
 	head = token;
-	if (head->next->value == NULL)
-		return (printf("\n"), SUCCESS);
-	if (head->next->type == FLAG)
-		return (handle_flag_type(head));
-	if (head != NULL && head->next != NULL && head->next->type == ARG)
-		return (handle_arg_type(head));
+	while (head->value != NULL)
+	{
+		if (head->next->value == NULL)
+			return (printf("\n"), SUCCESS);
+		if (head->next->type == FLAG && head->next->echo == true)
+			return (handle_flag_type(head));
+		if (head != NULL && head->next != NULL && head->next->type == ARG 
+			&& ft_strncmp(head->value, "echo", 5) == 0)
+			return (handle_arg_type(head));
+		head = head->next;
+	}
 	return (FAILURE);
 }

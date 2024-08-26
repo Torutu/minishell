@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:27:10 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/26 23:59:43 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/27 01:25:08 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_token
 {
 	t_type			type;
 	char			*value;
+	char			*value_us;
 	char			*path;
 	int				id;
 	bool			in_q;
