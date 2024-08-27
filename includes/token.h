@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:27:10 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/27 01:25:08 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/27 13:59:51 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct s_index
 	int	j;
 }	t_index;
 
+void    print_tokens(t_data *data);
 char	*ft_strncpy(char *s1, const char *s2, int n);
 
 //* ---------------------------------------------- */

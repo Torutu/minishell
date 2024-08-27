@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:38:16 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/27 01:05:26 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/27 17:47:50 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ void	initializer(t_data *data, t_env **env_ll, char **env)
 	data->binary_paths = ft_split(data->bin, ':');
 	if (!data->binary_paths)
 	{
-		free_null(env_ll);
 		free_null(data);
 		free_all_ll(env_ll);
+		printf("no path is found exiting...\n");
 		exit(1);
 	}
 	data->status = 0;

@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 10:58:07 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/27 03:03:15 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/27 19:15:02 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,55 +47,55 @@ void	replace_spaces_with_underscores(t_token *token_list)
  * 
  * @return None
  */
-void    print_tokens(t_data *data)
-{
-    t_token    *token;
-    t_token    *last_token;
+// void    print_tokens(t_data *data)
+// {
+//     t_token    *token;
+//     t_token    *last_token;
 
-    const char *type_names[]
-    = {
-        "UNKNOWN",
-        "BUILTIN",
-        "COMMAND",
-        "ARGUMENT",
-        "PIPE",
-        "FLAG",
-        "ENVVAR",
-        "RED_IN",
-        "RED_OUT",
-        "HEREDOC",
-        "APPEND",
-    };
+//     const char *type_names[]
+//     = {
+//         "UNKNOWN",
+//         "BUILTIN",
+//         "COMMAND",
+//         "ARGUMENT",
+//         "PIPE",
+//         "FLAG",
+//         "ENVVAR",
+//         "RED_IN",
+//         "RED_OUT",
+//         "HEREDOC",
+//         "APPEND",
+//     };
 
-    token = data->token;
-    last_token = NULL;
-    while (token != NULL)
-    {
-        if (token->value != NULL)
-        {
-            printf("--------------[%d]--------------\n", token->id);
-            printf("token value    :[%s]\n", token->value);
-			printf("token value_us :[%s]\n", token->value_us);
-            if (token->value[0] == '\0')
-                printf("empty string\n");
-            printf("token type     :[%s]\n", type_names[token->type]);
-            if (token->empty == true)
-                printf("empty?         :[%d]\n", token->empty);
-            if (token->in_q == true)
-                printf("in quotes      :[%d]\n", token->in_q);
-            if (token->echo == true)
-                printf("echo?          :[%d]\n", token->echo);
-            if (token->path != NULL)
-                printf("token path     :[%s]\n", token->path);
-            printf("\n");
-            if (token->next == NULL)
-                last_token = token;
-        }
-        token = token->next;
-    }
-    printf("#####################################\n");
-    token = last_token;
-}
+//     token = data->token;
+//     last_token = NULL;
+//     while (token != NULL)
+//     {
+//         if (token->value != NULL)
+//         {
+//             printf("--------------[%d]--------------\n", token->id);
+//             printf("token value    :[%s]\n", token->value);
+// 			printf("token value_us :[%s]\n", token->value_us);
+//             if (token->value[0] == '\0')
+//                 printf("empty string\n");
+//             printf("token type     :[%s]\n", type_names[token->type]);
+//             if (token->empty == true)
+//                 printf("empty?         :[%d]\n", token->empty);
+//             if (token->in_q == true)
+//                 printf("in quotes      :[%d]\n", token->in_q);
+//             if (token->echo == true)
+//                 printf("echo?          :[%d]\n", token->echo);
+//             if (token->path != NULL)
+//                 printf("token path     :[%s]\n", token->path);
+//             printf("\n");
+//             if (token->next == NULL)
+//                 last_token = token;
+//         }
+//         token = token->next;
+//     }
+//     printf("#####################################\n");
+//     token = last_token;
+// }
 
 /**
  * Execution and execution prepping are just the same function broke
@@ -124,8 +124,6 @@ int	execution(t_data *data, t_env **env_ll)
 	else
 	{
 		replace_spaces_with_underscores(token);
-		// if (data->token)
-		// 	print_tokens(data);
 		data->status = execution_prepping(data, token, env_ll);
 	}
 	return (data->status);
@@ -246,7 +244,9 @@ void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array)
 	if (cmd_array[0] == NULL)
 		exit(0);
 	if (check_path_unset(env_ll))
-		exit(err_msg(cmd_array[0], NO_EXEC, 127));
+	{
+		execution_absolute_path(data, cmd_array);
+	}
 	data->env = env_arr_updater(env_ll);
 	if (!data->env)
 		exit (1);

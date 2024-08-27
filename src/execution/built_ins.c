@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:18:24 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/27 02:40:37 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/27 15:38:28 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ int	built_ins(t_data *data, t_token *token, t_env **env_ll)
 	else if (!ft_strncmp(token->value, "pwd", 4))
 		status = print_pwd();
 	else if (!ft_strncmp(token->value, "exit", 5))
-		get_the_hell_out(data, token, env_ll);
+	{
+		status = get_the_hell_out(data, token, env_ll);
+	}
 	else if (!ft_strncmp(token->value, "echo", 5))
 		status = yodeling(data->token);
 	else if (!ft_strncmp(token->value, "cd", 3))
@@ -75,7 +77,7 @@ int	print_pwd(void)
 
 /* This is the exit function, it needs to take, if inputted,
 an exit code that was manually inserted after exit */
-void	get_the_hell_out(t_data *data, t_token *token, t_env **env_ll)
+int	get_the_hell_out(t_data *data, t_token *token, t_env **env_ll)
 {
 	int	status;
 
@@ -93,6 +95,7 @@ void	get_the_hell_out(t_data *data, t_token *token, t_env **env_ll)
 		}
 		status = ft_atoi(token->next->value);
 		free_gang(data);
+		dprintf(2,"exit status is = %d\n", status);
 		exit(status);
 	}
 	free_gang(data);

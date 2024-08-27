@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 15:26:27 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/27 01:01:48 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/27 17:40:26 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,47 +124,95 @@ int	print_export(t_env **env_ll)
 }
 
 /* this function unsets whatever argument given after unset in the command line */
+// int	unset(t_token *token, t_env **env_ll)
+// {
+// 	t_env	*tmp;
+// 	t_env	*del;
+// 	t_token	*head;
+
+// 	head = token;
+// 	if (!head->next->value || !*env_ll || !env_ll)
+// 		return (SUCCESS);
+// 	tmp = *env_ll;
+// 	head = head->next;
+
+// 	while (!ft_strncmp(head->value, tmp->content, ft_strlen(head->value)))
+// 	{
+// 		tmp = tmp->next;
+// 		free_null(tmp->key);
+// 		free_null(tmp->value);
+// 		free_null(tmp->content);
+// 		free(tmp);
+// 		tmp = NULL;
+// 		return (SUCCESS);
+// 	}
+// 	tmp = *env_ll;
+// 	while (tmp->next != NULL)
+// 	{
+// 		if (!ft_strncmp(head->value, tmp->next->content,
+// 				ft_strlen(head->value)))
+// 		{
+// 			del = tmp->next;
+// 			tmp->next = tmp->next->next;
+// 			free_null(del->key);
+// 			free_null(del->value);
+// 			free_null(del->content);
+// 			free(del);
+// 			del = NULL;
+// 			return (SUCCESS);
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// 	//*env_ll = tmp;
+// 	tmp = NULL;
+// 	head = NULL;
+// 	return (SUCCESS);
+// }
+
 int	unset(t_token *token, t_env **env_ll)
 {
 	t_env	*tmp;
 	t_env	*del;
 	t_token	*head;
 
-	head = token;
-	if (!head->next->value || !*env_ll || !env_ll)
-		return (SUCCESS);
-	tmp = *env_ll;
-	head = head->next;
-	while (!ft_strncmp(head->value, tmp->content, ft_strlen(head->value)))
+	head = token->next;
+	while (head && head->value)
 	{
-		tmp = tmp->next;
-		free_null(tmp->key);
-		free_null(tmp->value);
-		free_null(tmp->content);
-		free(tmp);
-		tmp = NULL;
-		return (SUCCESS);
-	}
-	tmp = *env_ll;
-	while (tmp->next != NULL)
-	{
-		if (!ft_strncmp(head->value, tmp->next->content,
-				ft_strlen(head->value)))
+		tmp = *env_ll;
+
+		// Handling the case where the first node is removed
+		if (tmp && !ft_strncmp(head->value, tmp->content, ft_strlen(head->value)))
 		{
-			del = tmp->next;
-			tmp->next = tmp->next->next;
-			free_null(del->key);
-			free_null(del->value);
-			free_null(del->content);
-			free(del);
-			del = NULL;
-			return (SUCCESS);
+			*env_ll = tmp->next;  // Update head of the list
+			free_null(tmp->key);
+			free_null(tmp->value);
+			free_null(tmp->content);
+			free(tmp);
+			tmp = NULL;  // Avoid dangling pointer
+			head = head->next;
+			continue;
 		}
-		tmp = tmp->next;
+
+		// Traverse and remove any matching node in the middle or end
+		while (tmp && tmp->next != NULL)
+		{
+			if (!ft_strncmp(head->value, tmp->next->content, ft_strlen(head->value)))
+			{
+				del = tmp->next;
+				tmp->next = tmp->next->next;
+				free_null(del->key);
+				free_null(del->value);
+				free_null(del->content);
+				free(del);
+				del = NULL;  // Avoid dangling pointer
+				break;
+			}
+			tmp = tmp->next;
+		}
+
+		head = head->next;  // Move to the next token
 	}
 	//*env_ll = tmp;
-	tmp = NULL;
-	head = NULL;
 	return (SUCCESS);
 }
 

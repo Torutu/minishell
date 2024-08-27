@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 10:13:01 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/27 02:05:41 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/27 18:36:17 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ typedef struct s_data
 	int			i;
 	int			tok_srt;
 	int			in_quotes;
+	int			is_exit;
 	char		quote_char;
 	size_t		env_len;
 	int			num_of_envs;
@@ -245,7 +246,7 @@ void	lstadd_front(t_env **lst, t_env *new);
 int		built_ins(t_data *data, t_token *token, t_env **env_ll);
 int		print_env(t_env *env_ll);
 int		print_pwd(void);
-void	get_the_hell_out(t_data *data, t_token *token, t_env **env_ll);
+int		get_the_hell_out(t_data *data, t_token *token, t_env **env_ll);
 int		yodeling(t_token *token);
 
 /* in built_ins2.c */

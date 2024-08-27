@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:29:42 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/27 00:01:17 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/27 15:28:11 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	execution_with_path(t_data *data, char **array, char *path)
 	{
 		err_msg(array[0], NO_EXEC, 127);
 		free_data(data, path, array);
-		exit(127);
+		exit(88);
 	}
 }
 
@@ -88,6 +88,6 @@ void	execution_absolute_path(t_data *data, char **array)
 	{
 		err_msg(array[0], NO_EXEC, 127);
 		free_data(data, NULL, array);
-		exit(127);
+		exit(88);
 	}
 }

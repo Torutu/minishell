@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:23:49 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/27 01:46:43 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/27 19:15:14 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	total_env_len(t_env *head)
 	current = head;
 	while (current != NULL)
 	{
-		if (current->value)
+		// Check if the value is non-null before using it
+		if (current->value != NULL)
 			total_length += strlen(current->value);
 		current = current->next;
 	}
@@ -30,6 +31,9 @@ int	total_env_len(t_env *head)
 
 void	setup(t_data *data)
 {
+	int len_found;
+	
+	len_found = 0;
 	data->deli = "  \t\n";
 	data->id = 0;
 	data->tok_res = 0;
@@ -38,10 +42,14 @@ void	setup(t_data *data)
 	data->echo_flag = false;
 	data->redirections = false;
 	data->piped = false;
-	data->env_len = total_env_len(data->envll);
+	if (len_found == 0)
+	{
+		data->env_len = total_env_len(data->envll);
+		len_found = 1;
+	}
 	if (data->status == 963)
 		data->status = 2;
-	else if (data->no_cmd_flag == 1)
+	else if (data->no_cmd_flag == 1 && data->is_exit == 1)
 		data->status = 127;
 }
 
@@ -66,6 +74,8 @@ int	token_only_arg(t_data *data)
 		{
 			expect_command = 0;
 			data->no_cmd_flag = 0;
+			if(ft_strncmp(head->value, "exit", 5) == 0)
+				data->is_exit = 1;
 		}
 		head = head->next;
 	}
@@ -80,8 +90,7 @@ int	token_only_arg(t_data *data)
  */
 int	sniff_line(t_data *data)
 {
-	data->line_read = readline("\e[1;45m[I can't believe this is"
-			" not shell]\e[0m ");
+	data->line_read = readline("[ft_putchar]> ");
 	if (!data->line_read)
 		return (NULL_LINE);
 	if (*data->line_read)
