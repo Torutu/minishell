@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exporting_utils_1.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/28 11:32:01 by walnaimi          #+#    #+#             */
+/*   Updated: 2024/08/28 11:32:02 by walnaimi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 int	add_new_env_variable(t_env **env_ll, char *token_value)
@@ -25,4 +37,35 @@ int	update_existing_env(t_env *env_node, char *token_value)
 		return (FAILURE);
 
 	return (SUCCESS);
+}
+
+// Helper function to check if the token is a redirection or append type
+int	if_redirection(t_token *token)
+{
+	if (find_token(token, APPEND) || find_token(token, HEREDOC)
+		|| find_token(token, RED_IN) || find_token(token, RED_OUT))
+		return (1);
+	return (0);
+}
+
+
+int	ft_ischar(char c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	return (0);
+}
+
+//export_utils
+char	**split_and_validate_token(char *token_value)
+{
+	char	**array;
+
+	array = ft_split(token_value, '=');
+	if (array == NULL || array[0] == NULL)
+	{
+		free_array(array);
+		return (NULL);
+	}
+	return (array);
 }
