@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 15:26:27 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/28 11:44:40 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/28 15:17:40 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	delete_subsequent_nodes(t_env *env_ll, t_token *head)
 	while (tmp && tmp->next != NULL)
 	{
 		if (!ft_strncmp(head->value, tmp->next->content,
-				ft_strlen(head->value)))
+				ft_strlen(head->value) + 1))
 		{
 			del = tmp->next;
 			tmp->next = tmp->next->next;

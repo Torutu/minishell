@@ -6,37 +6,45 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 04:08:46 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/23 22:44:49 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/28 14:31:14 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	handle_absolute_path(char *token, t_token *current_token)
-{
-	char	*last_slash;
-	int		path_len;
-
-	if (token[0] == '/')
-	{
-		last_slash = ft_strrchr(token, '/');
-		if (last_slash)
-		{
-			path_len = last_slash - token + 1;
-			current_token->path = ft_strndup(token, path_len);
-			current_token->value = ft_strdup(token);
-			free_null(token);
-		}
-		else
-		{
-			current_token->path = NULL;
-			current_token->value = ft_strdup(token);
-			free_null(token);
-		}
+int handle_relative_path(char *token, t_token *current_token) {
+	if (ft_strncmp(token, "./", 2) == 0) {
+		current_token->path = NULL;
+		current_token->value = ft_strdup(token);
+		free_null(token);
 		current_token->type = COMMAND;
-		return (0);
+		return 0;
 	}
-	return (1);
+	return 1;
+}
+
+int handle_absolute_path(char *token, t_token *current_token) {
+    char *last_slash;
+    int path_len;
+
+    if (token[0] == '/') {
+        last_slash = ft_strrchr(token, '/');
+        if (last_slash) {
+            path_len = last_slash - token + 1;
+            current_token->path = ft_strndup(token, path_len);
+            current_token->value = ft_strdup(token);
+            free_null(token);
+        } else {
+            current_token->path = NULL;
+            current_token->value = ft_strdup(token);
+            free_null(token);
+        }
+        current_token->type = COMMAND;
+        return 0;
+    } else if (handle_relative_path(token, current_token) == 0) {
+        return 0; // Path was handled by handle_relative_path
+    }
+    return 1; // Path does not match any known type
 }
 
 void	handle_slash(char *exe_path, char *token, t_token *current_token)

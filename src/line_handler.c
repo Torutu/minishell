@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:23:49 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/28 02:32:40 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/28 15:00:45 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	setup(t_data *data)
 	}
 	if (data->status == 963)
 		data->status = 2;
-	else if (data->no_cmd_flag == 1 && data->is_exit == 1)
+	if (data->no_cmd_flag == 1 && !data->is_exit)
 		data->status = 127;
 }
 
