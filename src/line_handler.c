@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:23:49 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/27 19:15:14 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/28 02:32:40 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	total_env_len(t_env *head)
 	current = head;
 	while (current != NULL)
 	{
-		// Check if the value is non-null before using it
 		if (current->value != NULL)
 			total_length += strlen(current->value);
 		current = current->next;
@@ -31,8 +30,8 @@ int	total_env_len(t_env *head)
 
 void	setup(t_data *data)
 {
-	int len_found;
-	
+	int	len_found;
+
 	len_found = 0;
 	data->deli = "  \t\n";
 	data->id = 0;
@@ -74,12 +73,11 @@ int	token_only_arg(t_data *data)
 		{
 			expect_command = 0;
 			data->no_cmd_flag = 0;
-			if(ft_strncmp(head->value, "exit", 5) == 0)
+			if (ft_strncmp(head->value, "exit", 5) == 0)
 				data->is_exit = 1;
 		}
 		head = head->next;
 	}
-
 	return (SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 10:58:07 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/27 19:15:02 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/27 23:24:21 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,17 @@ int	execution(t_data *data, t_env **env_ll)
 	return (data->status);
 }
 
+void print_all_cmds(char **arr)
+{
+    int i = 0;
+
+    while (arr[i] != NULL)
+    {
+        dprintf(2, "Command %d: %s\n", i, arr[i]);
+        i++;
+    }
+}
+
 int	execution_prepping(t_data *data, t_token *token, t_env **env_ll)
 {
 	static pid_t	pids;
@@ -244,9 +255,7 @@ void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array)
 	if (cmd_array[0] == NULL)
 		exit(0);
 	if (check_path_unset(env_ll))
-	{
 		execution_absolute_path(data, cmd_array);
-	}
 	data->env = env_arr_updater(env_ll);
 	if (!data->env)
 		exit (1);

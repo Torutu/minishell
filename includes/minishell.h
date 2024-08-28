@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 10:13:01 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/27 18:36:17 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/27 23:08:40 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,7 +253,7 @@ int		yodeling(t_token *token);
 int		shell_cd(t_token *token, t_data *data);
 int		export(t_token *token, t_env **env_ll);
 int		print_export(t_env **env_ll);
-int		unset(t_token *token, t_env **env_ll);
+int		unset(t_token *token, t_env **env_ll, t_data *data);
 void	alphabetical_printer(char **env_array);
 
 /* signals.c */

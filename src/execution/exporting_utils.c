@@ -1,17 +1,20 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   built_ins2.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/08 15:26:27 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/28 11:18:35 by walnaimi         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/minishell.h"
-/********************************************************************* */
+
+//export_utils
+int	print_export(t_env **env_ll)
+{
+	char	**env_array;
+
+	if (!env_ll || !*env_ll)
+		return (SUCCESS);
+	env_array = env_arr_updater(env_ll);
+	if (!env_array)
+		return (SUCCESS);
+	alphabetical_printer(env_array);
+	free_array(env_array);
+	return (SUCCESS);
+}
+
 void	alphabetical_printer(char **env_array)
 {
 	char	c;
@@ -159,20 +162,7 @@ int set_key_and_value(t_env *env_node, char *token_value)
 	return (SUCCESS);
 }
 
-int	update_existing_env(t_env *env_node, char *token_value)
-{
-	free_null(env_node->key);
-	free_null(env_node->value);
-	free_null(env_node->content);
 
-	if (update_content(env_node, token_value) == FAILURE)
-		return (FAILURE);
-
-	if (set_key_and_value(env_node, token_value) == FAILURE)
-		return (FAILURE);
-
-	return (SUCCESS);
-}
 
 int	find_key_in_env(t_env *env_ll, char *token_value, t_env **found_env)
 {
@@ -201,74 +191,4 @@ int	find_key_in_env(t_env *env_ll, char *token_value, t_env **found_env)
 		return (FAILURE);
 }
 
-int	add_new_env_variable(t_env **env_ll, char *token_value)
-{
-	t_env	*new_env;
 
-	new_env = ft_listnew(token_value);
-	if (!new_env)
-		return (FAILURE);
-
-	ft_listadd_back(env_ll, new_env);
-	return (SUCCESS);
-}
-/********************************************************** */
-int	delete_first_node(t_env **env_ll, t_token *head, t_data *data)
-{
-	t_env	*tmp;
-
-	tmp = *env_ll;
-	if (tmp && !ft_strncmp(head->value, tmp->content, ft_strlen(head->value)))
-	{
-		*env_ll = tmp->next;
-		data->envll = *env_ll;
-		free_null(tmp->key);
-		free_null(tmp->value);
-		free_null(tmp->content);
-		free(tmp);
-		return (1);
-	}
-	return (0);
-}
-
-
-void	delete_subsequent_nodes(t_env *env_ll, t_token *head)
-{
-	t_env	*tmp;
-	t_env	*del;
-
-	tmp = env_ll;
-	while (tmp && tmp->next != NULL)
-	{
-		if (!ft_strncmp(head->value, tmp->next->content,
-				ft_strlen(head->value)))
-		{
-			del = tmp->next;
-			tmp->next = tmp->next->next;
-			free_null(del->key);
-			free_null(del->value);
-			free_null(del->content);
-			free(del);
-			break ;
-		}
-		tmp = tmp->next;
-	}
-}
-
-int	unset(t_token *token, t_env **env_ll, t_data *data)
-{
-	t_token	*head;
-
-	head = token->next;
-	while (head && head->value)
-	{
-		if (delete_first_node(env_ll, head, data))
-		{
-			head = head->next;
-			continue ;
-		}
-		delete_subsequent_nodes(*env_ll, head);
-		head = head->next;
-	}
-	return (SUCCESS);
-}

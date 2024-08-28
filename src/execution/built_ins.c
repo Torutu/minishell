@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:18:24 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/27 15:38:28 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/28 00:29:21 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ int	built_ins(t_data *data, t_token *token, t_env **env_ll)
 	else if (!ft_strncmp(token->value, "pwd", 4))
 		status = print_pwd();
 	else if (!ft_strncmp(token->value, "exit", 5))
-	{
 		status = get_the_hell_out(data, token, env_ll);
-	}
 	else if (!ft_strncmp(token->value, "echo", 5))
 		status = yodeling(data->token);
 	else if (!ft_strncmp(token->value, "cd", 3))
@@ -38,7 +36,7 @@ int	built_ins(t_data *data, t_token *token, t_env **env_ll)
 	else if (!ft_strncmp(token->value, "export", 7))
 		status = export(token, env_ll);
 	else if (!ft_strncmp(token->value, "unset", 6))
-		status = unset(token, env_ll);
+		status = unset(token, env_ll, data);
 	else
 		return (err_msg(token->value, NO_EXEC, 127));
 	return (status);
@@ -47,21 +45,42 @@ int	built_ins(t_data *data, t_token *token, t_env **env_ll)
 /* The printing of the environment changes in conformity to the use of
 export and unset. The command 'env' itself does not take arguments.
 e.g. $> env || $> pwd (no white spaces or anything like caps)*/
+// int	print_env(t_env *env_ll)
+// {
+// 	t_env	*tmp;
+
+// 	if (!env_ll)
+// 		return (FAILURE);
+// 	tmp = env_ll;
+// 	while (tmp)
+// 	{
+// 		ft_printf("%s\n", tmp->content);
+// 		tmp = tmp->next;
+// 	}
+// 	env_ll = tmp;
+// 	return (SUCCESS);
+// }
+
 int	print_env(t_env *env_ll)
 {
 	t_env	*tmp;
 
 	if (!env_ll)
 		return (FAILURE);
+
 	tmp = env_ll;
 	while (tmp)
 	{
-		ft_printf("%s\n", tmp->content);
+		if (ft_strchr(tmp->content, '='))
+		{
+			ft_printf("%s\n", tmp->content);
+		}
 		tmp = tmp->next;
 	}
-	env_ll = tmp;
+
 	return (SUCCESS);
 }
+
 
 int	print_pwd(void)
 {
@@ -95,7 +114,6 @@ int	get_the_hell_out(t_data *data, t_token *token, t_env **env_ll)
 		}
 		status = ft_atoi(token->next->value);
 		free_gang(data);
-		dprintf(2,"exit status is = %d\n", status);
 		exit(status);
 	}
 	free_gang(data);
