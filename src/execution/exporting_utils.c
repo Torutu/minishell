@@ -6,13 +6,12 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:32:14 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/28 11:32:15 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/28 12:58:53 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-//export_utils
 int	print_export(t_env **env_ll)
 {
 	char	**env_array;
@@ -60,9 +59,7 @@ int	check_existing_key(t_env *env_ll, char *token_value, char **out_key)
 	array = split_and_validate_token(token_value);
 	if (array == NULL)
 		return (FAILURE);
-
 	found = compare_keys(env_ll, array[0]);
-
 	if (out_key != NULL)
 		*out_key = array[0];
 	else
@@ -70,18 +67,14 @@ int	check_existing_key(t_env *env_ll, char *token_value, char **out_key)
 		free_array(array);
 		return (FAILURE);
 	}
-
 	free_array(array);
-
 	if (found)
 		return (SUCCESS);
 	else
 		return (FAILURE);
 }
 
-//export_utils
-
-int set_key_and_value(t_env *env_node, char *token_value)
+int	set_key_and_value(t_env *env_node, char *token_value)
 {
 	char	**array;
 
@@ -110,8 +103,6 @@ int set_key_and_value(t_env *env_node, char *token_value)
 	return (SUCCESS);
 }
 
-
-
 int	find_key_in_env(t_env *env_ll, char *token_value, t_env **found_env)
 {
 	char	**array;
@@ -138,5 +129,3 @@ int	find_key_in_env(t_env *env_ll, char *token_value, t_env **found_env)
 	else
 		return (FAILURE);
 }
-
-

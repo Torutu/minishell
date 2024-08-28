@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 10:13:01 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/27 23:08:40 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/28 13:00:33 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,9 +156,9 @@ typedef struct s_data
 /* in execution.c */
 int		execution(t_data *data, t_env **env_ll);
 int		execution_prepping(t_data *data, t_token *token, t_env **env_ll);
-int		forking(t_data *data, t_env **env_ll, char **all_cmds, pid_t pids);
 void	child_execution(t_data *data, t_env **env_ll, char *instr, int child);
 void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array);
+void	replace_spaces_with_underscores(t_token *token_list);
 
 /* in execution2.c */
 bool	builtin_filter(t_token *token, char *command);
@@ -166,6 +166,11 @@ t_token	*find_token_exec(t_token *token, char **array);
 void	ft_builtin_exec(t_data *data, t_token *token, t_env **env_ll);
 int		check_path_unset(t_env **env_ll);
 void	handle_pipefd_readend(t_data *data);
+
+/* in execution3.c */
+int		forking(t_data *data, t_env **env_ll, char **all_cmds, pid_t pids);
+void	child_execution(t_data *data, t_env **env_ll, char *instr, int child);
+void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array);
 
 /* in syntax.c */
 int		syntax_check(t_token *token);
@@ -180,6 +185,7 @@ void	input_redirection(t_data *data, char **array);
 void	output_redirection(t_data *data, char **array);
 void	heredoc_redirection(t_data *data, char **array);
 void	append_redirection(t_data *data, char **array);
+void	check_and_handle_redirection(t_data *data, char **array);
 
 /* in execution_utils1.c */
 int		err_msg(char *obj, char *msg, int err_code);
@@ -256,6 +262,32 @@ int		print_export(t_env **env_ll);
 int		unset(t_token *token, t_env **env_ll, t_data *data);
 void	alphabetical_printer(char **env_array);
 
+/* in exporting.c */
+int		export(t_token *token, t_env **env_ll);
+int		process_token(t_env **env_ll, t_token *tmp_tok);
+int		is_valid_identifier(char *value);
+int		handle_special_cases(t_token *token, t_env **env_ll);
+int		handle_null_next_token(t_token *token, t_env **env_ll);
+
+/* in exporting_utils.c */
+int		find_key_in_env(t_env *env_ll, char *token_value, t_env **found_env);
+int		set_key_and_value(t_env *env_node, char *token_value);
+int		check_existing_key(t_env *env_ll, char *token_value, char **out_key);
+void	alphabetical_printer(char **env_array);
+int		print_export(t_env **env_ll);
+
+/* in exporting_utils1.c */
+char	**split_and_validate_token(char *token_value);
+int		ft_ischar(char c);
+int		if_redirection(t_token *token);
+int		update_existing_env(t_env *env_node, char *token_value);
+int		add_new_env_variable(t_env **env_ll, char *token_value);
+
+/* in exporting_utils2.c */
+int		update_content(t_env *env_node, char *token_value);
+char	*extract_value(char *token_value);
+int		compare_keys(t_env *env_ll, char *key);
+
 /* signals.c */
 void	handler(int sig);
 
@@ -265,6 +297,17 @@ int		free_retstatus(char *array, int status);
 void	free_tokens(t_token *head);
 void	free_gang(t_data *data);
 void	free_my_boi(char **paths);
+
+/* in freeing2.c */
+void	free_ll(t_env *env_ll);
+void	cleanup_node(t_env *node, char **tmp_array);
+
+/* in ft_listnew.c */
+t_env	*create_node(void);
+int		set_node_content(t_env *node, void *content);
+int		s_node_k(t_env *node, char **tmp_array);
+int		s_node_v(t_env *node, void *content);
+t_env	*ft_listnew(void *content);
 
 /* DEPRECATED FUNCTIONS */
 // int		built_in_or_garbage(t_data *data, t_env **env_ll, t_token *token);

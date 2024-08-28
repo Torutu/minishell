@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:32:21 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/28 11:32:37 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/28 11:45:06 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	handle_special_cases(t_token *token, t_env **env_ll)
 	return (FAILURE);
 }
 
-//export
 int	is_valid_identifier(char *value)
 {
 	if (!ft_ischar(value[0]) && !(value[0] == '_'))
@@ -42,7 +41,6 @@ int	is_valid_identifier(char *value)
 	return (SUCCESS);
 }
 
-//export
 int	process_token(t_env **env_ll, t_token *tmp_tok)
 {
 	t_env	*tmp_ll;
@@ -52,7 +50,6 @@ int	process_token(t_env **env_ll, t_token *tmp_tok)
 	found = 0;
 	if (is_valid_identifier(tmp_tok->value) == FAILURE)
 		return (SUCCESS);
-
 	while (tmp_ll != NULL)
 	{
 		if (find_key_in_env(tmp_ll, tmp_tok->value, NULL) == SUCCESS)

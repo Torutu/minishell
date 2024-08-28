@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:18:24 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/28 00:29:21 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/28 12:26:00 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,32 +42,12 @@ int	built_ins(t_data *data, t_token *token, t_env **env_ll)
 	return (status);
 }
 
-/* The printing of the environment changes in conformity to the use of
-export and unset. The command 'env' itself does not take arguments.
-e.g. $> env || $> pwd (no white spaces or anything like caps)*/
-// int	print_env(t_env *env_ll)
-// {
-// 	t_env	*tmp;
-
-// 	if (!env_ll)
-// 		return (FAILURE);
-// 	tmp = env_ll;
-// 	while (tmp)
-// 	{
-// 		ft_printf("%s\n", tmp->content);
-// 		tmp = tmp->next;
-// 	}
-// 	env_ll = tmp;
-// 	return (SUCCESS);
-// }
-
 int	print_env(t_env *env_ll)
 {
 	t_env	*tmp;
 
 	if (!env_ll)
 		return (FAILURE);
-
 	tmp = env_ll;
 	while (tmp)
 	{
@@ -77,10 +57,8 @@ int	print_env(t_env *env_ll)
 		}
 		tmp = tmp->next;
 	}
-
 	return (SUCCESS);
 }
-
 
 int	print_pwd(void)
 {
@@ -118,72 +96,4 @@ int	get_the_hell_out(t_data *data, t_token *token, t_env **env_ll)
 	}
 	free_gang(data);
 	exit(data->status);
-}
-
-int	handle_flag_type(t_token *head)
-{
-	head = head->next;
-	while (head->type == FLAG)
-	{
-		head = head->next;
-		if (head->value == NULL)
-			return (SUCCESS);
-	}
-	while (head->value != NULL && head->value[0] == '\0')
-		head = head->next;
-	while (head != NULL)
-	{
-		if (head->value != NULL && head->value[0] != '\0')
-		{
-			if (head->type == RED_IN || head->type == RED_OUT
-				|| head->type == APPEND || head->type == HEREDOC)
-				break ;
-			printf("%s", head->value);
-		}
-		head = head->next;
-		if (head != NULL && head->value != NULL && head->value[0] != '\0')
-			printf(" ");
-	}
-	return (SUCCESS);
-}
-
-int	handle_arg_type(t_token *head)
-{
-	head = head->next;
-	while (head->value != NULL && head->value[0] == '\0')
-		head = head->next;
-	while (head != NULL)
-	{
-		if (head->value != NULL && head->value[0] != '\0')
-		{
-			if (head->type == RED_IN || head->type == RED_OUT
-				|| head->type == APPEND || head->type == HEREDOC)
-				break ;
-			printf("%s", head->value);
-		}
-		head = head->next;
-		if (head != NULL && head->value != NULL && head->value[0] != '\0')
-			printf(" ");
-	}
-	printf("\n");
-	return (SUCCESS);
-}
-
-int	yodeling(t_token *token)
-{
-	t_token	*head;
-
-	head = token;
-	while (head->value != NULL)
-	{
-		if (head->next->value == NULL)
-			return (printf("\n"), SUCCESS);
-		if (head->next->type == FLAG && head->next->echo == true)
-			return (handle_flag_type(head));
-		if (head != NULL && head->next != NULL && head->next->type == ARG 
-			&& ft_strncmp(head->value, "echo", 5) == 0)
-			return (handle_arg_type(head));
-		head = head->next;
-	}
-	return (FAILURE);
 }

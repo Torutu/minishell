@@ -20,20 +20,28 @@ SRC_FILES = main.c\
 			utils2.c\
 			signals.c\
 			freeing.c\
+			freeing_1.c\
+			ft_listnew.c\
 			ll_utils.c\
 			ll_utils2.c\
 			line_handler.c\
 			src/execution/cd.c\
 			src/execution/built_ins.c\
 			src/execution/built_ins2.c\
+			src/execution/echoing.c\
 			src/execution/execution.c\
 			src/execution/execution2.c\
+			src/execution/execution_3.c\
 			src/execution/redirections.c\
 			src/execution/redirections_utils.c\
 			src/execution/fd_dups.c\
 			src/execution/redirect_parse.c\
 			src/execution/execution_utils1.c\
 			src/execution/execution_utils2.c\
+			src/execution/exporting.c\
+			src/execution/exporting_utils.c\
+			src/execution/exporting_utils_1.c\
+			src/execution/exporting_utils_2.c\
 			src/parse/tokenizer.c\
 			src/parse/ft_strtok.c\
 			src/parse/ft_strtok_utils.c\
