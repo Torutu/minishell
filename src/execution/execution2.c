@@ -6,39 +6,29 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 13:30:29 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/29 00:54:46 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/30 01:27:40 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 /**
-At first, the user will give us a command such as:
-
-shell %> ls -la | echo test > outfile | cat outfile
-
-In our parsing we will take care of stripping everything that is unnecessary
-and take care of redirections accordingly. Every command between pipes will
-be sent down to the children processes that will execute them depending if 
-they are built-ins or other commands. In the previous example, echo is a 
-built-in and I need to execute it in a different manner. For the execution
-of built-ins I have done everything with a linked list type t_token that
-parses out empty spaces and takes mostly strings and has a pointer to the 
-value of the string called value in the node.
-
-Therefore, at the doorstep of execution, the tokens will contain the full
-instruction "ls -la | echo test > outfile | cat outfile" where the nodes 
-will contain "ls, -la, |, echo, test, >, outfile, |, cat, and outfile". 
-My parsed array will have only what the child is supposed to execute.
-So, in the second child, which contains a builtin, we will see:
-
-arr[0] = echo 
-arr[1] = test
+ * Checks if the given command exists in the linked list.
+ *
+ * @param token the head of the linked list
+ * @param command the command to search for
+ *
+ * @return true if the command exists in the linked list, false otherwise
+ *
+ * The function walks through the linked list and checks if the command matches
+ * one of the tokens in the list. If it does, it returns true. If it doesn't
+ * find any match, it returns false.
  */
 bool	builtin_filter(t_token *token, char *command)
 {
 	t_token	*tmp;
 
+	dprintf(2, "%s\n", command);
 	if (command == NULL)
 		return (false);
 	tmp = token;
@@ -53,6 +43,17 @@ bool	builtin_filter(t_token *token, char *command)
 	return (false);
 }
 
+/**
+ * Given an array of strings, go through the linked list and return the
+ * address of the first node that matches one of the strings in the array.
+ * The comparison is done with strncmp and the type of the node has to be
+ * BUILTIN.
+ *
+ * @param token the head of the linked list
+ * @param array the array of strings to compare with
+ *
+ * @return the address of the first matching node or NULL if no match is found
+ */
 t_token	*find_token_exec(t_token *token, char **array)
 {
 	int		i;

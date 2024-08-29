@@ -6,12 +6,26 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:32:14 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/29 04:02:02 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/30 01:20:17 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/**
+ * Prints the environment variables in a sorted manner.
+ *
+ * @param env_ll A pointer to the linked list containing the environment
+ * variables.
+ *
+ * @return SUCCESS if the function executes successfully, FAILURE otherwise.
+ *
+ * This function first checks if the environment linked list is empty. If it is,
+ * it returns SUCCESS. Then, it allocates an array to store the environment
+ * variables. If the allocation fails, it returns FAILURE. Finally, it prints
+ * the environment variables in a sorted manner using alphabetical_printer()
+ * and frees the array.
+ */
 int		print_export(t_env **env_ll)
 {
 	char	**env_array;
@@ -26,6 +40,17 @@ int		print_export(t_env **env_ll)
 	return (SUCCESS);
 }
 
+/**
+ * Prints the environment variables in alphabetical order.
+ *
+ * The printing is done by first looping through the array of environment
+ * variables, and then looping through the characters in the ASCII table
+ * (from 32 to 126, which are the printable characters). For each character,
+ * it checks if the variable starts with that character, and if so, it
+ * prints it. This way, the variables are printed in alphabetical order.
+ *
+ * @param env_array An array of environment variables.
+ */
 void	alphabetical_printer(char **env_array)
 {
 	char	c;
@@ -49,7 +74,16 @@ void	alphabetical_printer(char **env_array)
 	}
 }
 
-//export_utils
+/**
+ * Checks if a key already exists in the environment linked list.
+ *
+ * @param env_ll The head of the environment linked list.
+ * @param token_value The token value to search for in the environment.
+ * @param out_key A pointer to a pointer to the environment node that matches
+ * the key. If NULL, the function does not set the pointer.
+ *
+ * @return SUCCESS if a match was found, FAILURE otherwise.
+ */
 int	check_existing_key(t_env *env_ll, char *token_value, char **out_key)
 {
 	char	**array;
@@ -74,6 +108,16 @@ int	check_existing_key(t_env *env_ll, char *token_value, char **out_key)
 		return (FAILURE);
 }
 
+/**
+ * Splits the given token_value into a key-value pair and assigns them
+ * to the given environment node.
+ *
+ * @param env_node The environment node to set the key-value pair.
+ * @param token_value The token value to split, which should be in the format
+ * "key=value".
+ *
+ * @return SUCCESS if the key-value pair was successfully set, FAILURE otherwise.
+ */
 int	set_key_and_value(t_env *env_node, char *token_value)
 {
 	char	**array;
@@ -103,6 +147,18 @@ int	set_key_and_value(t_env *env_node, char *token_value)
 	return (SUCCESS);
 }
 
+/**
+ * Searches the environment linked list to find a matching key for the given
+ * token_value. If a match is found, sets the found_env pointer to the matching
+ * node.
+ *
+ * @param env_ll The head of the environment linked list.
+ * @param token_value The token value to search for in the environment.
+ * @param found_env A pointer to a pointer to the environment node that matches
+ * the key. If NULL, the function does not set the pointer.
+ *
+ * @return SUCCESS if a match was found, FAILURE otherwise.
+ */
 int	find_key_in_env(t_env *env_ll, char *token_value, t_env **found_env)
 {
 	char	**array;

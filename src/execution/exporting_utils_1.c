@@ -6,12 +6,28 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:32:01 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/29 01:44:52 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/30 01:22:25 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/**
+ * Adds a new environment variable to the linked list.
+ *
+ * The function takes a double pointer to the environment linked list
+ * and a string containing the key-value pair of the new variable.
+ * It creates a new node with the given key-value pair and adds it
+ * to the end of the linked list. If the allocation for the new node
+ * fails, it returns FAILURE. Otherwise, it returns SUCCESS.
+ *
+ * @param env_ll A double pointer to the environment linked list.
+ * @param token_value A string containing the key-value pair
+ * of the new variable.
+ *
+ * @return SUCCESS if the new node was successfully added,
+ * FAILURE otherwise.
+ */
 int	add_new_env_variable(t_env **env_ll, char *token_value)
 {
 	t_env	*new_env;
@@ -23,6 +39,16 @@ int	add_new_env_variable(t_env **env_ll, char *token_value)
 	return (SUCCESS);
 }
 
+/**
+ * Updates the content, key and value fields of an existing
+ * environment node given a token_value string.
+ *
+ * @param env_node The environment node to update.
+ * @param token_value The string to update the content, key and value
+ * with.
+ *
+ * @return SUCCESS if the update was successful, FAILURE otherwise.
+ */
 int	update_existing_env(t_env *env_node, char *token_value)
 {
 	free_null(env_node->key);
@@ -35,7 +61,13 @@ int	update_existing_env(t_env *env_node, char *token_value)
 	return (SUCCESS);
 }
 
-// Helper function to check if the token is a redirection or append type
+/**
+ * Checks if the given token is a redirection operator.
+ *
+ * @param token The token to check.
+ *
+ * @return 0 if the token is a redirection operator, non-zero otherwise.
+ */
 int	if_redirection(t_token *token)
 {
 	if (find_token(token, APPEND) || find_token(token, HEREDOC)
@@ -45,6 +77,13 @@ int	if_redirection(t_token *token)
 	return (FAILURE);
 }
 
+/**
+ * Checks if a character is an alphabetical character.
+ *
+ * @param c The character to check.
+ *
+ * @return 1 if the character is an alphabetical character, 0 otherwise.
+ */
 int	ft_ischar(char c)
 {
 	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
@@ -52,7 +91,6 @@ int	ft_ischar(char c)
 	return (0);
 }
 
-//export_utils
 char	**split_and_validate_token(char *token_value)
 {
 	char	**array;

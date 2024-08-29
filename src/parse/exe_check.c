@@ -6,12 +6,20 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 04:08:46 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/29 00:55:03 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/30 01:27:17 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/**
+ * Handles relative path token.
+ *
+ * @param token The token to be handled.
+ * @param current_token The current token being processed.
+ *
+ * @return 0 if the token is a relative path token, 1 otherwise.
+ */
 int	handle_relative_path(char *token, t_token *current_token)
 {
 	if (ft_strncmp(token, "./", 2) == 0)
@@ -62,6 +70,18 @@ int	handle_absolute_path(char *token, t_token *current_token)
 	return (1);
 }
 
+/**
+ * Handles the case where the executable path contains a slash.
+ *
+ * @param exe_path The executable path.
+ * @param token The token to be handled.
+ * @param current_token The current token being processed.
+ *
+ * This function will split the executable path into a directory path and
+ * a file name. The directory path will be assigned to the path field of the
+ * current token, and the file name will be assigned to the value field. The
+ * original token will be freed.
+ */
 void	handle_slash(char *exe_path, char *token, t_token *current_token)
 {
 	char	*last_slash;
@@ -77,6 +97,17 @@ void	handle_slash(char *exe_path, char *token, t_token *current_token)
 	}
 }
 
+/**
+ * Handles the case where the executable path does not contain a slash.
+ *
+ * @param exe_path The executable path.
+ * @param token The token to be handled.
+ * @param current_token The current token being processed.
+ *
+ * This function will assign the executable path to the value field of the
+ * current token, and set the path field to NULL. The original token will be
+ * freed.
+ */
 void	handle_no_slash(char *exe_path, char *token, t_token *current_token)
 {
 	current_token->path = NULL;
@@ -84,6 +115,24 @@ void	handle_no_slash(char *exe_path, char *token, t_token *current_token)
 	free_null(token);
 }
 
+/**
+ * Handles the case where the executable path is an executable that can be
+ * found in the environment's PATH.
+ *
+ * @param token The token to be handled.
+ * @param current_token The current token being processed.
+ * @param data The data structure containing the environment state.
+ *
+ * This function will split the executable path into a directory path and
+ * a file name. The directory path will be assigned to the path field of the
+ * current token, and the file name will be assigned to the value field. The
+ * original token will be freed.
+ *
+ * If the executable path cannot be found in the environment's PATH, this
+ * function will return 1 and the token will not be modified.
+ *
+ * @return 0 if the token is a valid executable path, 1 otherwise.
+ */
 int	handle_cmd_exe(char *token, t_token *current_token, t_data *data)
 {
 	char	**paths;
