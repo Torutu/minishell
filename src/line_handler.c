@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:23:49 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/28 19:40:12 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 20:47:04 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	setup(t_data *data)
 		data->status = 2;
 	if (data->no_cmd_flag == 1 && !data->is_exit)
 		data->status = 127;
+	if (g_exit_code == 1)
+		data->status = 130;
 }
 
 int	token_only_arg(t_data *data)
@@ -68,7 +70,11 @@ int	token_only_arg(t_data *data)
 			data->no_cmd_flag = 1;
 		}
 		else if (expect_command && head->type == ARG)
+		{
 			data->no_cmd_flag = 1;
+			if (head->id >= 1 && head->prev->type == HEREDOC)
+				data->no_cmd_flag = 0;
+		}
 		else if (head->type == EXEC || head->type == BUILTIN)
 		{
 			expect_command = 0;
@@ -98,6 +104,7 @@ int	sniff_line(t_data *data)
 	if (data->status == 963)
 		return (free_retstatus(data->line_read, 963));
 	data->status = 0;
+	g_exit_code = 0;
 	free(data->line_read);
 	if (syntax_check(data->token) == FAILURE)
 	{

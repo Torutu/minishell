@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 10:58:07 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/29 16:54:20 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 19:35:11 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ int	trip_execution_prepping(t_data *data, t_token *token, t_env **env_ll)
 	pids = wait(&data->status);
 	while (pids > 0)
 		pids = wait(&data->status);
-	g_exit_code = 0;
+	//g_exit_code = 0;
 	free_cmd_array(cmd_a);
 	return (WEXITSTATUS(data->status));
 }

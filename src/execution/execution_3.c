@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 12:04:17 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/29 16:54:04 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 20:49:06 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ int	tri_forking(t_data *data, t_env **env_ll, char ***all_cmds, pid_t pids)
 	char sync_signal;
 
 	data->index = 0;
-	g_exit_code = EXEC_SIG;
-
+	//g_exit_code = EXEC_SIG;
+	signals(2);
 	while (data->index < data->nb_cmds)
 	{
 		if (data->piped == true && pipe(data->pipe_fd) == -1)

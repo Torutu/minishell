@@ -6,37 +6,53 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 10:37:35 by lstorey           #+#    #+#             */
-/*   Updated: 2024/08/28 11:52:07 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 19:56:25 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	handler(int sig)
+void	normal_state(int sig)
 {
-	if (sig == SIGINT)
+	g_exit_code = 1;
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+	(void)sig;
+}
+
+void	running_exe(int sig)
+{
+	g_exit_code = 1;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	(void)sig;
+}
+
+void	heredocing(int sig)
+{
+	g_exit_code = 1;
+	printf("\n");
+	clear_history();
+	signal(sig, SIG_DFL);
+	kill(getpid(), sig);
+}
+void	signals(int sig)
+{
+	if (sig == 1)
 	{
-		if (g_exit_code == HEREDOC_SIG)
-			handler(SIGQUIT);
-		else if (g_exit_code == EXEC_SIG)
-		{
-			printf("\n");
-			rl_on_new_line();
-			rl_replace_line("", 0);
-		}
-		else
-		{
-			printf("\n");
-			rl_on_new_line();
-			rl_replace_line("", 0);
-			rl_redisplay();
-		}
+		signal(SIGINT, normal_state);
+		signal(SIGQUIT, SIG_IGN);
 	}
-	else if (sig == SIGQUIT)
+	if (sig == 2)
 	{
-		printf("\n");
-		clear_history();
-		signal(sig, SIG_DFL);
-		kill(getpid(), sig);
+		signal(SIGINT, running_exe);
+		signal(SIGQUIT, SIG_IGN);
+	}
+	if (sig == 3)
+	{
+		signal(SIGINT, heredocing);
+		signal(SIGQUIT, SIG_IGN);
 	}
 }
