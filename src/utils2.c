@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 10:03:43 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/29 19:53:46 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 20:58:46 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	wow_loop(t_data *data, t_env **env_ll)
 	int	status;
 
 	status = 0;
+	g_exit_code = 0;
 	while (666)
 	{
 		signals(1);

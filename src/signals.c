@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 10:37:35 by lstorey           #+#    #+#             */
-/*   Updated: 2024/08/29 19:56:25 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 21:02:22 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	normal_state(int sig)
 void	running_exe(int sig)
 {
 	g_exit_code = 1;
-	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	(void)sig;

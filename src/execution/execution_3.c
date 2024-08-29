@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 12:04:17 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/29 20:49:06 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 20:52:20 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,32 +57,74 @@ void	cleanup_and_exit(t_data *data, t_env **env_ll, char **cmd_array,
  * 
  * The function does not return anything.
  */
+// void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array)
+// {
+// 	static char	*path;
+
+// 	if (cmd_array[0] == NULL)
+// 		exit (0);
+// 	if (check_path_unset(env_ll))
+// 		execution_absolute_path(data, cmd_array);
+// 	data->env = env_arr_updater(env_ll);
+// 	if (!data->env)
+// 		exit (1);
+// 	if (ft_strchr(cmd_array[0], '/') == NULL)
+// 	{
+// 		path = loop_path_for_binary(cmd_array[0], data->binary_paths);
+// 		if (!path)
+// 		{
+// 			err_msg(cmd_array[0], NO_EXEC, 127);
+// 			cleanup_and_exit(data, env_ll, cmd_array, 0);
+// 		}
+// 	}
+// 	free_tokens(data->token);
+// 	free_all_ll(env_ll);
+// 	if (!path)
+// 		execution_absolute_path(data, cmd_array);
+// 	execution_with_path(data, cmd_array, path);
+// }
+
 void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array)
 {
 	static char	*path;
+	struct stat	sb;
 
 	if (cmd_array[0] == NULL)
-		exit (0);
+		exit(0);
+
+	// Check if the command is a directory
+	if (stat(cmd_array[0], &sb) == 0 && S_ISDIR(sb.st_mode))
+	{
+		err_msg(cmd_array[0], " is a directory", 126);
+		cleanup_and_exit(data, env_ll, cmd_array, 126);
+	}
+
 	if (check_path_unset(env_ll))
 		execution_absolute_path(data, cmd_array);
+
 	data->env = env_arr_updater(env_ll);
 	if (!data->env)
-		exit (1);
+		exit(1);
+
 	if (ft_strchr(cmd_array[0], '/') == NULL)
 	{
 		path = loop_path_for_binary(cmd_array[0], data->binary_paths);
 		if (!path)
 		{
 			err_msg(cmd_array[0], NO_EXEC, 127);
-			cleanup_and_exit(data, env_ll, cmd_array, 0);
+			cleanup_and_exit(data, env_ll, cmd_array, 127);
 		}
 	}
+
 	free_tokens(data->token);
 	free_all_ll(env_ll);
+
 	if (!path)
 		execution_absolute_path(data, cmd_array);
+
 	execution_with_path(data, cmd_array, path);
 }
+
 
 int	tri_forking(t_data *data, t_env **env_ll, char ***all_cmds, pid_t pids)
 {
