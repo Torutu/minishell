@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 10:13:01 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/29 20:51:30 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/30 01:53:09 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,6 @@
 # define SYNTAX_EXIT ": exit: numeric argument required"
 # define NEW_LINE "newline"
 # define CD_ERR "cd: too many arguments"
-// # define REDIRECT_OUT 222
-// # define REDIRECT_IN 111
-// # define HERE_DOC 333
-// # define APP 444
 # define NO_FILE 100
 # define NULL_LINE 5
 # define DIRECTORY 69
