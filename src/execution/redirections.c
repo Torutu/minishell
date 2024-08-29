@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:03:21 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/28 16:33:50 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 03:22:05 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,9 @@ int	find_redirection(char **array)
 	}
 	return (FAILURE);
 }
-
 void	redirections_handling(t_data *data, char **array)
 {
 	int	last_heredoc_index;
-
 	last_heredoc_index = last_heredoc(array);
 	data->index = 0;
 	while (array[data->index])

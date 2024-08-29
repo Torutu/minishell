@@ -6,66 +6,11 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 10:19:57 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/28 21:00:57 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 01:07:17 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-// void print_instruction_array(char **array) {
-//     int i = 0;
-//     while (array[i] != NULL) 
-// 	{
-//         printf("pipe_array[%d] = %s\n",i , array[i]);
-//         i++;
-//     }
-// }
-
-/**
- * COMMAND LINE TO ARRAY
- * This function takes all tokens and organize them into elements of an array
- * so that we can distribute instructions to each child process individually.
- * 
- * E.g.:
- * *************** IN COMMAND LINE ********************
- * %> ls -la | grep Makefile | cat > outfile
- * ****************************************************
- * The array will take the instructions and organize them as follows:
- * pipe_array[0] = "ls -la"
- * pipe_array[1] = "grep Makefile"
- * pipe_array[2] = "cat > outfile"
- * 
- * ***NOTE: I dont think we need malloc checks after strdup, as its taken care of
- *  inside the function that should save a few lines at least***
- */
-// char	**cl_to_array(t_token *token)
-// {
-// 	t_token	*head;
-// 	char	**pipe_array;
-// 	char	*instruction;
-// 	int		i;
-
-// 	i = 0;
-// 	head = token;
-// 	if (alloc_memory(&pipe_array, &instruction, &token) == FAILURE)
-// 		return (NULL);
-// 	while (head)
-// 	{
-// 		if (fill_instr_loop(&instruction, &head) == FAILURE)
-// 			return (free_arr_retnull(pipe_array));
-// 		pipe_array[i] = ft_strdup(instruction);
-// 		if (!pipe_array[i])
-// 			return (NULL);
-// 		i++;
-// 		if (!head || head->type != PIPE)
-// 			break ;
-// 		head = head->next;
-// 	}
-// 	free(instruction);
-// 	instruction = NULL;
-// 	pipe_array[i] = NULL;
-// 	return (pipe_array);
-// }
 
 int	fill_instr_loop(char **instruction, t_token **head)
 {
@@ -94,23 +39,23 @@ int	fill_instr_loop(char **instruction, t_token **head)
 	return (SUCCESS);
 }
 
-int	alloc_memory(char ***pipe_array, char **instruction, t_token **token)
-{
-	int	nb_of_instructions;
+// int	alloc_memory(char ***pipe_array, char **instruction, t_token **token)
+// {
+// 	int	nb_of_instructions;
 
-	nb_of_instructions = count_token((*token), PIPE) + 1;
-	(*pipe_array) = (char **)malloc(sizeof(char *) * (nb_of_instructions + 1));
-	if (!(*pipe_array))
-		return (FAILURE);
-	(*instruction) = ft_strdup("");
-	if (!instruction)
-	{
-		free_null((*pipe_array));
-		pipe_array = NULL;
-		return (FAILURE);
-	}
-	return (SUCCESS);
-}
+// 	nb_of_instructions = count_token((*token), PIPE) + 1;
+// 	(*pipe_array) = (char **)malloc(sizeof(char *) * (nb_of_instructions + 1));
+// 	if (!(*pipe_array))
+// 		return (FAILURE);
+// 	(*instruction) = ft_strdup("");
+// 	if (!instruction)
+// 	{
+// 		free_null((*pipe_array));
+// 		pipe_array = NULL;
+// 		return (FAILURE);
+// 	}
+// 	return (SUCCESS);
+// }
 
 /** checking_access() is mainly a last check for general binaries that
  * the original shell uses. If the user inputs a binary of his own making
@@ -209,44 +154,46 @@ t_token	*find_redtok(t_token *token)
 
 char	**alloc_cmd_array(t_token *token) //trip
 {
-    int cmd_size = 0;
-    char **cmd_array;
+	int cmd_size = 0;
+	char **cmd_array;
 
-    while (token && token->type != PIPE)
-    {
-        cmd_size++;
-        token = token->next;
-    }
-    cmd_array = (char **)malloc(sizeof(char *) * (cmd_size + 1)); // +1 for NULL terminator
-    if (!cmd_array)
-        return (NULL);
-    return (cmd_array);
+	while (token && token->type != PIPE)
+	{
+		cmd_size++;
+		token = token->next;
+	}
+	cmd_array = (char **)malloc(sizeof(char *) * (cmd_size + 1)); // +1 for NULL terminator
+	if (!cmd_array)
+		return (NULL);
+	return (cmd_array);
 }
 
 
-int count_pipes(t_token *token) // trip
+int	count_pipes(t_token *token)//trip
 {
-    int count = 0;
-    while (token)
-    {
-        if (token->type == PIPE)
-            count++;
-        token = token->next;
-    }
-    return (count);
+	int	count;
+
+	count = 0;
+	while (token)
+	{
+		if (token->type == PIPE)
+			count++;
+		token = token->next;
+	}
+	return (count);
 }
 
-char ***tri_cl_to_array(t_token *token)
+char	***token_to_array(t_token *token)
 {
-	t_token *head;
-	char ***cmd_array;
-	char **cmd;
-	int i;
-	int j;
+	t_token	*head;
+	char	***cmd_array;
+	char	**cmd;
+	int		i;
+	int		j;
 
 	i = 0;
 	head = token;
-	cmd_array = (char ***)malloc(sizeof(char **) * (count_pipes(token) + 2)); // One extra for NULL
+	cmd_array = (char ***)malloc(sizeof(char **) * (count_pipes(token) + 2));
 	if (!cmd_array)
 		return (NULL);
 

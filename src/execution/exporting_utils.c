@@ -6,13 +6,13 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:32:14 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/28 12:58:53 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 04:02:02 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	print_export(t_env **env_ll)
+int		print_export(t_env **env_ll)
 {
 	char	**env_array;
 

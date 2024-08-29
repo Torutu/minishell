@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:18:24 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/28 12:26:00 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 00:59:24 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ int	get_the_hell_out(t_data *data, t_token *token, t_env **env_ll)
 
 	status = 0;
 	free_all_ll(env_ll);
-	ft_printf("exit\n");
+	ft_printf("OUCH!\n");
 	if (token->next != NULL && token->next->value != NULL)
 	{
-		if (ft_isalpha_str(token->next->value))
+		if (!ft_isnum_str(token->next->value))
 		{
 			status = 2;
 			err_msg(token->next->value, SYNTAX_EXIT, status);

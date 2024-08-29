@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:27:10 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/28 19:40:12 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 01:00:34 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,13 @@ typedef struct s_index
 }	t_index;
 
 char	*ft_strncpy(char *s1, const char *s2, int n);
-
-
+int		ft_isnum_str(const char *str);
 
 int		trip_execution_prepping(t_data *data, t_token *token, t_env **env_ll);
 int		tri_forking(t_data *data, t_env **env_ll, char ***all_cmds, pid_t pids);
 void	tri_child_execution(t_data *data, t_env **env_ll,
 			char **cmd_with_args, int child);
-char	***tri_cl_to_array(t_token *token);
+char	***token_to_array(t_token *token);
 char	***free_cmd_array(char ***cmd_array);
 
 //* ---------------------------------------------- */

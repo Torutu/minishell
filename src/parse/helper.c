@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:08:47 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/27 13:20:10 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 00:55:49 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ t_token	*find_token(t_token *token, t_type type)
 	while (head != NULL)
 	{
 		if (type == head->type)
+		{
+			dprintf(2, "find_token: %s\n", head->value);
 			return (head);
+		}
 		head = head->next;
 	}
 	head = NULL;
@@ -77,4 +80,18 @@ int	ft_isalpha_str(const char *str)
 		i++;
 	}
 	return (0);
+}
+
+int	ft_isnum_str(const char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:28:13 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/28 13:03:06 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 04:04:41 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,23 @@ void	input_redirection(t_data *data, char **array)
 		exit(err_msg("'newline'", SYNTAX, 2));
 }
 
+void print_arry_with_args(char **cmd_with_args)
+{
+    if (cmd_with_args == NULL)
+    {
+        dprintf(2,"array is NULL\n");
+        return;
+    }
+	dprintf(2, "array:\n");
+    for (int i = 0; cmd_with_args[i] != NULL; i++)
+    {
+        dprintf(2, "%s\n", cmd_with_args[i]);
+    }
+}
+
 void	output_redirection(t_data *data, char **array)
 {
+	print_arry_with_args(array);
 	if (array[data->index + 1])
 	{
 		open_fdout(data, array[data->index + 1], 1);
@@ -50,6 +65,7 @@ void	append_redirection(t_data *data, char **array)
 	if (array[data->index + 1])
 	{
 		open_fdout(data, array[data->index + 1], 0);
+		dprintf(2, "array: %s\n", array[data->index + 1]);
 		if (data->piped == true)
 			dup2(data->read_end, STDIN_FILENO);
 		dup2(data->fd_out, STDOUT_FILENO);
@@ -73,16 +89,16 @@ void	heredoc_redirection(t_data *data, char **array)
 
 void	check_and_handle_redirection(t_data *data, char **array)
 {
-	if (!ft_strncmp(array[data->index], "<", 1)
+	if (!ft_strncmp(array[data->index], "<", 2)
 		&& ft_strlen(array[data->index]) == 1)
 		input_redirection(data, array);
-	else if (!ft_strncmp(array[data->index], ">", 1)
+	else if (!ft_strncmp(array[data->index], ">", 2)
 		&& ft_strlen(array[data->index]) == 1)
 		output_redirection(data, array);
-	else if (!ft_strncmp(array[data->index], ">>", 2)
+	else if (!ft_strncmp(array[data->index], ">>", 3)
 		&& ft_strlen(array[data->index]) == 2)
 		append_redirection(data, array);
-	else if (!ft_strncmp(array[data->index], "<<", 2)
+	else if (!ft_strncmp(array[data->index], "<<", 3)
 		&& ft_strlen(array[data->index]) == 2)
 		heredoc_redirection(data, array);
 }

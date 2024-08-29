@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:32:01 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/28 12:30:21 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 01:44:52 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ int	update_existing_env(t_env *env_node, char *token_value)
 int	if_redirection(t_token *token)
 {
 	if (find_token(token, APPEND) || find_token(token, HEREDOC)
-		|| find_token(token, RED_IN) || find_token(token, RED_OUT))
-		return (1);
-	return (0);
+		|| find_token(token, RED_IN) || find_token(token, RED_OUT)
+		|| find_token(token, PIPE))
+		return (SUCCESS);
+	return (FAILURE);
 }
 
 int	ft_ischar(char c)

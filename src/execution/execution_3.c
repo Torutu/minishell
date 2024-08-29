@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 12:04:17 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/28 20:12:33 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 03:37:08 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,21 +137,20 @@ void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array)
 	execution_with_path(data, cmd_array, path);
 }
 
-int tri_forking(t_data *data, t_env **env_ll, char ***all_cmds, pid_t pids)
+int	tri_forking(t_data *data, t_env **env_ll, char ***all_cmds, pid_t pids)
 {
-    char sync_signal;
+	char sync_signal;
 
-    data->index = 0;
-    g_exit_code = EXEC_SIG;
+	data->index = 0;
+	g_exit_code = EXEC_SIG;
 
-    while (data->index < data->nb_cmds)
-    {
-        // Create a pipe for inter-process communication if needed
-        if (data->piped == true && pipe(data->pipe_fd) == -1)
-            return (err_msg(NULL, "Broken pipe\n", 141));
+	while (data->index < data->nb_cmds)
+	{
+		// Create a pipe for inter-process communication if needed
+		if (data->piped == true && pipe(data->pipe_fd) == -1)
+			return (err_msg(NULL, "Broken pipe\n", 141));
 
-        // Fork a new process
-        pids = fork();
+		pids = fork();
         if (pids < 0)  // Fork failed
         {
             close_fds(data);
@@ -189,8 +188,7 @@ int tri_forking(t_data *data, t_env **env_ll, char ***all_cmds, pid_t pids)
     return (data->status);
 }
 
-
-void tri_child_execution(t_data *data, t_env **env_ll, char **cmd_with_args, int child)
+void	tri_child_execution(t_data *data, t_env **env_ll, char **cmd_with_args, int child)
 {
     if (!cmd_with_args || !cmd_with_args[0])
     {
@@ -199,7 +197,6 @@ void tri_child_execution(t_data *data, t_env **env_ll, char **cmd_with_args, int
         exit(err_msg(NULL, "Invalid command", -1));
     }
 
-    // Handle redirections and prepare the command array if necessary
     dup_fds(data, child, cmd_with_args);
     if (data->redirections == true)
     {
@@ -215,6 +212,7 @@ void tri_child_execution(t_data *data, t_env **env_ll, char **cmd_with_args, int
     // Check for built-in commands
     if (builtin_filter(data->token, cmd_with_args[0]) == true)
     {
+		dprintf(2, "Built-in command: %s\n", cmd_with_args[0]);
         ft_builtin_exec(data, find_token_exec(data->token, cmd_with_args), env_ll);
     }
     else
