@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 10:13:01 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/29 15:02:30 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:47:24 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@
 # define HEREDOC_FAILURE "Unable to create temporary for here_doc"
 # define HEREDOC_FAILURE2 "Unable to read temporary for here_doc"
 # define FILE_ERROR " No such file or directory"
-# define SYNTAX ": syntax error near unexpected token "
+# define SYNTAX "syntax error near unexpected token "
+# define ERR_ARG "Wrong number of arguments, Karen\n"
 # define ERR_EXP "export: not a valid identifier\n"
 # define EXEC_ENV_NULL "envir"
 # define SYNTAX_EXIT ": exit: numeric argument required"
@@ -200,8 +201,8 @@ void	execution_absolute_path(t_data *data, char **array);
 /* in execution_utils2.c */
 char	**cl_to_array(t_token *token);
 int		fill_instr_loop(char **instruction, t_token **head);
-/* int		alloc_memory(char ***pipe_array, char **instruction, \
- 					t_token **token);*/
+int		alloc_memory(char ***pipe_array, char **instruction, \
+					t_token **token);
 t_token	*find_redtok(t_token *token);
 char	*get_binary(char *instruction);
 
@@ -270,7 +271,7 @@ int		export(t_token *token, t_env **env_ll);
 int		process_token(t_env **env_ll, t_token *tmp_tok);
 int		is_valid_identifier(char *value);
 int		handle_special_cases(t_token *token, t_env **env_ll);
-int		no_args(t_token *token, t_env **env_ll);
+int		handle_null_next_token(t_token *token, t_env **env_ll);
 
 /* in exporting_utils.c */
 int		find_key_in_env(t_env *env_ll, char *token_value, t_env **found_env);

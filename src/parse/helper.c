@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:08:47 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/29 00:55:49 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:55:35 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,7 @@ t_token	*find_token(t_token *token, t_type type)
 	while (head != NULL)
 	{
 		if (type == head->type)
-		{
-			dprintf(2, "find_token: %s\n", head->value);
 			return (head);
-		}
 		head = head->next;
 	}
 	head = NULL;

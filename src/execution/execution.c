@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 10:58:07 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/29 15:29:36 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:54:20 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int execution(t_data *data, t_env **env_ll)
         return (status);
 
     // Count the number of commands separated by pipes
-    data->nb_cmds = count_token(token, PIPE);
+    data->nb_cmds = count_token(token, PIPE) + 1;
     if (data->nb_cmds == 0)
         data->nb_cmds = 1;
 
@@ -120,10 +120,7 @@ int execution(t_data *data, t_env **env_ll)
 
     // If redirections are found or there are multiple commands
     if (has_redirection || data->nb_cmds >= 1)
-    {
-        // Forward the remaining tokens to trip_execution_prepping
         data->status = trip_execution_prepping(data, data->token, env_ll);
-    }
 
     return (status);
 }
