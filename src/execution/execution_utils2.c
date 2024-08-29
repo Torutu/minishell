@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 10:19:57 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/29 01:07:17 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 11:22:31 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ t_token	*find_redtok(t_token *token)
 	return (NULL);
 }
 
-char	**alloc_cmd_array(t_token *token) //trip
+char	**alloc_cmd_array(t_token *token)
 {
 	int cmd_size = 0;
 	char **cmd_array;
@@ -162,13 +162,18 @@ char	**alloc_cmd_array(t_token *token) //trip
 		cmd_size++;
 		token = token->next;
 	}
-	cmd_array = (char **)malloc(sizeof(char *) * (cmd_size + 1)); // +1 for NULL terminator
+	cmd_array = (char **)malloc(sizeof(char *) * (cmd_size + 1));
 	if (!cmd_array)
 		return (NULL);
 	return (cmd_array);
 }
 
 
+/**
+ * @brief Counts the number of PIPE tokens in a linked list of tokens.
+ * @param token the first token in the list
+ * @return the number of PIPE tokens in the list
+ */
 int	count_pipes(t_token *token)//trip
 {
 	int	count;

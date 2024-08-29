@@ -6,87 +6,26 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 12:04:17 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/29 03:37:08 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 15:56:01 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-// int	forking(t_data *data, t_env **env_ll, char **all_cmds, pid_t pids)
-// {
-// 	char	sync_signal;
-
-// 	data->index = 0;
-// 	g_exit_code = EXEC_SIG;
-// 	while (data->index < data->nb_cmds)
-// 	{
-// 		if (data->piped == true && pipe(data->pipe_fd) == -1)
-// 			return (err_msg(NULL, "Broken pipe\n", 141));
-// 		pids = fork();
-// 		if (pids < 0)
-// 		{
-// 			close_fds(data);
-// 			return (err_msg(NULL, "Failed to fork\n", -1));
-// 		}
-// 		if (pids == 0)
-// 		{
-// 			if (data->index > 0 && data->heredoc_exist == true)
-// 				read(data->sync_pipe[0], &sync_signal, 1);
-// 			dprintf(2, "all_cmds[%d] = %s\n", data->index, all_cmds[data->index]);
-// 			child_execution(data, env_ll, all_cmds[data->index], data->index);
-// 		}
-// 		else if (data->piped == true)
-// 			handle_pipefd_readend(data);
-// 		data->index++;
-// 	}
-// 	return (data->index);
-// }
-
 /**
- * The piped execution is where the child processes go. Here we will check for
- * redirections to know if the user wants the output/input to be redirected
- * from/to a file.
- * 
- * RETURN VALUES: child_execution() does not return anything as it is just a
- * pathway to the final part of the execution in ft_exet().
- * 
- * DETAILS: at this point we may use exit() function without worrying that we
- * will end the whole program. Also, at this point we are working with fully
- * parsed out strings, our only concern should be if files/commands don't exist.
- * Examples of instruction:
- * "< infile cat"
- * "cat > outfile"
- * "ls -la Makefile"
- * "> outfile"
- * "<< END"
+ * Clean up all the memory used by the program and exit with the given
+ * exit_code.
+ *
+ * This function is used to handle the cleanup of the program when we need to
+ * exit with an error message. It first frees the array of strings passed to
+ * it, then frees all the nodes in the environment linked list. Finally, it
+ * calls free_data() to free the t_data structure, and then exits with the
+ * given exit code.
+ *
+ * @param data The t_data structure to free.
+ * @param env_ll The environment linked list to free.
+ * @param cmd_array The array of strings to free.
+ * @param exit_code The exit code to use when exiting.
  */
-// void	child_execution(t_data *data, t_env **env_ll, char *instr, int child)
-// {
-// 	char		**cmd_array;
-
-// 	cmd_array = ft_split(instr, ' ');
-// 	if (!cmd_array)
-// 	{
-// 		free_all_ll(env_ll);
-// 		free_data(data, NULL, NULL);
-// 		exit (err_msg(NULL, MALLOC, -1));
-// 	}
-// 	dup_fds(data, child, cmd_array);
-// 	if (data->redirections == true)
-// 	{
-// 		cmd_array = parse_instruction(data, cmd_array);
-// 		if (!cmd_array || !*cmd_array)
-// 		{
-// 			free_all_ll(env_ll);
-// 			free_data(data, NULL, cmd_array);
-// 			exit (0);
-// 		}
-// 	}
-// 	if (builtin_filter(data->token, cmd_array[0]) == true)
-// 		ft_builtin_exec(data, find_token_exec(data->token, cmd_array), env_ll);
-// 	ft_exec(data, env_ll, cmd_array);
-// }
-
 void	cleanup_and_exit(t_data *data, t_env **env_ll, char **cmd_array,
 		int exit_code)
 {
@@ -96,19 +35,27 @@ void	cleanup_and_exit(t_data *data, t_env **env_ll, char **cmd_array,
 	exit(exit_code);
 }
 
+
 /**
- * This is the second part of the execution where we are going to
- * check if we have the redirection flag (int redirect) and we are
- * parsing the commands differently if we do.
+ * The final execution function.
  * 
- * Redirections here take an even more strict definition:
- * - "%> cat << EOF | cat > outfile"
+ * This function will check if the command is a built-in or not. If it is, it
+ * will call the corresponding built-in function. If it is not, it will call
+ * the execution_with_path() function to execute the command.
  * 
- * Therefore, in here, redirections will be strictly "<" and ">", while
- * HERE_DOC and APPEND will have explicit naming because they are able
- * to take arguments beforehand.
+ * The function takes a t_data structure, a pointer to a linked list of
+ * environment variables, and an array of strings as arguments.
  * 
- * [placeholder for more documentation]
+ * If the command is not found, it will call the cleanup_and_exit() function
+ * to free all the memory used and exit the program with an error message.
+ * 
+ * If the command is a built-in, the function will call the corresponding
+ * built-in function and pass the arguments to it.
+ * 
+ * If the command is not a built-in, the function will call the
+ * execution_with_path() function and pass the arguments to it.
+ * 
+ * The function does not return anything.
  */
 void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array)
 {
@@ -146,78 +93,56 @@ int	tri_forking(t_data *data, t_env **env_ll, char ***all_cmds, pid_t pids)
 
 	while (data->index < data->nb_cmds)
 	{
-		// Create a pipe for inter-process communication if needed
 		if (data->piped == true && pipe(data->pipe_fd) == -1)
 			return (err_msg(NULL, "Broken pipe\n", 141));
-
 		pids = fork();
-        if (pids < 0)  // Fork failed
-        {
-            close_fds(data);
-            return (err_msg(NULL, "Failed to fork\n", -1));
-        }
-
-        if (pids == 0)  // Child process
-        {
-            // Synchronize with previous process if a heredoc was used
-            if (data->index > 0 && data->heredoc_exist == true)
-                read(data->sync_pipe[0], &sync_signal, 1);
-
-            // // Debugging: print the command and its arguments
-            // dprintf(2, "Command %d:\n", data->index);
-            // for (int i = 0; all_cmds[data->index][i] != NULL; i++)
-            // {
-            //     dprintf(2, "  Arg %d: %s\n", i, all_cmds[data->index][i]);
-            // }
-
-            // Execute the command using the child_execution function
-            tri_child_execution(data, env_ll, all_cmds[data->index], data->index);
-
-            // No explicit exit here; child_execution is expected to handle termination or return control here if needed
-        }
-        else if (data->piped == true)  // Parent process handling for pipes
-        {
-            handle_pipefd_readend(data);
-        }
-
-        data->index++;
-    }
-    // Wait for all child processes to finish
-    while (data->index--)
+		if (pids < 0)
+		{
+			close_fds(data);
+			return (err_msg(NULL, "Failed to fork\n", -1));
+		}
+		if (pids == 0)
+		{
+			if (data->index > 0 && data->heredoc_exist == true)
+				read(data->sync_pipe[0], &sync_signal, 1);
+			tri_child_execution(data, env_ll, all_cmds[data->index], data->index);
+		}
+		else if (data->piped == true)
+			handle_pipefd_readend(data);
+		data->index++;
+	}
+	while (data->index--)
 		wait(&data->status);
-    return (data->status);
+	return (data->status);
 }
 
 void	tri_child_execution(t_data *data, t_env **env_ll, char **cmd_with_args, int child)
 {
-    if (!cmd_with_args || !cmd_with_args[0])
-    {
-        free_all_ll(env_ll);
-        free_data(data, NULL, NULL);
-        exit(err_msg(NULL, "Invalid command", -1));
-    }
-
-    dup_fds(data, child, cmd_with_args);
-    if (data->redirections == true)
-    {
-        cmd_with_args = parse_instruction(data, cmd_with_args);
-        if (!cmd_with_args || !*cmd_with_args)
-        {
-            free_all_ll(env_ll);
-            free_data(data, NULL, cmd_with_args);
-            exit(0);
-        }
-    }
-
-    // Check for built-in commands
-    if (builtin_filter(data->token, cmd_with_args[0]) == true)
-    {
-		dprintf(2, "Built-in command: %s\n", cmd_with_args[0]);
-        ft_builtin_exec(data, find_token_exec(data->token, cmd_with_args), env_ll);
-    }
-    else
-    {
-        // Execute the command using execve
-        ft_exec(data, env_ll, cmd_with_args);
-    }
+	if (!cmd_with_args || !cmd_with_args[0])
+	{
+		free_all_ll(env_ll);
+		free_data(data, NULL, NULL);
+		exit(err_msg(NULL, "Invalid command", -1));
+	}
+	dup_fds(data, child, cmd_with_args);
+	if (ft_strncmp(cmd_with_args[0], "cd", 3) == 0 && data->cd_executed)
+	{
+		free_all_ll(env_ll);
+		free_data(data, NULL, NULL);
+		exit(data->status);
+	}
+	if (data->redirections == true)
+	{
+		cmd_with_args = parse_instruction(data, cmd_with_args);
+		if (!cmd_with_args || !*cmd_with_args)
+		{
+			free_all_ll(env_ll);
+			free_data(data, NULL, cmd_with_args);
+			exit(0);
+		}
+	}
+	if (builtin_filter(data->token, cmd_with_args[0]) == true)
+		ft_builtin_exec(data, find_token_exec(data->token, cmd_with_args), env_ll);
+	else
+		ft_exec(data, env_ll, cmd_with_args);
 }

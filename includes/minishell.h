@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 10:13:01 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/29 02:15:50 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 15:02:30 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@
 # define ERR_EXP "export: not a valid identifier\n"
 # define EXEC_ENV_NULL "envir"
 # define SYNTAX_EXIT ": exit: numeric argument required"
+# define NEW_LINE "newline"
+# define CD_ERR "cd: too many arguments"
 // # define REDIRECT_OUT 222
 // # define REDIRECT_IN 111
 // # define HERE_DOC 333
@@ -114,6 +116,7 @@ typedef struct s_data
 	t_token		*cur_tok;
 	t_token		*prev_token;
 	t_index		indexx;
+	bool		cd_executed;
 	char		**cmd_a;
 	bool		echoed;
 	bool		heredoc_exist;
@@ -129,6 +132,7 @@ typedef struct s_data
 	char		*fin_tok;
 	const char	*deli;
 	bool		ignore_cmd;
+	bool		ignore_redirections;
 	char		*ctoken;
 	char		*cnew_token;
 	char		*str_token;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bposa <bposa@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 11:23:58 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/22 23:34:32 by bposa            ###   ########.fr       */
+/*   Updated: 2024/08/29 14:33:33 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,16 @@ int	check_bin_local(char *binary)
 	{
 		if (!access(binary_with_path, X_OK))
 		{
-			free(binary_with_path);
-			free(cwd);
+			free_null(binary_with_path);
+			free_null(cwd);
 			return (EXECUTABLE);
 		}
-		free(cwd);
+		free_null(cwd);
+		free_null(binary_with_path);
 		return (FILE);
 	}
-	free(cwd);
-	free(binary_with_path);
+	free_null(cwd);
+	free_null(binary_with_path);
 	return (FAILURE);
 }
 
@@ -105,13 +106,13 @@ int	check_bin_path(char *binary, char **paths)
 		{
 			if (!access(token_with_path, X_OK))
 			{
-				free(token_with_path);
+				free_null(token_with_path);
 				return (EXECUTABLE);
 			}
-			free(token_with_path);
+			free_null(token_with_path);
 			return (FILE);
 		}
-		free(token_with_path);
+		free_null(token_with_path);
 		i++;
 	}
 	return (FAILURE);
@@ -129,10 +130,10 @@ int	is_file(char *binary, char *path)
 	{
 		if (!access(file_with_path, X_OK))
 		{
-			free(file_with_path);
+			free_null(file_with_path);
 			return (EXECUTABLE);
 		}
-		free(file_with_path);
+		free_null(file_with_path);
 		return (FILE);
 	}
 	return (FAILURE);

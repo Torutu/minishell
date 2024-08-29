@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 10:58:07 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/29 03:36:48 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 15:29:36 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,35 +116,7 @@ int execution(t_data *data, t_env **env_ll)
         ft_strncmp(token->value, "export", 7) == 0 ||
         ft_strncmp(token->value, "unset", 6) == 0 ||
         ft_strncmp(token->value, "exit", 5) == 0)
-    {
-        // Execute built-in command
         status = built_ins(data, token, env_ll);
-
-        // // Move to the next token after the built-in command
-        // next_token = token->next;
-
-        // // Check for redirections following the built-in command
-        // while (next_token != NULL &&
-        //        !(next_token->type == RED_IN || 
-        //          next_token->type == RED_OUT || 
-        //          next_token->type == APPEND || 
-        //          next_token->type == HEREDOC))
-        // {
-        //     next_token = next_token->next;
-        // }
-
-        // // If a redirection token is found, process the remaining tokens
-        // if (next_token != NULL &&
-        //     (next_token->type == RED_IN || 
-        //      next_token->type == RED_OUT || 
-        //      next_token->type == APPEND || 
-        //      next_token->type == HEREDOC))
-        // {
-        //     // Adjust the token pointer to start from the redirection token
-        //     data->token = next_token;
-        //     has_redirection = 1;
-        // }
-    }
 
     // If redirections are found or there are multiple commands
     if (has_redirection || data->nb_cmds >= 1)

@@ -6,12 +6,23 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 15:26:27 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/29 00:54:55 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 11:05:37 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/**
+ * Deletes the first node in the linked list of environment variables if its
+ * content matches the value of the given token.
+ *
+ * @param env_ll A pointer to the head of the linked list of environment variables.
+ * @param head The token whose value is to be compared with the content of the
+ * first node.
+ * @param data A structure containing the program's global data.
+ *
+ * @return 1 if the first node was deleted, 0 otherwise.
+ */
 int	delete_first_node(t_env **env_ll, t_token *head, t_data *data)
 {
 	t_env	*tmp;
@@ -30,6 +41,14 @@ int	delete_first_node(t_env **env_ll, t_token *head, t_data *data)
 	return (0);
 }
 
+/**
+ * Deletes subsequent nodes in the linked list of environment variables if their
+ * content matches the value of the given token.
+ *
+ * @param env_ll A pointer to the head of the linked list of environment variables.
+ * @param head The token whose value is to be compared with the content of the
+ * subsequent nodes.
+ */
 void	delete_subsequent_nodes(t_env *env_ll, t_token *head)
 {
 	t_env	*tmp;
@@ -53,6 +72,20 @@ void	delete_subsequent_nodes(t_env *env_ll, t_token *head)
 	}
 }
 
+/**
+ * The unset built-in removes the given environment variables from the environment.
+ *
+ * The unset built-in takes multiple arguments, each of which is a name of an
+ * environment variable. If the environment variable does not exist, the command
+ * silently ignores it. If the environment variable exists, it is removed from the
+ * environment.
+ *
+ * @param token The token containing the command and its arguments.
+ * @param env_ll A pointer to the head of the linked list of environment variables.
+ * @param data A structure containing the program's global data.
+ *
+ * @return 0 on success, -1 on failure.
+ */
 int	unset(t_token *token, t_env **env_ll, t_data *data)
 {
 	t_token	*head;

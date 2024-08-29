@@ -6,12 +6,19 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 12:19:17 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/29 00:54:52 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/29 11:05:36 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/**
+ * Handles the flag type tokens in the echo command.
+ * 
+ * @param head The token to start processing from.
+ * 
+ * @return 0 if the tokens were processed successfully, 1 otherwise.
+ */
 int	handle_flag_type(t_token *head)
 {
 	head = head->next;
@@ -39,6 +46,13 @@ int	handle_flag_type(t_token *head)
 	return (SUCCESS);
 }
 
+/**
+ * Handles the argument type tokens in the echo command.
+ * 
+ * @param head The token to start processing from.
+ * 
+ * @return 0 if the tokens were processed successfully, 1 otherwise.
+ */
 int	handle_arg_type(t_token *head)
 {
 	head = head->next;
@@ -61,6 +75,13 @@ int	handle_arg_type(t_token *head)
 	return (SUCCESS);
 }
 
+/**
+ * Handles the echo command.
+ * 
+ * @param token The token to start processing from.
+ * 
+ * @return 0 if the tokens were processed successfully, 1 otherwise.
+ */
 int	yodeling(t_token *token)
 {
 	t_token	*head;

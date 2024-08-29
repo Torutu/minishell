@@ -5,14 +5,23 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 14:18:24 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/29 00:59:24 by walnaimi         ###   ########.fr       */
+/*   Created: 2024/08/29 10:53:41 by walnaimi          #+#    #+#             */
+/*   Updated: 2024/08/29 15:55:06 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/* This part is taking the tokens and taking the argument just after it. */
+/**
+ * Checks if the command is a built-in command and
+ * executes it directly. Only one command can be
+ * executed at a time.
+ *
+ * @param data		minishell data
+ * @param token		token to be processed
+ * @param env_ll	environment linked list
+ * @return			status of the built-in command
+ */
 int	built_ins(t_data *data, t_token *token, t_env **env_ll)
 {
 	int	status;
@@ -39,9 +48,17 @@ int	built_ins(t_data *data, t_token *token, t_env **env_ll)
 		status = unset(token, env_ll, data);
 	else
 		return (err_msg(token->value, NO_EXEC, 127));
+	data->status = status;
 	return (status);
 }
 
+/**
+ * Prints out the environment variables in the format
+ * "VARIABLE_NAME=variable_value"
+ *
+ * @param env_ll	environment linked list
+ * @return		status of the operation
+ */
 int	print_env(t_env *env_ll)
 {
 	t_env	*tmp;
@@ -60,6 +77,11 @@ int	print_env(t_env *env_ll)
 	return (SUCCESS);
 }
 
+/**
+ * Prints the current working directory.
+ *
+ * @return		status of the operation
+ */
 int	print_pwd(void)
 {
 	char	*pwd;
@@ -72,8 +94,17 @@ int	print_pwd(void)
 	return (SUCCESS);
 }
 
-/* This is the exit function, it needs to take, if inputted,
-an exit code that was manually inserted after exit */
+
+/**
+ * Handles the exit built-in command. If the command is not provided with any
+ * arguments, it just exits the shell. If the command is provided with an argument,
+ * it will exit the shell with the provided value as the exit status.
+ *
+ * @param data		data structure holding the program state
+ * @param token		token list
+ * @param env_ll	environment linked list
+ * @return			status of the operation
+ */
 int	get_the_hell_out(t_data *data, t_token *token, t_env **env_ll)
 {
 	int	status;
