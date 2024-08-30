@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 10:13:01 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/30 01:53:09 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/30 02:47:11 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,10 +221,10 @@ char	*bin_extract(char *path);
 
 /* in utils.c */
 void	free_data(t_data *data, char *path, char **command_array);
-void	free_token(t_token *token);
+// void	free_token(t_token *token);
 int		check_bin_local(char *binary);
 int		check_bin_path(char *binary, char **paths);
-int		is_file(char *binary, char *path);
+// int		is_file(char *binary, char *path);
 
 /* in utils2.c */
 void	malloc_check_message(void *ptr);

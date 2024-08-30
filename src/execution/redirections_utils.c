@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:28:13 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/29 19:39:31 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/30 03:46:31 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	input_redirection(t_data *data, char **array)
 		exit(err_msg("'newline'", SYNTAX, 2));
 }
 
-void print_arry_with_args(char **cmd_with_args)//debug
+void print_arry_with_args(char **cmd_with_args)  //debug
 {
     if (cmd_with_args == NULL)
     {
@@ -64,7 +64,6 @@ void	append_redirection(t_data *data, char **array)
 	if (array[data->index + 1])
 	{
 		open_fdout(data, array[data->index + 1], 0);
-		dprintf(2, "array: %s\n", array[data->index + 1]);
 		if (data->piped == true)
 			dup2(data->read_end, STDIN_FILENO);
 		dup2(data->fd_out, STDOUT_FILENO);

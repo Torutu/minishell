@@ -6,12 +6,12 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 10:37:35 by lstorey           #+#    #+#             */
-/*   Updated: 2024/08/29 21:02:22 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/30 02:19:19 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-void	normal_state(int sig)
+void	stasis_mode(int sig)
 {
 	g_exit_code = 1;
 	write(1, "\n", 1);
@@ -21,7 +21,7 @@ void	normal_state(int sig)
 	(void)sig;
 }
 
-void	running_exe(int sig)
+void	exec_stream(int sig)
 {
 	g_exit_code = 1;
 	rl_on_new_line();
@@ -29,7 +29,7 @@ void	running_exe(int sig)
 	(void)sig;
 }
 
-void	heredocing(int sig)
+void	holodoc(int sig)
 {
 	g_exit_code = 1;
 	printf("\n");
@@ -41,17 +41,17 @@ void	signals(int sig)
 {
 	if (sig == 1)
 	{
-		signal(SIGINT, normal_state);
+		signal(SIGINT, stasis_mode);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	if (sig == 2)
 	{
-		signal(SIGINT, running_exe);
+		signal(SIGINT, exec_stream);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	if (sig == 3)
 	{
-		signal(SIGINT, heredocing);
+		signal(SIGINT, holodoc);
 		signal(SIGQUIT, SIG_IGN);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 13:30:29 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/30 01:27:40 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/30 02:28:57 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ bool	builtin_filter(t_token *token, char *command)
 {
 	t_token	*tmp;
 
-	dprintf(2, "%s\n", command);
 	if (command == NULL)
 		return (false);
 	tmp = token;

@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 15:26:27 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/30 01:16:12 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/30 02:18:39 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,6 @@ void	delete_subsequent_nodes(t_env *env_ll, t_token *head)
 		tmp = tmp->next;
 	}
 }
-
-
 
 /**
  * The unset built-in removes the given environment variables from the environment.

@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 11:23:58 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/29 14:33:33 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/30 02:47:07 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,20 @@ void	free_data(t_data *data, char *path, char **command_array)
 	}
 }
 
-void	free_token(t_token *token)
-{
-	t_token	*tmp;
+// void	free_token(t_token *token)
+// {
+// 	t_token	*tmp;
 
-	while (token != NULL)
-	{
-		tmp = token;
-		token = token->next;
-		free(tmp);
-		tmp = NULL;
-	}
-	free(token);
-	token = NULL;
-}
+// 	while (token != NULL)
+// 	{
+// 		tmp = token;
+// 		token = token->next;
+// 		free(tmp);
+// 		tmp = NULL;
+// 	}
+// 	free(token);
+// 	token = NULL;
+// }
 
 /**
  * check_bin_local() searches for a binary in the current working
@@ -121,20 +121,20 @@ int	check_bin_path(char *binary, char **paths)
 /**
  * Still no use for this one yet, I imagine that this will be for absolute path
  */
-int	is_file(char *binary, char *path)
-{
-	char	*file_with_path;
+// int	is_file(char *binary, char *path)
+// {
+// 	char	*file_with_path;
 
-	file_with_path = ft_strsjoin(path, binary, '/');
-	if (!access(file_with_path, F_OK))
-	{
-		if (!access(file_with_path, X_OK))
-		{
-			free_null(file_with_path);
-			return (EXECUTABLE);
-		}
-		free_null(file_with_path);
-		return (FILE);
-	}
-	return (FAILURE);
-}
+// 	file_with_path = ft_strsjoin(path, binary, '/');
+// 	if (!access(file_with_path, F_OK))
+// 	{
+// 		if (!access(file_with_path, X_OK))
+// 		{
+// 			free_null(file_with_path);
+// 			return (EXECUTABLE);
+// 		}
+// 		free_null(file_with_path);
+// 		return (FILE);
+// 	}
+// 	return (FAILURE);
+// }

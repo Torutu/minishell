@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:38:16 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/29 18:58:02 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/30 03:48:44 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,6 @@ char	*bin_extract(char *path)
 
 void	initializer(t_data *data, t_env **env_ll, char **env)
 {
-	// signal(SIGINT, handler);
-	// signal(SIGQUIT, SIG_IGN);
 	ft_bzero(data, sizeof(t_data));
 	ll_env(env_ll, env);
 	find_bin(env_ll, data);
