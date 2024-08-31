@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 10:53:35 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/29 11:20:26 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 01:18:40 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	if (!env || !*env)
+	{
+		dprintf(1, "pls don't remove env 😰\n");
 		return (1);
+	}
 	env = add_shell_lvl(env);
 	data = ft_calloc(1, sizeof(t_data));
 	if (!data)

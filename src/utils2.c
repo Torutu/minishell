@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 10:03:43 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/29 20:58:46 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/31 00:54:50 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,9 @@ int	wow_loop(t_data *data, t_env **env_ll)
 		}
 		else if (status == 0)
 			execution(data, env_ll);
+		status = data->status;
 		free_gang(data);
+		data->status = status;
 	}
 	return (status);
 }

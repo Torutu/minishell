@@ -6,38 +6,38 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 10:19:57 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/29 11:22:31 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 01:09:10 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	fill_instr_loop(char **instruction, t_token **head)
-{
-	char	*tmp;
+// int	fill_instr_loop(char **instruction, t_token **head)
+// {
+// 	char	*tmp;
 
-	tmp = NULL;
-	(*instruction)[0] = '\0';
-	while ((*head) && (*head)->type != PIPE)
-	{
-		tmp = ft_strjoin(*instruction, (*head)->value_us);
-		free(*instruction);
-		if (!tmp)
-			return (FAILURE);
-		*instruction = tmp;
-		tmp = ft_strjoin(*instruction, " ");
-		free(*instruction);
-		if (!tmp)
-			return (FAILURE);
-		*instruction = tmp;
-		if (!(*head)->next || !(*head)->next->value)
-			break ;
-		(*head) = (*head)->next;
-	}
-	if ((*instruction)[ft_strlen(*instruction) - 1] == ' ')
-		(*instruction)[ft_strlen(*instruction) - 1] = '\0';
-	return (SUCCESS);
-}
+// 	tmp = NULL;
+// 	(*instruction)[0] = '\0';
+// 	while ((*head) && (*head)->type != PIPE)
+// 	{
+// 		tmp = ft_strjoin(*instruction, (*head)->value_us);
+// 		free(*instruction);
+// 		if (!tmp)
+// 			return (FAILURE);
+// 		*instruction = tmp;
+// 		tmp = ft_strjoin(*instruction, " ");
+// 		free(*instruction);
+// 		if (!tmp)
+// 			return (FAILURE);
+// 		*instruction = tmp;
+// 		if (!(*head)->next || !(*head)->next->value)
+// 			break ;
+// 		(*head) = (*head)->next;
+// 	}
+// 	if ((*instruction)[ft_strlen(*instruction) - 1] == ' ')
+// 		(*instruction)[ft_strlen(*instruction) - 1] = '\0';
+// 	return (SUCCESS);
+// }
 
 // int	alloc_memory(char ***pipe_array, char **instruction, t_token **token)
 // {
@@ -97,7 +97,22 @@ int	fill_instr_loop(char **instruction, t_token **head)
 // 	free(binary);
 // 	return (FAILURE);
 // }
+void    print_args(char **cmd_a)
+{
+    int    i;
 
+    i = 0;
+    if (cmd_a == NULL)
+    {
+        dprintf(2, "cmd_a is NULL\n");
+        return ;
+    }
+    while (cmd_a[i])
+    {
+        dprintf(2, "[%s]\n", cmd_a[i]);
+        i++;
+    }
+}
 /**
  * At this point we have an instruction that should follow this syntax:
  * 
@@ -134,23 +149,23 @@ char	*get_binary(char *instruction)
 	return (binary);
 }
 
-t_token	*find_redtok(t_token *token)
-{
-	t_token	*tmp;
+// t_token	*find_redtok(t_token *token)
+// {
+// 	t_token	*tmp;
 
-	tmp = token;
-	while (tmp)
-	{
-		if (find_token(token, RED_IN)
-			|| find_token(token, RED_OUT)
-			|| find_token(token, APPEND)
-			|| find_token(token, HEREDOC))
-			return (tmp);
-		tmp = tmp->next;
-	}
-	tmp = NULL;
-	return (NULL);
-}
+// 	tmp = token;
+// 	while (tmp)
+// 	{
+// 		if (find_token(token, RED_IN)
+// 			|| find_token(token, RED_OUT)
+// 			|| find_token(token, APPEND)
+// 			|| find_token(token, HEREDOC))
+// 			return (tmp);
+// 		tmp = tmp->next;
+// 	}
+// 	tmp = NULL;
+// 	return (NULL);
+// }
 
 char	**alloc_cmd_array(t_token *token)
 {
@@ -167,7 +182,6 @@ char	**alloc_cmd_array(t_token *token)
 		return (NULL);
 	return (cmd_array);
 }
-
 
 /**
  * @brief Counts the number of PIPE tokens in a linked list of tokens.

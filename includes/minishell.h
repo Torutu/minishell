@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 10:13:01 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/30 02:47:11 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/31 11:20:11 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,19 @@
 # define ERR "Error\n"
 # define MALLOC "Malloc failure"
 # define EXIT "Exit\n"
-# define NO_EXEC ": command not found"
-# define NO_PERMISSION "Permission denied"
+# define NO_EXEC ": command not found 🙄"
+# define NO_PERMISSION " Permission denied"
 # define HEREDOC_FAILURE "Unable to create temporary for here_doc"
 # define HEREDOC_FAILURE2 "Unable to read temporary for here_doc"
 # define FILE_ERROR " No such file or directory"
-# define SYNTAX "syntax error near unexpected token "
+# define SYNTAX " syntax error near unexpected token "
 # define ERR_ARG "Wrong number of arguments, Karen\n"
 # define ERR_EXP "export: not a valid identifier\n"
 # define EXEC_ENV_NULL "envir"
-# define SYNTAX_EXIT ": exit: numeric argument required"
+# define SYNTAX_EXIT ": exit: numeric argument required 😠\n"
 # define NEW_LINE "newline"
 # define CD_ERR "cd: too many arguments"
+# define EXIT_ERR "exit: too many arguments"
 # define NO_FILE 100
 # define NULL_LINE 5
 # define DIRECTORY 69
@@ -177,7 +178,7 @@ void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array);
 int		syntax_check(t_token *token);
 
 /* in redirections.c */
-int		find_redirection(char **array);
+int		find_redirection(char **array, t_token *token);
 void	redirections_handling(t_data *data, char **array);
 int		here_doc(char *delimiter, t_data *data);
 
@@ -190,17 +191,17 @@ void	check_and_handle_redirection(t_data *data, char **array);
 
 /* in execution_utils1.c */
 int		err_msg(char *obj, char *msg, int err_code);
-char	*access_path(char **path, char *cmd);
+// char	*access_path(char **path, char *cmd);
 void	close_fds(t_data *data);
 void	execution_with_path(t_data *data, char **array, char *path);
 void	execution_absolute_path(t_data *data, char **array);
 
 /* in execution_utils2.c */
 char	**cl_to_array(t_token *token);
-int		fill_instr_loop(char **instruction, t_token **head);
+// int		fill_instr_loop(char **instruction, t_token **head);
 int		alloc_memory(char ***pipe_array, char **instruction, \
 					t_token **token);
-t_token	*find_redtok(t_token *token);
+int		find_redtok(t_token *token);
 char	*get_binary(char *instruction);
 
 /* in fd_dups.c */

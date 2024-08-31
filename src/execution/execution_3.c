@@ -6,11 +6,12 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 12:04:17 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/29 20:52:20 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 01:32:48 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
 /**
  * Clean up all the memory used by the program and exit with the given
  * exit_code.
@@ -88,10 +89,7 @@ void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array)
 {
 	static char	*path;
 	struct stat	sb;
-
-	if (cmd_array[0] == NULL)
-		exit(0);
-
+	//print_args(cmd_array);
 	// Check if the command is a directory
 	if (stat(cmd_array[0], &sb) == 0 && S_ISDIR(sb.st_mode))
 	{
@@ -115,10 +113,8 @@ void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array)
 			cleanup_and_exit(data, env_ll, cmd_array, 127);
 		}
 	}
-
 	free_tokens(data->token);
 	free_all_ll(env_ll);
-
 	if (!path)
 		execution_absolute_path(data, cmd_array);
 
@@ -129,9 +125,8 @@ void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array)
 int	tri_forking(t_data *data, t_env **env_ll, char ***all_cmds, pid_t pids)
 {
 	char sync_signal;
-
 	data->index = 0;
-	//g_exit_code = EXEC_SIG;
+
 	signals(2);
 	while (data->index < data->nb_cmds)
 	{
@@ -160,6 +155,7 @@ int	tri_forking(t_data *data, t_env **env_ll, char ***all_cmds, pid_t pids)
 
 void	tri_child_execution(t_data *data, t_env **env_ll, char **cmd_with_args, int child)
 {
+
 	if (!cmd_with_args || !cmd_with_args[0])
 	{
 		free_all_ll(env_ll);

@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:28:13 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/30 03:46:31 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 01:06:07 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,10 @@ void	input_redirection(t_data *data, char **array)
 				dup2(data->pipe_fd[1], STDOUT_FILENO);
 		}
 		else
-			exit(err_msg(array[data->index + 1], FILE_ERROR, 2));
+			exit(err_msg(array[data->index + 1], FILE_ERROR, 1));
 	}
 	else
 		exit(err_msg("'newline'", SYNTAX, 2));
-}
-
-void print_arry_with_args(char **cmd_with_args)  //debug
-{
-    if (cmd_with_args == NULL)
-    {
-        dprintf(2,"array is NULL\n");
-        return;
-    }
-	dprintf(2, "array:\n");
-    for (int i = 0; cmd_with_args[i] != NULL; i++)
-    {
-        dprintf(2, "%s\n", cmd_with_args[i]);
-    }
 }
 
 void	output_redirection(t_data *data, char **array)
@@ -85,18 +71,45 @@ void	heredoc_redirection(t_data *data, char **array)
 		exit(err_msg("'newline'", SYNTAX, 2));
 }
 
+// void	check_and_handle_redirection(t_data *data, char **array)
+// {
+// 	if (!ft_strncmp(array[data->index], "<", 2)
+// 		&& ft_strlen(array[data->index]) == 1)
+// 		input_redirection(data, array);
+// 	else if (!ft_strncmp(array[data->index], ">", 2)
+// 		&& ft_strlen(array[data->index]) == 1)
+// 		output_redirection(data, array);
+// 	else if (!ft_strncmp(array[data->index], ">>", 3)
+// 		&& ft_strlen(array[data->index]) == 2)
+// 		append_redirection(data, array);
+// 	else if (!ft_strncmp(array[data->index], "<<", 3)
+// 		&& ft_strlen(array[data->index]) == 2)
+// 		heredoc_redirection(data, array);
+// }
+
 void	check_and_handle_redirection(t_data *data, char **array)
 {
-	if (!ft_strncmp(array[data->index], "<", 2)
-		&& ft_strlen(array[data->index]) == 1)
-		input_redirection(data, array);
-	else if (!ft_strncmp(array[data->index], ">", 2)
-		&& ft_strlen(array[data->index]) == 1)
-		output_redirection(data, array);
-	else if (!ft_strncmp(array[data->index], ">>", 3)
-		&& ft_strlen(array[data->index]) == 2)
-		append_redirection(data, array);
-	else if (!ft_strncmp(array[data->index], "<<", 3)
-		&& ft_strlen(array[data->index]) == 2)
-		heredoc_redirection(data, array);
+	t_token *token;
+
+	token = data->token;
+	while (token->value)
+	{
+		if (token->id == data->index && token->value != NULL)
+		{
+			if (token->type == RED_IN && !ft_strncmp(array[data->index], "<", 2)
+				&& ft_strlen(array[data->index]) == 1)
+				input_redirection(data, array);
+			else if (token->type == RED_OUT && !ft_strncmp(array[data->index], ">", 2)
+				&& ft_strlen(array[data->index]) == 1)
+				output_redirection(data, array);
+			else if (token->type == APPEND && !ft_strncmp(array[data->index], ">>", 3)
+				&& ft_strlen(array[data->index]) == 2)
+				append_redirection(data, array);
+			else if (token->type == HEREDOC && !ft_strncmp(array[data->index], "<<", 3)
+				&& ft_strlen(array[data->index]) == 2)
+				heredoc_redirection(data, array);
+			break;
+		}
+		token = token->next; // Move to the next token
+	}
 }

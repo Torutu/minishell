@@ -6,23 +6,30 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 17:18:12 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/29 14:10:40 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/31 00:41:57 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/**
+ * incorrect_pipe_syntax() checks for syntax errors related to pipes.
+ * It ensures that two consecutive pipes are not used,
+ * and that a pipe is not used as the last character of the command.
+ *
+ * RETURN VALUES:
+ * Upon success, it returns 0. If it fails, it returns 2.
+ */
 static int	incorrect_pipe_syntax(t_token *token)
 {
 	t_token	*head;
 
 	head = token;
-	while (head)
+	while (head->value)
 	{
 		// Check if the current token is a PIPE
 		if (head->type == PIPE)
 		{
-			// Check if the next token is either another PIPE or NULL
 			if (head->next->value == NULL || head->next->type == PIPE)
 			{
 				if (head->next->value == NULL)
@@ -34,7 +41,6 @@ static int	incorrect_pipe_syntax(t_token *token)
 	}
 	return (SUCCESS);
 }
-
 
 /**
  * incorrect_syntax() checks for specific operators and checks if they're

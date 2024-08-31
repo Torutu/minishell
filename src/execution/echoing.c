@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 12:19:17 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/29 11:05:36 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 00:53:22 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,12 @@ int	handle_flag_type(t_token *head)
 				|| head->type == APPEND || head->type == HEREDOC)
 				break ;
 			printf("%s", head->value);
+				// ft_putstr_fd(head->value,1);
 		}
 		head = head->next;
 		if (head != NULL && head->value != NULL && head->value[0] != '\0')
 			printf(" ");
+			//write(1, " ", 1);
 	}
 	return (SUCCESS);
 }
@@ -66,13 +68,15 @@ int	handle_arg_type(t_token *head)
 				|| head->type == APPEND || head->type == HEREDOC)
 				break ;
 			printf("%s", head->value);
+			//ft_putstr_fd(head->value,1);
 		}
 		head = head->next;
 		if (head != NULL && head->value != NULL && head->value[0] != '\0')
 			printf(" ");
+			//write(1, " ", 1);
 	}
 	printf("\n");
-	return (SUCCESS);
+	return (SUCCESS);//write(1, "\n", 1);
 }
 
 /**
@@ -87,6 +91,7 @@ int	yodeling(t_token *token)
 	t_token	*head;
 
 	head = token;
+
 	while (head->value != NULL)
 	{
 		if (head->next->value == NULL)

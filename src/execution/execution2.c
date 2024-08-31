@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 13:30:29 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/30 02:28:57 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/31 01:21:12 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,14 @@ t_token	*find_token_exec(t_token *token, char **array)
 	return (NULL);
 }
 
+/**
+ * Handles the execution of built-in commands. It calls the built_ins() function
+ * to execute the command and then exits the shell with the returned status.
+ *
+ * @param data the data structure holding the shell state
+ * @param token the head of the linked list of tokens
+ * @param env_ll the head of the environment linked list
+ */
 void	ft_builtin_exec(t_data *data, t_token *token, t_env **env_ll)
 {
 	int	status;
@@ -86,6 +94,13 @@ void	ft_builtin_exec(t_data *data, t_token *token, t_env **env_ll)
 	exit(status);
 }
 
+/**
+ * Checks if the PATH environment variable is set in the environment linked list.
+ *
+ * @param env_ll the head of the environment linked list
+ *
+ * @return SUCCESS if the PATH variable is set, FAILURE otherwise
+ */
 int	check_path_unset(t_env **env_ll)
 {
 	t_env	*tmp;
@@ -100,6 +115,15 @@ int	check_path_unset(t_env **env_ll)
 	return (FAILURE);
 }
 
+/*
+ * Handles the read end of the pipe after forking a new process.
+ *
+ * Closes the write end of the pipe and the previous read end of the pipe if
+ * it is not the first command in the pipeline. Then assigns the read end of
+ * the pipe to the read_end field of the data structure.
+ * 
+ * @param data the data structure holding the shell state
+ */
 void	handle_pipefd_readend(t_data *data)
 {
 	close(data->pipe_fd[1]);

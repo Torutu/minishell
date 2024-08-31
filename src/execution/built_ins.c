@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 10:53:41 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/30 02:48:56 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 00:05:15 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ int	built_ins(t_data *data, t_token *token, t_env **env_ll)
 	if (token->value == NULL)
 		return (status);
 	data->home_pwd = get_home((*env_ll));
-	if (token->value == NULL)
-		return (status);
 	if (!ft_strncmp(token->value, "env", 4))
 		status = print_env((*env_ll));
 	else if (!ft_strncmp(token->value, "pwd", 4))
@@ -69,9 +67,7 @@ int	print_env(t_env *env_ll)
 	while (tmp)
 	{
 		if (ft_strchr(tmp->content, '='))
-		{
-			ft_printf("%s\n", tmp->content);
-		}
+			ft_putendl_fd(tmp->content, 1);//ft_printf("%s\n", tmp->content);
 		tmp = tmp->next;
 	}
 	return (SUCCESS);
@@ -89,11 +85,16 @@ int	print_pwd(void)
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 		return (FAILURE);
-	printf("%s\n", pwd);
+	ft_putendl_fd(pwd, 1);//printf("%s\n", pwd);
 	free_null(pwd);
 	return (SUCCESS);
 }
 
+void	free_before_exit(t_data *data, t_env **env_ll)
+{
+	free_gang(data);
+	free_all_ll(env_ll);
+}
 
 /**
  * Handles the exit built-in command. If the command is not provided with any
@@ -109,22 +110,27 @@ int	get_the_hell_out(t_data *data, t_token *token, t_env **env_ll)
 {
 	int	status;
 
-	status = 0;
-	free_all_ll(env_ll);
-	ft_printf("bye bye!\n");
 	if (token->next != NULL && token->next->value != NULL)
 	{
+		if(token->next->type == PIPE)
+			return(0);
 		if (!ft_isnum_str(token->next->value))
 		{
-			status = 2;
-			err_msg(token->next->value, SYNTAX_EXIT, status);
-			free_gang(data);
-			exit(status);
+			printf("%s" ,SYNTAX_EXIT);
+			free_before_exit(data, env_ll);
+			exit(2);
 		}
+		else if (token->next->next->value != NULL)
+		{
+			printf("%s" ,EXIT_ERR);
+			return (1);
+		}
+		printf("bye bye👋!\n");
 		status = ft_atoi(token->next->value);
-		free_gang(data);
+		free_before_exit(data, env_ll);
 		exit(status);
 	}
-	free_gang(data);
+	printf("bye bye👋!\n");
+	free_before_exit(data, env_ll);
 	exit(data->status);
 }

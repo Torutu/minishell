@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:27:10 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/29 19:17:02 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 01:05:41 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef enum e_type
 	RED_OUT = 8,
 	HEREDOC = 9,
 	APPEND = 10,
+	TFILE = 11,
 	UNKNOWN = 404,
 }			t_type;
 
@@ -62,12 +63,12 @@ typedef struct s_token
 {
 	t_type			type;
 	char			*value;
-	char			*value_us;
 	char			*path;
 	int				id;
 	bool			in_q;
 	bool			empty;
 	bool			echo;
+	//bool			file;
 	struct s_token	*next;
 	struct s_token	*prev;
 }		t_token;
@@ -95,6 +96,8 @@ typedef struct s_index
 	int	j;
 }	t_index;
 
+void    print_args(char **cmd_a);
+void	move_tokens_left(t_token *token);
 char	*ft_strncpy(char *s1, const char *s2, int n);
 int		ft_isnum_str(const char *str);
 void	signals(int sig);

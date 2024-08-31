@@ -6,36 +6,36 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:29:42 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/29 00:54:50 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/08/31 05:14:49 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*access_path(char **path, char *cmd)
-{
-	int		i;
-	char	*curr_path;
+// char	*access_path(char **path, char *cmd)
+// {
+// 	int		i;
+// 	char	*curr_path;
 
-	i = 0;
-	while (path[i])
-	{
-		curr_path = ft_strsjoin(path[i], cmd, '/');
-		if (!access(curr_path, F_OK))
-		{
-			if (!access(curr_path, X_OK))
-			{
-				free_array(path);
-				return (curr_path);
-			}
-			ft_putstr_fd("Command not found: ", 2);
-			ft_putendl_fd(cmd, 2);
-		}
-		free(curr_path);
-		i++;
-	}
-	return (NULL);
-}
+// 	i = 0;
+// 	while (path[i])
+// 	{
+// 		curr_path = ft_strsjoin(path[i], cmd, '/');
+// 		if (!access(curr_path, F_OK))
+// 		{
+// 			if (!access(curr_path, X_OK))
+// 			{
+// 				free_array(path);
+// 				return (curr_path);
+// 			}
+// 			ft_putstr_fd("Command not found: ", 2);
+// 			ft_putendl_fd(cmd, 2);
+// 		}
+// 		free(curr_path);
+// 		i++;
+// 	}
+// 	return (NULL);
+// }
 
 /**
 * This is our standard error printer.
