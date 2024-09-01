@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bposa <bposa@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 10:13:01 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/30 02:47:11 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 23:54:49 by bposa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,6 +309,15 @@ int		set_node_content(t_env *node, void *content);
 int		s_node_k(t_env *node, char **tmp_array);
 int		s_node_v(t_env *node, void *content);
 t_env	*ft_listnew(void *content);
+
+
+
+
+//temp:
+void print_cmd_array(char ***cmd_array);
+
+
+
 
 /* DEPRECATED FUNCTIONS */
 // int		built_in_or_garbage(t_data *data, t_env **env_ll, t_token *token);
