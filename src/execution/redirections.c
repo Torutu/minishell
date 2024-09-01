@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:03:21 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/01 01:16:57 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 04:38:09 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,13 +191,11 @@ int here_doc(char *delimiter, t_data *data)
     {
         signals(3);
         input = readline(":3 ");
-        // If input is NULL, it means either EOF or an error occurred
         if (!input)
         {
             close(pipe_fd[1]);
             return (pipe_fd[0]);
         }
-        // Check if input matches the delimiter
         if (!ft_strncmp(input, delimiter, ft_strlen(input) + 1))
             break;
         process_and_write_input(input, pipe_fd, data);

@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 10:41:10 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/31 12:32:28 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 04:29:11 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,88 +29,90 @@
  * the commands that will be used in execve(). In case of any failures, the
  * function returns NULL
  */
-// char	**parse_instruction(t_data *data, char **cmd_array)
-// {
-// 	static int	index;
-// 	static int	len;
-// 	char		**parsed_array;
-// 	while (cmd_array[index])
-// 	{
-// 		dprintf(2, "%s[%d]\n", cmd_array[index], index);
-// 		if (!ft_strcmp(cmd_array[index], ">")
-// 			|| !ft_strcmp(cmd_array[index], "<")
-// 			|| !ft_strcmp(cmd_array[index], "<<")
-// 			|| !ft_strcmp(cmd_array[index], ">>"))
-// 		{
-// 			if (cmd_array[index + 2])
-// 				index += 2;
-// 		}
-// 		len++;
-// 		index++;
-// 	}
-// 	parsed_array = remove_redirect(data, cmd_array, len);
-// 	if (!parsed_array)
-// 	{
-// 		free_array(cmd_array);
-// 		return (NULL);
-// 	}
-// 	free_array(cmd_array);
-// 	return (parsed_array);
-// }
-
-char **parse_instruction(t_data *data, char **cmd_array)
+char	**parse_instruction(t_data *data, char **cmd_array)
 {
-    t_token *token;
-    int len = 0;
-    char **parsed_array;
-    int i = 0;
+	static int	index;
+	static int	len;
+	char		**parsed_array;
 
-    // Count the number of elements that are not redirections
-    token = data->token;
-    while (token->value)
-    {
-        if (token->type != RED_OUT && token->type != RED_IN &&
-            token->type != HEREDOC && token->type != APPEND)
-            len++;
-        else
-        {
-            // Skip the next token as it's the file/delimiter
-            if (token->next)
-                token = token->next;
-        }
-        token = token->next;
-    }
-
-    // Allocate memory for the parsed array
-    parsed_array = (char **)malloc(sizeof(char *) * (len + 1));
-    if (!parsed_array)
-        return (NULL);
-
-    // Populate the parsed_array with non-redirection tokens
-    token = data->token;
-    while (token->value)
-    {
-        if (token->type != RED_OUT && token->type != RED_IN &&
-            token->type != HEREDOC && token->type != APPEND)
-        {
-            parsed_array[i++] = ft_strdup(token->value);  // Duplicate the token value into the parsed array
-        }
-        else
-        {
-            // Skip the next token as it's the file/delimiter
-            if (token->next)
-                token = token->next;
-        }
-        token = token->next;
-    }
-
-    parsed_array[i] = NULL;  // Null-terminate the array
-
-    // Clean up original cmd_array (assuming it's no longer needed)
-    free_array(cmd_array);
-
-    return (parsed_array);
+	while (cmd_array[index])
+	{
+		if (!ft_strcmp(cmd_array[index], ">")
+			|| !ft_strcmp(cmd_array[index], "<")
+			|| !ft_strcmp(cmd_array[index], "<<")
+			|| !ft_strcmp(cmd_array[index], ">>"))
+		{
+			if (cmd_array[index + 2])
+			{
+				index += 2;
+			}
+		}
+		len++;
+		index++;
+	}
+	parsed_array = remove_redirect(data, cmd_array, len);
+	if (!parsed_array)
+	{
+		free_array(cmd_array);
+		return (NULL);
+	}
+	free_array(cmd_array);
+	return (parsed_array);
 }
+
+// char **parse_instruction(t_data *data, char **cmd_array)
+// {
+//     t_token *token;
+//     int len = 0;
+//     char **parsed_array;
+//     int i = 0;
+
+//     // Count the number of elements that are not redirections
+//     token = data->token;
+//     while (token->value)
+//     {
+//         if (token->type != RED_OUT && token->type != RED_IN &&
+//             token->type != HEREDOC && token->type != APPEND)
+//             len++;
+//         else
+//         {
+//             // Skip the next token as it's the file/delimiter
+//             if (token->next)
+//                 token = token->next;
+//         }
+//         token = token->next;
+//     }
+
+//     // Allocate memory for the parsed array
+//     parsed_array = (char **)malloc(sizeof(char *) * (len + 1));
+//     if (!parsed_array)
+//         return (NULL);
+
+//     // Populate the parsed_array with non-redirection tokens
+//     token = data->token;
+//     while (token->value)
+//     {
+//         if (token->type != RED_OUT && token->type != RED_IN &&
+//             token->type != HEREDOC && token->type != APPEND)
+//         {
+//             parsed_array[i++] = ft_strdup(token->value);  // Duplicate the token value into the parsed array
+//         }
+//         else
+//         {
+//             // Skip the next token as it's the file/delimiter
+//             if (token->next)
+//                 token = token->next;
+//         }
+//         token = token->next;
+//     }
+
+//     parsed_array[i] = NULL;  // Null-terminate the array
+
+//     // Clean up original cmd_array (assuming it's no longer needed)
+//     free_array(cmd_array);
+
+//     return (parsed_array);
+// }
 
 
 static int	is_redirection(char *str)

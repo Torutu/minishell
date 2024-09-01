@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 12:04:17 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/01 01:32:48 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 03:07:44 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int	tri_forking(t_data *data, t_env **env_ll, char ***all_cmds, pid_t pids)
 
 	signals(2);
 	while (data->index < data->nb_cmds)
-	{
+	{	
 		if (data->piped == true && pipe(data->pipe_fd) == -1)
 			return (err_msg(NULL, "Broken pipe\n", 141));
 		pids = fork();
@@ -155,7 +155,6 @@ int	tri_forking(t_data *data, t_env **env_ll, char ***all_cmds, pid_t pids)
 
 void	tri_child_execution(t_data *data, t_env **env_ll, char **cmd_with_args, int child)
 {
-
 	if (!cmd_with_args || !cmd_with_args[0])
 	{
 		free_all_ll(env_ll);

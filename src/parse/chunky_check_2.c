@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 04:35:52 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/01 00:49:37 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 02:46:57 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,10 @@ int	check_argument(char *token, t_token *current_token, t_data *data)
 			data->ignore_cmd = true;
 		if (data->echoed == true)
 			current_token->echo = true;
-		if (current_token->prev->type == RED_IN 
+		if (current_token->id >= 1 && (current_token->prev->type == RED_IN 
 			|| current_token->prev->type == RED_OUT 
 			|| current_token->prev->type == HEREDOC 
-			|| current_token->prev->type == APPEND)
+			|| current_token->prev->type == APPEND))
 			{
 				current_token->type = TFILE;
 				current_token->echo = false;

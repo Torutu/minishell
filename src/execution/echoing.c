@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 12:19:17 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/01 00:53:22 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 04:32:10 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,11 @@ int	handle_flag_type(t_token *head)
 			if (head->type == RED_IN || head->type == RED_OUT
 				|| head->type == APPEND || head->type == HEREDOC)
 				break ;
-			printf("%s", head->value);
-				// ft_putstr_fd(head->value,1);
+			ft_putstr_fd(head->value,1);
 		}
 		head = head->next;
 		if (head != NULL && head->value != NULL && head->value[0] != '\0')
-			printf(" ");
-			//write(1, " ", 1);
+			write(1, " ", 1);
 	}
 	return (SUCCESS);
 }
@@ -67,16 +65,14 @@ int	handle_arg_type(t_token *head)
 			if (head->type == RED_IN || head->type == RED_OUT
 				|| head->type == APPEND || head->type == HEREDOC)
 				break ;
-			printf("%s", head->value);
-			//ft_putstr_fd(head->value,1);
+			ft_putstr_fd(head->value,1);
 		}
 		head = head->next;
 		if (head != NULL && head->value != NULL && head->value[0] != '\0')
-			printf(" ");
-			//write(1, " ", 1);
+			write(1, " ", 1);
 	}
-	printf("\n");
-	return (SUCCESS);//write(1, "\n", 1);
+	write(1, "\n", 1);
+	return (SUCCESS);
 }
 
 /**
@@ -95,7 +91,7 @@ int	yodeling(t_token *token)
 	while (head->value != NULL)
 	{
 		if (head->next->value == NULL)
-			return (printf("\n"), SUCCESS);
+			return (write(1, "\n", 1), SUCCESS);
 		if (head->next->type == FLAG && head->next->echo == true)
 			return (handle_flag_type(head));
 		if (head != NULL && head->next != NULL && head->next->type == ARG

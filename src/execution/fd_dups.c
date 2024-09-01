@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 10:06:30 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/01 00:43:03 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 04:35:26 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,8 @@ void dup_fds(t_data *data, int child, char **array)
 		else
 			dup2(data->read_end, STDIN_FILENO);
 	}
-
 	if (child != data->nb_cmds - 1)
 		dup2(data->pipe_fd[1], STDOUT_FILENO);
-
 	if (data->piped == true)
 	{
 		close(data->pipe_fd[0]);

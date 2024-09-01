@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:23:49 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/01 01:30:18 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 04:40:10 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,28 +213,28 @@ void move_tokens_left(t_token *token)
 	t_token *current;
 	current = token;
 
-	while (current && current->value != NULL && current->type != PIPE)
+	while (current && current->value != NULL)
 	{
 		if (current->type == TFILE && (current->prev->type == RED_OUT || current->prev->type == APPEND))
 		{
-			//dprintf(2, "CUR[%s]\n\n", current->value);
+			// dprintf(2, "CUR[%s]\n\n", current->value);
 			while(current->value != NULL && current->type != ARG)
 				current = current->next;
-			//dprintf(2, "1CUR[%s]\n\n", current->value);
+			// dprintf(2, "1CUR[%s]\n\n", current->value);
 			while(current->value != NULL && current->type == ARG && (current->prev->type != RED_OUT || current->prev->type != APPEND || current->prev->type != HEREDOC)
-			&& current->prev->type != PIPE && current->type != PIPE)
+			&& current->prev->type != PIPE && current->type != PIPE && current->prev->type != BUILTIN)
 			{
-				//dprintf(2, "1-P[%s]<->C[%s]\n", current->prev->value, current->value);
+				// dprintf(2, "1-P[%s]<->C[%s]\n", current->prev->value, current->value);
 				swap_tokens(current, current->prev);
-				//dprintf(2, "2-P[%s]<->C[%s]\n", current->prev->value, current->value);
+				// dprintf(2, "2-P[%s]<->C[%s]\n", current->prev->value, current->value);
 				current = current->prev;
-				//dprintf(2, "WE MOVE THE TO THE PREV <-\n");
-				//dprintf(2, "3-P[%s]<->C[%s]\n\n", current->prev->value, current->value);
+				// dprintf(2, "WE MOVE THE TO THE PREV <-\n");
+				// dprintf(2, "3-P[%s]<->C[%s]\n\n", current->prev->value, current->value);
 				if ((current->type == ARG && current->prev->type == ARG) || current->prev->type == BUILTIN)
 					break;
 			}
 		}
-		//dprintf(2, "BIG WHILE CUR[%s]\n\n", current->value);
+		// dprintf(2, "BIG WHILE CUR[%s]\n\n", current->value);
 		if(current->value != NULL)
 			current = current->next;
 	}
@@ -281,7 +281,7 @@ int	sniff_line(t_data *data)
 		data->status = 2;
 		return (2);
 	}
-	//move_tokens_left(data->token);
+	move_tokens_left(data->token);
 	//print_tokens(data);
 	//token_only_arg(data);
 	data->piped = false;
