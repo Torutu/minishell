@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:28:13 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/01 01:06:07 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 19:38:34 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	input_redirection(t_data *data, char **array)
 				dup2(data->pipe_fd[1], STDOUT_FILENO);
 		}
 		else
-			exit(err_msg(array[data->index + 1], FILE_ERROR, 1));
+			exit(err_msg(array[data->index + 1], FILE_ERROR, 2));
 	}
 	else
 		exit(err_msg("'newline'", SYNTAX, 2));

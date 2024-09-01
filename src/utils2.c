@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 10:03:43 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/31 00:54:50 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 18:31:52 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	super_free(t_data *data, t_env **env_ll)
 	free_null(data->fin_tok);
 	free_array(data->binary_paths);
 	free_all_ll(env_ll);
+	free(data->line_read);
 	free(data);
 }
 

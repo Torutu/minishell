@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 10:06:30 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/01 04:35:26 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 21:12:03 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@
  */
 void dup_fds(t_data *data, int child, char **array)
 {
-	if (find_redtok(data->token) == SUCCESS)
+	if (find_redirection(data->token) == SUCCESS)
 		data->redirections = true;
 	if (data->redirections == true)
 		redirections_handling(data, array);

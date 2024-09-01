@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 10:13:01 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/31 11:20:11 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 21:15:37 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,6 @@ void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array);
 int		syntax_check(t_token *token);
 
 /* in redirections.c */
-int		find_redirection(char **array, t_token *token);
 void	redirections_handling(t_data *data, char **array);
 int		here_doc(char *delimiter, t_data *data);
 
@@ -201,7 +200,7 @@ char	**cl_to_array(t_token *token);
 // int		fill_instr_loop(char **instruction, t_token **head);
 int		alloc_memory(char ***pipe_array, char **instruction, \
 					t_token **token);
-int		find_redtok(t_token *token);
+int		find_redirection(t_token *token);
 char	*get_binary(char *instruction);
 
 /* in fd_dups.c */
@@ -254,7 +253,7 @@ void	lstadd_front(t_env **lst, t_env *new);
 int		built_ins(t_data *data, t_token *token, t_env **env_ll);
 int		print_env(t_env *env_ll);
 int		print_pwd(void);
-int		get_the_hell_out(t_data *data, t_token *token, t_env **env_ll);
+int		shut_down(t_data *data, t_token *token, t_env **env_ll);
 int		yodeling(t_token *token);
 
 /* in built_ins2.c */

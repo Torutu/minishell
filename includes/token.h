@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:27:10 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/01 01:05:41 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 17:07:56 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ void	handle_env_var(const char *str, t_index *num, t_data *data, char *res);
 //*----------------------------------------------*/
 //              src/parse/setup_env.c            //
 //*----------------------------------------------*/
-int		count_matching_keys(t_env *env_list, const char *input);
+int		count_matching_keys(const char *input);
 void	skip_non_word_characters(const char **ptr);
 char	*extract_word(const char **ptr, int max_word_size);
 int		is_key_in_list(t_env *head, const char *word);

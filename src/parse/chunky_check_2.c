@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 04:35:52 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/01 02:46:57 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 15:47:29 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,12 @@ int	check_redirect(char *token, t_token *current_token, t_data *data)
  */
 int	check_command(char *token, t_token *current_token, t_data *data)
 {
+	if (token == NULL || token[0] == '\0')
+		return (1);
+	if (ft_strncmp(token, "..", 3) == 0)
+		return (1);
+	if (ft_strncmp(token, ".", 2) == 0)
+		return (1);
 	if (!data->echoed && !data->ignore_cmd
 		&& (cmd_check(token, current_token, data) == 0))
 	{

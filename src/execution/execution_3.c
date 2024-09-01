@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 12:04:17 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/01 03:07:44 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 20:34:20 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,21 +89,17 @@ void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array)
 {
 	static char	*path;
 	struct stat	sb;
-	//print_args(cmd_array);
 	// Check if the command is a directory
 	if (stat(cmd_array[0], &sb) == 0 && S_ISDIR(sb.st_mode))
 	{
 		err_msg(cmd_array[0], " is a directory", 126);
 		cleanup_and_exit(data, env_ll, cmd_array, 126);
 	}
-
 	if (check_path_unset(env_ll))
 		execution_absolute_path(data, cmd_array);
-
 	data->env = env_arr_updater(env_ll);
 	if (!data->env)
 		exit(1);
-
 	if (ft_strchr(cmd_array[0], '/') == NULL)
 	{
 		path = loop_path_for_binary(cmd_array[0], data->binary_paths);
@@ -117,7 +113,6 @@ void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array)
 	free_all_ll(env_ll);
 	if (!path)
 		execution_absolute_path(data, cmd_array);
-
 	execution_with_path(data, cmd_array, path);
 }
 
@@ -125,8 +120,8 @@ void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array)
 int	tri_forking(t_data *data, t_env **env_ll, char ***all_cmds, pid_t pids)
 {
 	char sync_signal;
+	
 	data->index = 0;
-
 	signals(2);
 	while (data->index < data->nb_cmds)
 	{	
@@ -148,8 +143,8 @@ int	tri_forking(t_data *data, t_env **env_ll, char ***all_cmds, pid_t pids)
 			handle_pipefd_readend(data);
 		data->index++;
 	}
-	while (data->index--)
-		wait(&data->status);
+	// while (data->index--)
+	// 	wait(&data->status);
 	return (data->status);
 }
 
@@ -180,6 +175,5 @@ void	tri_child_execution(t_data *data, t_env **env_ll, char **cmd_with_args, int
 	}
 	if (builtin_filter(data->token, cmd_with_args[0]) == true)
 		ft_builtin_exec(data, find_token_exec(data->token, cmd_with_args), env_ll);
-	else
-		ft_exec(data, env_ll, cmd_with_args);
+	ft_exec(data, env_ll, cmd_with_args);
 }

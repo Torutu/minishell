@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 14:53:29 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/31 01:23:02 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 17:08:00 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	copy_env_value(char *result, const char *env_value, t_index *num)
  */
 void	setup_env_variables(const char *input, t_data *data)
 {
-	data->num_of_envs = count_matching_keys(data->envll, input);
+	data->num_of_envs = count_matching_keys(input);
 	if (data->num_of_envs == 0)
 		data->num_of_envs = 1;
 	data->s_quote_o = 0;

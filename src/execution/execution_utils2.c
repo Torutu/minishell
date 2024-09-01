@@ -6,97 +6,12 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 10:19:57 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/01 01:09:10 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 20:19:59 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// int	fill_instr_loop(char **instruction, t_token **head)
-// {
-// 	char	*tmp;
-
-// 	tmp = NULL;
-// 	(*instruction)[0] = '\0';
-// 	while ((*head) && (*head)->type != PIPE)
-// 	{
-// 		tmp = ft_strjoin(*instruction, (*head)->value_us);
-// 		free(*instruction);
-// 		if (!tmp)
-// 			return (FAILURE);
-// 		*instruction = tmp;
-// 		tmp = ft_strjoin(*instruction, " ");
-// 		free(*instruction);
-// 		if (!tmp)
-// 			return (FAILURE);
-// 		*instruction = tmp;
-// 		if (!(*head)->next || !(*head)->next->value)
-// 			break ;
-// 		(*head) = (*head)->next;
-// 	}
-// 	if ((*instruction)[ft_strlen(*instruction) - 1] == ' ')
-// 		(*instruction)[ft_strlen(*instruction) - 1] = '\0';
-// 	return (SUCCESS);
-// }
-
-// int	alloc_memory(char ***pipe_array, char **instruction, t_token **token)
-// {
-// 	int	nb_of_instructions;
-
-// 	nb_of_instructions = count_token((*token), PIPE) + 1;
-// 	(*pipe_array) = (char **)malloc(sizeof(char *) * (nb_of_instructions + 1));
-// 	if (!(*pipe_array))
-// 		return (FAILURE);
-// 	(*instruction) = ft_strdup("");
-// 	if (!instruction)
-// 	{
-// 		free_null((*pipe_array));
-// 		pipe_array = NULL;
-// 		return (FAILURE);
-// 	}
-// 	return (SUCCESS);
-// }
-
-/** checking_access() is mainly a last check for general binaries that
- * the original shell uses. If the user inputs a binary of his own making
- * it will fail this check, since it uses the paths that were stablished
- * in the environment variable.
- * 
- * USAGE: pass the struct data and the instruction and it will find the
- * binary by itself and check for existence (F_OK) and executability (X_OK)
- * 
- * RETURN VALUES: checking_access() either returns SUCCESS or FAILURE. If
- * FAILURE is returned, it means that your binary cannot be found in the
- * general concatenated paths in the environment pointers.
- */ // DEPRECATED
-// int	checking_access(t_data *data, char *instruction)
-// {
-// 	int		i;
-// 	char	*binary_path;
-// 	char	*binary;
-
-// 	i = 0;
-// 	binary = get_binary(instruction);
-// 	while (data->binary_paths[i])
-// 	{
-// 		binary_path = ft_strsjoin(data->binary_paths[i++], binary, '/');
-// 		if (!access(binary_path, F_OK))
-// 		{
-// 			if (!access(binary_path, X_OK))
-// 			{
-// 				free(binary);
-// 				return (free_retstatus(binary_path, SUCCESS));
-// 			}
-// 			ft_putstr_fd(binary, 2);
-// 			ft_putstr_fd(": command not found\n", 2);
-// 			free(binary);
-// 			return (free_retstatus(binary_path, FAILURE));
-// 		}
-// 		free(binary_path);
-// 	}
-// 	free(binary);
-// 	return (FAILURE);
-// }
 void    print_args(char **cmd_a)
 {
     int    i;
@@ -128,26 +43,26 @@ void    print_args(char **cmd_a)
  * RETURN VALUES: the function returns the binary upon success. If allocation
  * fails at some point, it returns NULL and frees memory used in the function.
  */
-char	*get_binary(char *instruction)
-{
-	char		**split_instruction;
-	static char	*binary;
+// char	*get_binary(char *instruction)
+// {
+// 	char		**split_instruction;
+// 	static char	*binary;
 
-	split_instruction = ft_split(instruction, ' ');
-	if (!split_instruction)
-		return (NULL);
-	if (!ft_strcmp(split_instruction[0], "<"))
-		binary = ft_strdup(split_instruction[2]);
-	else
-		binary = ft_strdup(split_instruction[0]);
-	if (!binary)
-	{
-		free_array(split_instruction);
-		return (NULL);
-	}
-	free_array(split_instruction);
-	return (binary);
-}
+// 	split_instruction = ft_split(instruction, ' ');
+// 	if (!split_instruction)
+// 		return (NULL);
+// 	if (!ft_strcmp(split_instruction[0], "<"))
+// 		binary = ft_strdup(split_instruction[2]);
+// 	else
+// 		binary = ft_strdup(split_instruction[0]);
+// 	if (!binary)
+// 	{
+// 		free_array(split_instruction);
+// 		return (NULL);
+// 	}
+// 	free_array(split_instruction);
+// 	return (binary);
+// }
 
 // t_token	*find_redtok(t_token *token)
 // {

@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 03:25:26 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/29 00:56:49 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 17:08:26 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*extract_word(const char **ptr, int max_word_size)
 {
 	int		index;
 	char	*word;
-
+	dprintf(2, "max_word_size = %d\n", max_word_size);
 	word = (char *)malloc((max_word_size + 1) * sizeof(char));
 	index = 0;
 	if (!word)
@@ -99,28 +99,18 @@ void	skip_non_word_characters(const char **ptr)
  *
  * @return The number of matching keys found in the environment list.
  */
-int	count_matching_keys(t_env *env_list, const char *input)
+int	count_matching_keys(const char *input)
 {
 	int			count;
-	int			max_word_size;
-	char		*word;
 	const char	*ptr;
 
 	count = 0;
-	max_word_size = ft_strlen(input);
 	ptr = input;
 	while (*ptr != '\0')
 	{
-		skip_non_word_characters(&ptr);
 		if (*ptr == '$')
-			ptr++;
-		word = extract_word(&ptr, max_word_size);
-		if (word)
-		{
-			if (ft_strlen(word) > 0 && is_key_in_list(env_list, word))
-				count++;
-			free_null(word);
-		}
+			count++;
+		ptr++;
 	}
 	return (count);
 }

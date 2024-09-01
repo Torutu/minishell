@@ -6,28 +6,11 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:03:21 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/01 04:38:09 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 21:14:38 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-// static int	last_heredoc(t_token *token)
-// {
-// 	int	i;
-// 	int	last_index;
-
-// 	last_index = -1;
-// 	i = 0;
-// 	while (array[i])
-// 	{
-// 		if (!ft_strncmp(array[i], "<<", 2)
-// 			&& ft_strlen(array[i]) == 2)
-// 			last_index = i;
-// 		i++;
-// 	}
-// 	return (last_index);
-// }
 
 static int last_heredoc(t_token *token)
 {
@@ -64,23 +47,41 @@ static int last_heredoc(t_token *token)
 // 	return (FAILURE);
 // }
 
-int	find_redtok(t_token *token)
+int	find_redirection(t_token *token)
 {
 	t_token	*tmp;
 
 	tmp = token;
 	while (tmp->value)
 	{
-		if (find_token(token, RED_IN)
-			|| find_token(token, RED_OUT)
-			|| find_token(token, APPEND)
-			|| find_token(token, HEREDOC))
+		if (search_token_type(tmp, RED_IN)
+			|| search_token_type(tmp, RED_OUT)
+			|| search_token_type(tmp, APPEND)
+			|| search_token_type(tmp, HEREDOC))
 			return (SUCCESS);
 		tmp = tmp->next;
 	}
 	tmp = NULL;
 	return (FAILURE);
 }
+
+// int	find_redirection(t_token *token)
+// {
+// 	t_token	*tmp;
+
+// 	tmp = token;
+// 	while (tmp->value)
+// 	{
+// 		if (find_token(token, RED_IN)
+// 			|| find_token(token, RED_OUT)
+// 			|| find_token(token, APPEND)
+// 			|| find_token(token, HEREDOC))
+// 			return (SUCCESS);
+// 		tmp = tmp->next;
+// 	}
+// 	tmp = NULL;
+// 	return (FAILURE);
+// }
 
 // void	redirections_handling(t_data *data, char **array)
 // {

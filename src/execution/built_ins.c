@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 10:53:41 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/01 00:05:15 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 19:20:46 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	built_ins(t_data *data, t_token *token, t_env **env_ll)
 	else if (!ft_strncmp(token->value, "pwd", 4))
 		status = print_pwd();
 	else if (!ft_strncmp(token->value, "exit", 5))
-		status = get_the_hell_out(data, token, env_ll);
+		status = shut_down(data, token, env_ll);
 	else if (!ft_strncmp(token->value, "echo", 5))
 		status = yodeling(data->token);
 	else if (!ft_strncmp(token->value, "cd", 3))
@@ -45,7 +45,21 @@ int	built_ins(t_data *data, t_token *token, t_env **env_ll)
 	else if (!ft_strncmp(token->value, "unset", 6))
 		status = unset(token, env_ll, data);
 	else
-		return (err_msg(token->value, NO_EXEC, 127));
+	{
+		if (ft_strncmp(token->value, ".", 2) == 0)
+		{
+			ft_putstr_fd(token->value, 2);
+			ft_putendl_fd(": bro forgot an argument 🤣", 2);
+			return (2);
+		}
+		if(token->value[0] != '\0' || (token->value[0] == '\0' && token->in_q == true))
+		{
+			ft_putstr_fd(token->value, 2);
+			ft_putendl_fd(": command not found 🙄", 2);
+			return (127);
+		}
+		status = 0;
+	}
 	data->status = status;
 	return (status);
 }
@@ -106,7 +120,7 @@ void	free_before_exit(t_data *data, t_env **env_ll)
  * @param env_ll	environment linked list
  * @return			status of the operation
  */
-int	get_the_hell_out(t_data *data, t_token *token, t_env **env_ll)
+int	shut_down(t_data *data, t_token *token, t_env **env_ll)
 {
 	int	status;
 
