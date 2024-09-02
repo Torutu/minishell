@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 15:29:42 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/02 21:45:28 by walnaimi         ###   ########.fr       */
+/*   Created: 2024/07/16 15:29:42 by walnaimi          #+#    #+#             */
+/*   Updated: 2024/09/03 02:29:50 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	execution_with_path(t_data *data, char **array, char *path)
 		free_data(data, path, array);
 		exit(126);
 	}
-	if (array[1] == NULL && data->redirections == false)
+	if (!ft_strncmp(array[0], "cat",4) && array[1] == NULL && data->redirections == false)
 	{
 		if (!isatty(STDIN_FILENO))
 		{
@@ -91,7 +91,7 @@ void	execution_absolute_path(t_data *data, char **array)
 		free_data(data, NULL, array);
 		exit(126);
 	}
-	if (array[1] == NULL && data->redirections == false)
+	if (!ft_strncmp(array[0], "cat",4) && array[1] == NULL && data->redirections == false)
 	{
 		if (!isatty(STDIN_FILENO))
 		{

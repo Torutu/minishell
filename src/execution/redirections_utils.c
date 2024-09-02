@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/19 15:28:13 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/01 23:08:06 by walnaimi         ###   ########.fr       */
+/*   Created: 2024/08/19 15:28:13 by walnaimi          #+#    #+#             */
+/*   Updated: 2024/09/03 02:30:31 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,31 +71,18 @@ void	heredoc_redirection(t_data *data, char **array)
 		exit(err_msg("'newline'", SYNTAX, 2));
 }
 
-void	check_and_handle_redirection(t_data *data, char **ar)
+void	check_and_handle_redirection(t_data *data, char **array)
 {
-	t_token	*tok;
-
-	tok = data->token;
-	while (tok->value)
-	{
-		if (tok->id == data->index && tok->value != NULL)
-		{
-			if (tok->type == RED_IN && !ft_strncmp(ar[data->index], "<", 2)
-				&& ft_strlen(ar[data->index]) == 1)
-				input_redirection(data, ar);
-			else if (tok->type == RED_OUT
-				&& !ft_strncmp(ar[data->index], ">", 2)
-				&& ft_strlen(ar[data->index]) == 1)
-				output_redirection(data, ar);
-			else if (tok->type == APPEND
-				&& !ft_strncmp(ar[data->index], ">>", 3)
-				&& ft_strlen(ar[data->index]) == 2)
-				append_redirection(data, ar);
-			else if (tok->type == HDOC && !ft_strncmp(ar[data->index], "<<", 3)
-				&& ft_strlen(ar[data->index]) == 2)
-				heredoc_redirection(data, ar);
-			break ;
-		}
-		tok = tok->next;
-	}
+	if (!ft_strncmp(array[data->index], "<", 1)
+		&& ft_strlen(array[data->index]) == 1)
+		input_redirection(data, array);
+	else if (!ft_strncmp(array[data->index], ">", 1)
+		&& ft_strlen(array[data->index]) == 1)
+		output_redirection(data, array);
+	else if (!ft_strncmp(array[data->index], ">>", 2)
+		&& ft_strlen(array[data->index]) == 2)
+		append_redirection(data, array);
+	else if (!ft_strncmp(array[data->index], "<<", 2)
+		&& ft_strlen(array[data->index]) == 2)
+		heredoc_redirection(data, array);
 }

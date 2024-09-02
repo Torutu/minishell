@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 10:13:01 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/02 20:54:02 by walnaimi         ###   ########.fr       */
+/*   Created: 2024/05/13 10:13:01 by walnaimi          #+#    #+#             */
+/*   Updated: 2024/09/03 02:33:44 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,13 +154,6 @@ typedef struct s_data
 /*************************************************/
 /* functions *************************************/
 /*************************************************/
-//char	*get_binary(char *instruction);
-// int		fill_instr_loop(char **instruction, t_token **head);
-// char	**cl_to_array(t_token *token);
-// int		alloc_memory(char ***pipe_array, char **instruction,
-// 					t_token **token);
-//void	child_execution(t_data *data, t_env **env_ll,
-//char *instr, int child);
 
 /* in execution.c */
 int		execution(t_data *data, t_env **env_ll);

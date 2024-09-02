@@ -10,7 +10,7 @@ VPATH = src:libft:includes
 O_FLAGS = -lreadline -L${HOME}/.brew/opt/readline/lib
 
 # Compiler flags
-CFLAGS = -Wall -Wextra -Werror -I${HOME}/.brew/opt/readline/include -g #-fsanitize=address 
+CFLAGS = -Wall -Wextra -Werror -I${HOME}/.brew/opt/readline/include -g -fsanitize=address 
 INCFLAGS = -Iincludes -Ilibft/includes
 
 # Main project files

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 12:38:16 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/30 03:48:44 by walnaimi         ###   ########.fr       */
+/*   Created: 2024/05/13 12:38:16 by walnaimi          #+#    #+#             */
+/*   Updated: 2024/09/03 02:32:59 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@ void	ll_env(t_env **env_ll, char **env)
 	(*env_ll) = tmp;
 }
 
+/**
+ * This function loops through the linked list of environment variables to find
+ * the PATH variable. When it finds it, it extracts the value of the PATH variable
+ * and stores it in the data->bin field. It then resets the *env_ll pointer to the
+ * start of the linked list.
+ */
 void	find_bin(t_env **env_ll, t_data *data)
 {
 	t_env	*tmp;

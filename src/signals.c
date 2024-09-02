@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/15 10:37:35 by lstorey           #+#    #+#             */
-/*   Updated: 2024/09/02 18:01:01 by walnaimi         ###   ########.fr       */
+/*   Created: 2024/07/15 10:37:35 by walnaimi          #+#    #+#             */
+/*   Updated: 2024/09/03 02:29:18 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ void	signals(int sig)
 	{
 		signal(SIGINT, exec_stream);
 		signal(SIGQUIT, SIG_IGN);
-	}
-	if (sig == 3)
+	}sig == 
+	if (3)
 	{
 		signal(SIGINT, holodoc);
 		signal(SIGQUIT, SIG_IGN);

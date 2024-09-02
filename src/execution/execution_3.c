@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 12:04:17 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/02 21:16:30 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/03 01:20:12 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array)
 {
 	static char	*path;
 
+	update_path(env_ll, data);
 	if (check_path_unset(env_ll))
 		execution_absolute_path(data, cmd_array);
 	data->env = env_arr_updater(env_ll);
@@ -59,7 +60,6 @@ void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array)
 		exit(1);
 	if (ft_strchr(cmd_array[0], '/') == NULL)
 	{
-		update_path(env_ll, data);
 		path = loop_path_for_binary(cmd_array[0], data->binary_paths);
 		if (!path)
 		{

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/13 10:03:43 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/02 19:30:35 by walnaimi         ###   ########.fr       */
+/*   Created: 2024/08/13 10:03:43 by walnaimi          #+#    #+#             */
+/*   Updated: 2024/09/03 02:33:29 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	wow_loop(t_data *data, t_env **env_ll)
 	while (666)
 	{
 		signals(1);
+		find_bin(env_ll, data);
 		status = sniff_line(data);
 		free(data->line_read);
 		if (status == NULL_LINE)

@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:23:49 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/02 19:31:43 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/03 01:30:48 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	sniff_line(t_data *data)
 		data->status = 2;
 		return (2);
 	}
-	move_tokens_left(data->token);
+	//move_tokens_left(data->token);
 	data->piped = false;
 	data->heredoc_exist = false;
 	if (count_token(data->token, PIPE) >= 1)
