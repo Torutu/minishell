@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 10:13:01 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/02 10:41:43 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 20:54:02 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 /* User defined headers **************************/
 /*************************************************/
 # include "libft.h"
-# include "../libft/includes/libft.h" // <- just to silence the nvim errors
+# include "../libft/includes/libft.h"
 # include "token.h"
 
 /*************************************************/
@@ -52,7 +52,7 @@
 # define HEREDOC_FAILURE2 "Unable to read temporary for here_doc"
 # define FILE_ERROR " No such file or directory"
 # define SYNTAX " syntax error near unexpected token "
-# define ERR_ARG "Wrong number of arguments, Karen\n"
+# define ERR_ARG "too many arguments"
 # define ERR_EXP "export: not a valid identifier\n"
 # define EXEC_ENV_NULL "envir"
 # define SYNTAX_EXIT "exit: numeric argument required 😠\n"
@@ -154,24 +154,29 @@ typedef struct s_data
 /*************************************************/
 /* functions *************************************/
 /*************************************************/
+//char	*get_binary(char *instruction);
+// int		fill_instr_loop(char **instruction, t_token **head);
+// char	**cl_to_array(t_token *token);
+// int		alloc_memory(char ***pipe_array, char **instruction,
+// 					t_token **token);
+//void	child_execution(t_data *data, t_env **env_ll,
+//char *instr, int child);
 
 /* in execution.c */
 int		execution(t_data *data, t_env **env_ll);
 int		execution_prepping(t_data *data, t_token *token, t_env **env_ll);
-void	child_execution(t_data *data, t_env **env_ll, char *instr, int child);
 void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array);
-void	replace_spaces_with_underscores(t_token *token_list);
 
 /* in execution2.c */
 bool	builtin_filter(t_token *token, char *command);
 t_token	*find_token_exec(t_token *token, char **array);
-void	ft_builtin_exec(t_data *data, t_token *token, t_env **env_ll, int child);
+void	ft_builtin_exec(t_data *data, t_token *token,
+			t_env **env_ll, int child);
 int		check_path_unset(t_env **env_ll);
 void	handle_pipefd_readend(t_data *data);
 
 /* in execution3.c */
 int		forking(t_data *data, t_env **env_ll, char **all_cmds, pid_t pids);
-void	child_execution(t_data *data, t_env **env_ll, char *instr, int child);
 void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array);
 
 /* in syntax.c */
@@ -196,12 +201,7 @@ void	execution_with_path(t_data *data, char **array, char *path);
 void	execution_absolute_path(t_data *data, char **array);
 
 /* in execution_utils2.c */
-char	**cl_to_array(t_token *token);
-// int		fill_instr_loop(char **instruction, t_token **head);
-int		alloc_memory(char ***pipe_array, char **instruction, \
-					t_token **token);
 int		find_redirection(t_token *token);
-char	*get_binary(char *instruction);
 
 /* in fd_dups.c */
 void	dup_fds(t_data *data, int child, char **array);
@@ -224,7 +224,6 @@ void	free_data(t_data *data, char *path, char **command_array);
 // void	free_token(t_token *token);
 int		check_bin_local(char *binary);
 int		check_bin_path(char *binary, char **paths);
-// int		is_file(char *binary, char *path);
 
 /* in utils2.c */
 void	malloc_check_message(void *ptr);
@@ -261,7 +260,6 @@ int		shell_cd(t_token *token, t_data *data);
 int		export(t_token *token, t_env **env_ll);
 int		print_export(t_env **env_ll);
 int		unset(t_token *token, t_env **env_ll, t_data *data);
-void	alphabetical_printer(char **env_array);
 
 /* in exporting.c */
 int		export(t_token *token, t_env **env_ll);
@@ -309,14 +307,5 @@ int		set_node_content(t_env *node, void *content);
 int		s_node_k(t_env *node, char **tmp_array);
 int		s_node_v(t_env *node, void *content);
 t_env	*ft_listnew(void *content);
-
-/* DEPRECATED FUNCTIONS */
-// int		built_in_or_garbage(t_data *data, t_env **env_ll, t_token *token);
-// int		single_execution(t_data *data, t_token *token, t_env **env_ll);
-// void		single_child(t_data *data, t_token *token, t_env **env_ll);
-// int		single_parent(pid_t pid, int status);
-// int 		lonely_execution(t_data *data, t_token *token, t_env **env_ll);
-// int		how_many_children(t_token *token);
-// void		handle_heredoc(t_data *data, char *delimiter);
 
 #endif

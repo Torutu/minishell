@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdessoy- <fdessoy-@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/13 15:53:46 by fdessoy-          #+#    #+#             */
-/*   Updated: 2023/11/13 16:15:48 by fdessoy-         ###   ########.fr       */
+/*   Created: 2024/09/02 21:00:08 by walnaimi          #+#    #+#             */
+/*   Updated: 2024/09/02 21:00:10 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

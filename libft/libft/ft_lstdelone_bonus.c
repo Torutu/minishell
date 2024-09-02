@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdessoy- <fdessoy-@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/14 10:31:24 by fdessoy-          #+#    #+#             */
-/*   Updated: 2023/11/14 11:13:02 by fdessoy-         ###   ########.fr       */
+/*   Created: 2024/09/02 21:00:20 by walnaimi          #+#    #+#             */
+/*   Updated: 2024/09/02 21:00:21 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

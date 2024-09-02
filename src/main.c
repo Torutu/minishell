@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 10:53:35 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/02 03:20:15 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 18:28:41 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	main(int argc, char **argv, char **env)
 	int		status;
 
 	status = 0;
-	(void)argc;
+	if (argc != 1)
+		exit(err_msg(NULL, ERR_ARG, 1));
 	(void)argv;
 	if (!env || !*env)
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 15:26:27 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/02 00:22:55 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 17:42:41 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,22 @@ int	unset(t_token *token, t_env **env_ll, t_data *data)
 		head = head->next;
 	}
 	return (SUCCESS);
+}
+
+int	handle_non_builtin(t_token *token)
+{
+	if (ft_strncmp(token->value, ".", 2) == 0)
+	{
+		ft_putstr_fd(token->value, 2);
+		ft_putendl_fd(": bro forgot an argument 🤣", 2);
+		return (2);
+	}
+	if (token->value[0] != '\0'
+		|| (token->value[0] == '\0' && token->in_q == true))
+	{
+		ft_putstr_fd(token->value, 2);
+		ft_putendl_fd(": command not found 🙄", 2);
+		return (127);
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 10:58:07 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/02 10:44:07 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 17:41:19 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,21 @@ int	trip_execution_prepping(t_data *data, t_token *token, t_env **env_ll)
 	g_mod = 0;
 	free_cmd_array(cmd_a);
 	return (WEXITSTATUS(data->status));
+}
+
+t_token	*search_backwards_for_builtin(t_token *start, const char *cmd)
+{
+	t_token	*end;
+
+	end = start;
+	while (end && end->next != NULL)
+		end = end->next;
+	while (end != start)
+	{
+		if (end->type == BUILTIN
+			&& !ft_strncmp(cmd, end->value, ft_strlen(cmd)))
+			return (end);
+		end = end->prev;
+	}
+	return (start);
 }

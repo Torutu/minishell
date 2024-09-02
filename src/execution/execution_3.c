@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 12:04:17 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/02 10:39:18 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 21:16:30 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,18 @@ void	cleanup_and_exit(t_data *data, t_env **env_ll, char **cmd_array,
 	exit(exit_code);
 }
 
+static void	update_path(t_env **env_ll, t_data *data)
+{
+	if (data->binary_paths)
+		free_array(data->binary_paths);
+	if (!*env_ll || !env_ll)
+		return ;
+	find_bin(env_ll, data);
+	data->binary_paths = ft_split(data->bin, ':');
+	if (!data->binary_paths)
+		return ;
+}
+
 void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array)
 {
 	static char	*path;
@@ -47,6 +59,7 @@ void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array)
 		exit(1);
 	if (ft_strchr(cmd_array[0], '/') == NULL)
 	{
+		update_path(env_ll, data);
 		path = loop_path_for_binary(cmd_array[0], data->binary_paths);
 		if (!path)
 		{
@@ -60,14 +73,6 @@ void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array)
 		execution_absolute_path(data, cmd_array);
 	execution_with_path(data, cmd_array, path);
 }
-
-// struct stat	sb;
-
-// if (stat(cmd_array[0], &sb) == 0 && S_ISDIR(sb.st_mode))
-// {
-// 	err_msg(cmd_array[0], " is a directory", 126);
-// 	cleanup_and_exit(data, env_ll, cmd_array, 126);
-// }
 
 int	tri_forking(t_data *data, t_env **env_ll, char ***all_cmds, pid_t pids)
 {

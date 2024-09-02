@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdessoy- <fdessoy-@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/14 11:59:10 by fdessoy-          #+#    #+#             */
-/*   Updated: 2023/11/14 12:09:07 by fdessoy-         ###   ########.fr       */
+/*   Created: 2024/09/02 21:00:25 by walnaimi          #+#    #+#             */
+/*   Updated: 2024/09/02 21:00:29 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

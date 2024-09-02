@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 10:03:43 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/01 22:45:59 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 19:30:35 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,12 @@ int	wow_loop(t_data *data, t_env **env_ll)
 	{
 		signals(1);
 		status = sniff_line(data);
+		free(data->line_read);
 		if (status == NULL_LINE)
 		{
 			g_mod = 0;
 			status = 0;
-			printf("bye bye!\n");
+			printf("OUCH!!\n");
 			break ;
 		}
 		else if (status == 0)

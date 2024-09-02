@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 10:19:57 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/02 00:06:43 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:16:25 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**alloc_cmd_array(t_token *token)
  * @param token the first token in the list
  * @return the number of PIPE tokens in the list
  */
-int	count_pipes(t_token *token)//trip
+int	count_pipes(t_token *token)
 {
 	int	count;
 

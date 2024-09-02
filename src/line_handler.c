@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:23:49 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/02 10:28:39 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 19:31:43 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void	move_tokens_left(t_token *token)
 			while (cur->value != NULL && cur->type != ARG)
 				cur = cur->next;
 			while (cur->value != NULL && cur->type == ARG
-				&& (cur->prev->type != RED_OUT || cur->prev->type != APPEND
-					|| cur->prev->type != HDOC) && cur->prev->type != PIPE
+				&& (cur->prev->type != RED_OUT && cur->prev->type != APPEND
+					&& cur->prev->type != HDOC) && cur->prev->type != PIPE
 				&& cur->type != PIPE && cur->prev->type != BUILTIN)
 			{
 				swap_tokens(cur, cur->prev);
@@ -112,13 +112,13 @@ int	sniff_line(t_data *data)
 		return (free_retstatus(data->line_read, 963));
 	data->status = 0;
 	g_mod = 0;
-	free_null(data->line_read);
+	//free_null(data->line_read);
 	if (syntax_check(data->token) == FAILURE)
 	{
 		data->status = 2;
 		return (2);
 	}
-	//move_tokens_left(data->token);
+	move_tokens_left(data->token);
 	data->piped = false;
 	data->heredoc_exist = false;
 	if (count_token(data->token, PIPE) >= 1)

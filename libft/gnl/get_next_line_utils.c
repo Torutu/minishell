@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdessoy- <fdessoy-@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/19 10:38:08 by fdessoy-          #+#    #+#             */
-/*   Updated: 2023/12/19 10:38:10 by fdessoy-         ###   ########.fr       */
+/*   Created: 2024/09/02 21:11:25 by walnaimi          #+#    #+#             */
+/*   Updated: 2024/09/02 21:11:26 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

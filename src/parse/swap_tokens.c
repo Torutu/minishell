@@ -19,7 +19,6 @@ void	swap_type(t_token *a, t_token *b)
 	tmp_type = a->type;
 	a->type = b->type;
 	b->type = tmp_type;
-
 }
 
 void	swap_value(t_token *a, t_token *b)

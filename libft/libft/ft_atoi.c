@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdessoy- <fdessoy-@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/28 13:51:35 by fdessoy-          #+#    #+#             */
-/*   Updated: 2023/11/08 15:47:25 by fdessoy-         ###   ########.fr       */
+/*   Created: 2024/09/02 20:58:29 by walnaimi          #+#    #+#             */
+/*   Updated: 2024/09/02 20:58:30 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 int	ft_atoi(const char *s)
 {

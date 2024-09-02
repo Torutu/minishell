@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 11:23:58 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/01 18:33:03 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 18:43:41 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,24 +117,3 @@ int	check_bin_path(char *binary, char **paths)
 	}
 	return (FAILURE);
 }
-
-/**
- * Still no use for this one yet, I imagine that this will be for absolute path
- */
-// int	is_file(char *binary, char *path)
-// {
-// 	char	*file_with_path;
-
-// 	file_with_path = ft_strsjoin(path, binary, '/');
-// 	if (!access(file_with_path, F_OK))
-// 	{
-// 		if (!access(file_with_path, X_OK))
-// 		{
-// 			free_null(file_with_path);
-// 			return (EXECUTABLE);
-// 		}
-// 		free_null(file_with_path);
-// 		return (FILE);
-// 	}
-// 	return (FAILURE);
-// }

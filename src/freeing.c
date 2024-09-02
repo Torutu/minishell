@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 22:21:18 by bposa             #+#    #+#             */
-/*   Updated: 2024/09/01 21:18:32 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 19:32:35 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ void	*free_arr_retnull(char **array)
 
 int	free_retstatus(char *array, int status)
 {
-	free(array);
-	array = NULL;
+	(void)array;
+	// free(array);
+	// array = NULL;
 	return (status);
 }

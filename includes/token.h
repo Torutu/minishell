@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:27:10 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/02 09:39:48 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 20:56:11 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ typedef struct s_token
 	bool			empty;
 	bool			echo;
 	bool			redirect;
-	//bool			file;
 	struct s_token	*next;
 	struct s_token	*prev;
 }		t_token;
@@ -97,19 +96,25 @@ typedef struct s_index
 	int	j;
 }	t_index;
 
-void swap_type(t_token *a, t_token *b);
-void swap_value(t_token *a, t_token *b);
-void swap_path(t_token *a, t_token *b);
-void swap_echo(t_token *a, t_token *b);
-void swap_in_q(t_token *a, t_token *b);
-void swap_empty(t_token *a, t_token *b);
+void	print_args(char **cmd_a);
+
+void	swap_type(t_token *a, t_token *b);
+void	swap_value(t_token *a, t_token *b);
+void	swap_path(t_token *a, t_token *b);
+void	swap_echo(t_token *a, t_token *b);
+void	swap_in_q(t_token *a, t_token *b);
+void	swap_empty(t_token *a, t_token *b);
+
+t_token	*search_backwards_for_builtin(t_token *start, const char *cmd);
 
 void	free_before_exit(t_data *data, t_env **env_ll);
 
-void 	free_all_resources(t_env **env_ll, t_data *data);
+int		handle_non_builtin(t_token *token);
+
+void	free_all_resources(t_env **env_ll, t_data *data);
 void	free_all_with_cmd(t_env **env_ll, t_data *data, char **cmd_with_args);
 void	free_dock(void **ptr);
-void	print_args(char **cmd_a);
+
 void	move_tokens_left(t_token *token);
 char	*ft_strncpy(char *s1, const char *s2, int n);
 
@@ -117,7 +122,7 @@ int		ft_isnum_str(const char *str);
 void	signals(int sig);
 int		trip_execution_prepping(t_data *data, t_token *token, t_env **env_ll);
 int		tri_forking(t_data *data, t_env **env_ll, char ***all_cmds, pid_t pids);
-void	tri_child_exe(t_data *data, t_env **env_ll,char **cmd, int child);
+void	tri_child_exe(t_data *data, t_env **env_ll, char **cmd, int child);
 char	***token_to_array(t_token *token);
 char	***free_cmd_array(char ***cmd_array);
 

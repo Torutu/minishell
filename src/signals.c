@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 10:37:35 by lstorey           #+#    #+#             */
-/*   Updated: 2024/09/02 09:45:29 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 18:01:01 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	exec_stream(int sig)
 void	holodoc(int sig)
 {
 	g_mod = 1;
-	write(1, "\n", 1); // write("\n");
+	write(1, "\n", 1);
 	clear_history();
 	signal(sig, SIG_DFL);
 	kill(getpid(), sig);

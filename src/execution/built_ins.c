@@ -6,29 +6,11 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 10:53:41 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/02 10:49:33 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 21:13:29 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	handle_non_builtin(t_token *token)
-{
-	if (ft_strncmp(token->value, ".", 2) == 0)
-	{
-		ft_putstr_fd(token->value, 2);
-		ft_putendl_fd(": bro forgot an argument 🤣", 2);
-		return (2);
-	}
-	if (token->value[0] != '\0'
-		|| (token->value[0] == '\0' && token->in_q == true))
-	{
-		ft_putstr_fd(token->value, 2);
-		ft_putendl_fd(": command not found 🙄", 2);
-		return (127);
-	}
-	return (0);
-}
 
 /**
  * Checks if the command is a built-in command and
@@ -85,7 +67,7 @@ int	print_env(t_env *env_ll)
 	while (tmp)
 	{
 		if (ft_strchr(tmp->content, '='))
-			printf(tmp->content, 1);
+			ft_putendl_fd(tmp->content, 1);
 		tmp = tmp->next;
 	}
 	return (SUCCESS);
@@ -106,6 +88,23 @@ int	print_pwd(void)
 	ft_putendl_fd(pwd, 1);
 	free_null(pwd);
 	return (SUCCESS);
+}
+
+/**
+ * Converts the exit status from a string to an integer, performs cleanup,
+ * and exits with the specified status.
+ *
+ * @param data		data structure holding the program state
+ * @param env_ll	environment linked list
+ * @param status_str	string containing the status to exit with
+ */
+int	exit_with_status(t_data *data, t_env **env_ll, const char *status_str)
+{
+	int	status;
+
+	status = ft_atoi(status_str);
+	free_before_exit(data, env_ll);
+	return (status);
 }
 
 /**
@@ -139,8 +138,7 @@ int	shut_down(t_data *data, t_token *token, t_env **env_ll, int child)
 			return (1);
 		}
 		printf("bye bye👋!\n");
-		status = ft_atoi(token->next->value);
-		free_before_exit(data, env_ll);
+		status = exit_with_status(data, env_ll, token->next->value);
 		exit(status);
 	}
 	if (child == 0)
