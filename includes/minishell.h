@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 10:13:01 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/02 01:21:16 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 10:41:43 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ void	replace_spaces_with_underscores(t_token *token_list);
 /* in execution2.c */
 bool	builtin_filter(t_token *token, char *command);
 t_token	*find_token_exec(t_token *token, char **array);
-void	ft_builtin_exec(t_data *data, t_token *token, t_env **env_ll);
+void	ft_builtin_exec(t_data *data, t_token *token, t_env **env_ll, int child);
 int		check_path_unset(t_env **env_ll);
 void	handle_pipefd_readend(t_data *data);
 
@@ -250,10 +250,10 @@ char	**add_shell_lvl(char **env);
 void	lstadd_front(t_env **lst, t_env *new);
 
 /* in built_ins.c */
-int		built_ins(t_data *data, t_token *token, t_env **env_ll);
+int		built_ins(t_data *data, t_token *token, t_env **env_ll, int child);
 int		print_env(t_env *env_ll);
 int		print_pwd(void);
-int		shut_down(t_data *data, t_token *token, t_env **env_ll);
+int		shut_down(t_data *data, t_token *token, t_env **env_ll, int child);
 int		yodeling(t_token *token);
 
 /* in built_ins2.c */

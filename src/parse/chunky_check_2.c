@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 04:35:52 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/02 01:36:44 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 09:17:47 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	check_redirect(char *token, t_token *current_token, t_data *data)
 {
 	if (ft_redirect_op_check(token, current_token) == 0)
 	{
+		current_token->redirect = true;
 		current_token->echo = false;
 		data->echoed = false;
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 10:58:07 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/01 22:59:14 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 10:44:07 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	execution(t_data *data, t_env **env_ll)
 	if (data->nb_cmds == 0)
 		data->nb_cmds = 1;
 	if (is_only_builtins(token) == true)
-		data->status = built_ins(data, token, env_ll);
+		data->status = built_ins(data, token, env_ll, 0);
 	else if (data->nb_cmds >= 1)
 		data->status = trip_execution_prepping(data, data->token, env_ll);
 	return (data->status);

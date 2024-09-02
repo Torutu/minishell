@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:23:49 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/02 03:18:58 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 10:28:39 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	swap_tokens(t_token *a, t_token *b)
 {
 	swap_type(a, b);
 	swap_value(a, b);
-	//swap_path(a, b);
 	swap_echo(a, b);
 	swap_in_q(a, b);
 	swap_empty(a, b);
@@ -119,7 +118,7 @@ int	sniff_line(t_data *data)
 		data->status = 2;
 		return (2);
 	}
-	move_tokens_left(data->token);
+	//move_tokens_left(data->token);
 	data->piped = false;
 	data->heredoc_exist = false;
 	if (count_token(data->token, PIPE) >= 1)

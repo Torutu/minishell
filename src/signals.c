@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 10:37:35 by lstorey           #+#    #+#             */
-/*   Updated: 2024/09/01 22:45:42 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 09:45:29 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	stasis_mode(int sig)
 void	exec_stream(int sig)
 {
 	g_mod = 1;
+	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	(void)sig;
@@ -57,7 +58,7 @@ void	exec_stream(int sig)
 void	holodoc(int sig)
 {
 	g_mod = 1;
-	printf("\n");
+	write(1, "\n", 1); // write("\n");
 	clear_history();
 	signal(sig, SIG_DFL);
 	kill(getpid(), sig);

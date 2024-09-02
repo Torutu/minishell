@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 13:30:29 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/02 03:12:24 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 10:40:53 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,14 +129,14 @@ t_token    *find_token_exec(t_token *token, char **array)
  * @param token the head of the linked list of tokens
  * @param env_ll the head of the environment linked list
  */
-void	ft_builtin_exec(t_data *data, t_token *token, t_env **env_ll)
+void	ft_builtin_exec(t_data *data, t_token *token, t_env **env_ll, int child)
 {
 	int	status;
 
 	status = 0;
 	if (token == NULL)
 		exit(status);
-	status = built_ins(data, token, env_ll);
+	status = built_ins(data, token, env_ll, child);
 	exit(status);
 }
 

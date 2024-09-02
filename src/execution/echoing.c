@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 12:19:17 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/01 22:59:14 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 10:52:00 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ int	handle_flag_type(t_token *head)
 	{
 		if (head->value != NULL && head->value[0] != '\0')
 		{
-			if (head->type == RED_IN || head->type == RED_OUT
-				|| head->type == APPEND || head->type == HDOC)
+			if (head->redirect == true || head->type == PIPE)
 				break ;
 			ft_putstr_fd(head->value, 1);
 		}
 		head = head->next;
-		if (head != NULL && head->value != NULL && head->value[0] != '\0')
+		if (head != NULL && head->value != NULL && head->value[0] != '\0'
+			&& head->redirect == false && head->type != PIPE)
 			write(1, " ", 1);
 	}
 	return (SUCCESS);
@@ -62,13 +62,13 @@ int	handle_arg_type(t_token *head)
 	{
 		if (head->value != NULL && head->value[0] != '\0')
 		{
-			if (head->type == RED_IN || head->type == RED_OUT
-				|| head->type == APPEND || head->type == HDOC)
+			if (head->redirect == true || head->type == PIPE)
 				break ;
 			ft_putstr_fd(head->value, 1);
 		}
 		head = head->next;
-		if (head != NULL && head->value != NULL && head->value[0] != '\0')
+		if (head != NULL && head->value != NULL && head->value[0] != '\0'
+			&& head->redirect == false && head->type != PIPE)
 			write(1, " ", 1);
 	}
 	write(1, "\n", 1);

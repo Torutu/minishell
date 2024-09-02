@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 10:53:41 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/02 02:18:15 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 10:49:33 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	handle_non_builtin(t_token *token)
  * @param env_ll	environment linked list
  * @return			status of the built-in command
  */
-int	built_ins(t_data *data, t_token *token, t_env **env_ll)
+int	built_ins(t_data *data, t_token *token, t_env **env_ll, int child)
 {
 	int	status;
 
@@ -53,7 +53,7 @@ int	built_ins(t_data *data, t_token *token, t_env **env_ll)
 	else if (!ft_strncmp(token->value, "pwd", 4))
 		status = print_pwd();
 	else if (!ft_strncmp(token->value, "exit", 5))
-		status = shut_down(data, token, env_ll);
+		status = shut_down(data, token, env_ll, child);
 	else if (!ft_strncmp(token->value, "echo", 5))
 		status = yodeling(token);
 	else if (!ft_strncmp(token->value, "cd", 3))
@@ -85,7 +85,7 @@ int	print_env(t_env *env_ll)
 	while (tmp)
 	{
 		if (ft_strchr(tmp->content, '='))
-			ft_putendl_fd(tmp->content, 1);
+			printf(tmp->content, 1);
 		tmp = tmp->next;
 	}
 	return (SUCCESS);
@@ -119,13 +119,13 @@ int	print_pwd(void)
  * @param env_ll	environment linked list
  * @return			status of the operation
  */
-int	shut_down(t_data *data, t_token *token, t_env **env_ll)
+int	shut_down(t_data *data, t_token *token, t_env **env_ll, int child)
 {
 	int	status;
 
 	if (token->next != NULL && token->next->value != NULL)
 	{
-		if (token->next->type == PIPE)
+		if (token->next->type == PIPE || child > 0)
 			return (0);
 		if (!ft_isnum_str(token->next->value))
 		{
@@ -143,7 +143,8 @@ int	shut_down(t_data *data, t_token *token, t_env **env_ll)
 		free_before_exit(data, env_ll);
 		exit(status);
 	}
-	printf("bye bye👋!\n");
+	if (child == 0)
+		printf("bye bye👋!\n");
 	free_before_exit(data, env_ll);
 	exit(data->status);
 }

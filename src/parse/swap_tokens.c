@@ -19,6 +19,7 @@ void	swap_type(t_token *a, t_token *b)
 	tmp_type = a->type;
 	a->type = b->type;
 	b->type = tmp_type;
+
 }
 
 void	swap_value(t_token *a, t_token *b)
@@ -29,15 +30,6 @@ void	swap_value(t_token *a, t_token *b)
 	a->value = b->value;
 	b->value = tmp_value;
 }
-
-// void	swap_path(t_token *a, t_token *b)
-// {
-// 	char	*tmp_path;
-
-// 	tmp_path = a->path;
-// 	a->path = b->path;
-// 	b->path = tmp_path;
-// }
 
 void	swap_echo(t_token *a, t_token *b)
 {
@@ -60,8 +52,12 @@ void	swap_in_q(t_token *a, t_token *b)
 void	swap_empty(t_token *a, t_token *b)
 {
 	bool	tmp_empty;
+	bool	tmp_redirect;
 
 	tmp_empty = a->empty;
 	a->empty = b->empty;
 	b->empty = tmp_empty;
+	tmp_redirect = a->redirect;
+	a->redirect = b->redirect;
+	b->redirect = tmp_redirect;
 }

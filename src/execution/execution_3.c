@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 12:04:17 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/01 22:14:04 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 10:39:18 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,6 @@ void	tri_child_exe(t_data *data, t_env **env_ll, char **cmd, int child)
 		}
 	}
 	if (builtin_filter(data->token, cmd[0]) == true)
-		ft_builtin_exec(data, find_token_exec(data->token, cmd), env_ll);
+		ft_builtin_exec(data, find_token_exec(data->token, cmd), env_ll, child);
 	ft_exec(data, env_ll, cmd);
 }

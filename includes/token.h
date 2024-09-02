@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:27:10 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/02 01:19:46 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 09:39:48 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_token
 	bool			in_q;
 	bool			empty;
 	bool			echo;
+	bool			redirect;
 	//bool			file;
 	struct s_token	*next;
 	struct s_token	*prev;
