@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 10:06:30 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/01 21:12:03 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 21:34:10 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@
  *  - child: the index of the current command in the array of commands
  *  - array: the array of commands
  */
-void dup_fds(t_data *data, int child, char **array)
+void	dup_fds(t_data *data, int child, char **array)
 {
 	if (find_redirection(data->token) == SUCCESS)
 		data->redirections = true;

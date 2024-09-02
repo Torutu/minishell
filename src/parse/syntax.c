@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 17:18:12 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/31 00:41:57 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 00:27:48 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static int	incorrect_pipe_syntax(t_token *token)
 	head = token;
 	while (head->value)
 	{
-		// Check if the current token is a PIPE
 		if (head->type == PIPE)
 		{
 			if (head->next->value == NULL || head->next->type == PIPE)
@@ -60,16 +59,16 @@ static int	incorrect_syntax(t_token *token, t_type token_type)
 			if ((head->type == token_type && head->next->type == token_type)
 				|| (head->type == token_type && head->next->type == RED_IN)
 				|| (head->type == token_type && head->next->type == RED_OUT)
-				|| (head->type == token_type && head->next->type == HEREDOC)
+				|| (head->type == token_type && head->next->type == HDOC)
 				|| (head->type == token_type && head->next->type == APPEND)
 				|| (head->type == token_type && head->next->type == PIPE)
 				|| (head->type == token_type && head->next->type == FLAG)
 				|| (head->type == token_type && head->next->value == NULL))
-				{
-					if (head->next->value == NULL)
-						return(err_msg(NEW_LINE, SYNTAX, 1));
-					return (err_msg(head->next->value, SYNTAX, 1));
-				}
+			{
+				if (head->next->value == NULL)
+					return (err_msg(NEW_LINE, SYNTAX, 1));
+				return (err_msg(head->next->value, SYNTAX, 1));
+			}
 		}
 		head = head->next;
 	}
@@ -90,7 +89,7 @@ int	syntax_check(t_token *token)
 		return (FAILURE);
 	if (incorrect_syntax(token, RED_OUT) == FAILURE
 		|| incorrect_syntax(token, RED_IN) == FAILURE
-		|| incorrect_syntax(token, HEREDOC) == FAILURE
+		|| incorrect_syntax(token, HDOC) == FAILURE
 		|| incorrect_syntax(token, APPEND) == FAILURE)
 		return (FAILURE);
 	else

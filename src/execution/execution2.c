@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 13:30:29 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/31 01:21:12 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 03:12:24 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,25 +53,71 @@ bool	builtin_filter(t_token *token, char *command)
  *
  * @return the address of the first matching node or NULL if no match is found
  */
-t_token	*find_token_exec(t_token *token, char **array)
-{
-	int		i;
-	t_token	*tmp;
+// t_token	*find_token_exec(t_token *token, char **array)
+// {
+// 	int		i;
+// 	t_token	*tmp;
+
+// 	i = 0;
+// 	tmp = token;
+// 	while (array[i])
+// 	{
+// 		while (tmp->next != NULL)
+// 		{
+// 			if (!ft_strncmp(array[i], tmp->value, ft_strlen(array[i]))
+// 				&& tmp->type == BUILTIN)
+// 				return (tmp);
+// 			tmp = tmp->next;
+// 		}
+// 		i++;
+// 	}
+// 	tmp = NULL;
+// 	return (NULL);
+// }
+
+/**
+ * Given an array of strings, go through the linked list and return the
+ * address of the first node that matches one of the strings in the array.
+ * The comparison is done with strncmp and the type of the node has to be
+ * BUILTIN. If there is more than one match, the function will return the
+ * last matching node.
+ *
+ * @param token the head of the linked list
+ * @param array the array of strings to compare with
+ *
+ * @return the address of the first matching node or NULL if no match is found
+ */
+t_token    *find_token_exec(t_token *token, char **array)
+{//instead of checkin for BUILTIN in end token pointer, maybe check for echo?
+	int			i;
+	t_token		*tmp;
+	t_token		*end;
 
 	i = 0;
 	tmp = token;
+	end = token;
+	while (end && end->next && end->next->next != NULL)
+		end = end->next;
 	while (array[i])
 	{
-		while (tmp->next != NULL)
+		tmp = token;
+		while (tmp && tmp->next != NULL)
 		{
 			if (!ft_strncmp(array[i], tmp->value, ft_strlen(array[i]))
 				&& tmp->type == BUILTIN)
+			{
+				while (end != tmp && !(end->type == BUILTIN && !ft_strncmp(array[i], end->value, ft_strlen(array[i]))))
+					end = end->prev;
+				if (end != tmp)
+					tmp = end;
 				return (tmp);
+			}
 			tmp = tmp->next;
 		}
 		i++;
 	}
 	tmp = NULL;
+	end = NULL;
 	return (NULL);
 }
 

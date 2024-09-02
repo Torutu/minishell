@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:32:10 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/30 01:20:15 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 22:14:21 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ char	*extract_value(char *token_value)
 		value = ft_strdup("");
 	return (value);
 }
-
 
 /**
  * Compares the given key with the keys in the environment linked list.

@@ -6,39 +6,38 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 10:58:07 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/01 20:08:31 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 22:59:14 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-bool is_only_builtins(t_token *tokens) 
+bool	is_only_builtins(t_token *tokens)
 {
-	while (tokens->value != NULL) 
+	while (tokens->value != NULL)
 	{
-		if (tokens->type == EXEC || tokens->type == PIPE 
-		|| tokens->type == RED_IN || tokens->type == RED_OUT 
-		|| tokens->type == HEREDOC || tokens->type == APPEND) 
-			return false;
+		if (tokens->type == EXEC || tokens->type == PIPE
+			|| tokens->type == RED_IN || tokens->type == RED_OUT
+			|| tokens->type == HDOC || tokens->type == APPEND)
+			return (false);
 		tokens = tokens->next;
 	}
-	return true;
+	return (true);
 }
 
-int execution(t_data *data, t_env **env_ll)
+int	execution(t_data *data, t_env **env_ll)
 {
-	t_token *token;
+	t_token	*token;
+	int		status;
 
-	int status = 0;
-
+	status = 0;
 	token = data->token;
-
 	if (token == NULL || token->value == NULL)
 		return (status);
 	data->nb_cmds = count_token(token, PIPE) + 1;
 	if (data->nb_cmds == 0)
 		data->nb_cmds = 1;
-	if(is_only_builtins(token) == true)
+	if (is_only_builtins(token) == true)
 		data->status = built_ins(data, token, env_ll);
 	else if (data->nb_cmds >= 1)
 		data->status = trip_execution_prepping(data, data->token, env_ll);
@@ -60,8 +59,7 @@ int	trip_execution_prepping(t_data *data, t_token *token, t_env **env_ll)
 	pids = wait(&data->status);
 	while (pids > 0)
 		pids = wait(&data->status);
-
-	g_exit_code = 0;
+	g_mod = 0;
 	free_cmd_array(cmd_a);
 	return (WEXITSTATUS(data->status));
 }

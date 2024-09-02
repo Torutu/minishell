@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 10:31:53 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/08/29 15:11:09 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 23:15:58 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static int	change_to_home_directory(t_data *data)
 		return (err_msg(data->home_pwd, FILE_ERROR, 1));
 	return (SUCCESS);
 }
-
 
 /**
  * @brief Changes the current directory to the one given by the token's value,
@@ -84,11 +83,14 @@ static int	change_to_absolute_directory(t_token *token)
  */
 int	shell_cd(t_token *token, t_data *data)
 {
-	t_token *arg_checker = token->next;
-	int arg_count = 0;
-	int result;
+	t_token	*arg_checker;
+	int		arg_count;
+	int		result;
+
+	arg_checker = token->next;
+	arg_count = 0;
 	if (!token->next || !token->next->value)
-		return(result = change_to_home_directory(data));
+		return (result = change_to_home_directory(data));
 	while (arg_checker->value && arg_checker->type != PIPE)
 	{
 		arg_count++;
@@ -104,73 +106,6 @@ int	shell_cd(t_token *token, t_data *data)
 		result = change_to_relative_directory(token);
 	else
 		result = change_to_absolute_directory(token);
-	if (result == SUCCESS)
-	{
-		data->cd_executed = true;
-		return (SUCCESS);
-	}
-	else
-	{
-		data->cd_executed = true;
-		return (result);
-	}
+	data->cd_executed = true;
+	return (result);
 }
-
-// int shell_cd(t_token *token, t_data *data)
-// {
-//     t_token *arg_checker = token->next;
-//     int arg_count = 0;
-//     int result;
-
-//     // Check if the next token is a redirection
-//     if ((token->next->type == RED_IN ||
-//         token->next->type == RED_OUT ||
-//         token->next->type == APPEND ||
-//         token->next->type == HEREDOC) &&
-// 		data->ignore_redirections == false)
-//     {
-//         data->cd_executed = false;
-// 		data->ignore_redirections = true;
-//         return 0;
-//     }
-
-// 	if (!token->next || !token->next->value || data->ignore_redirections == true)
-//     {
-//         // If no argument or redirection, change to home directory
-// 		dprintf(2, "dude\n");
-// 		data->ignore_redirections = false;
-//         result = change_to_home_directory(data);
-//         if (result == SUCCESS)
-//             data->cd_executed = true;
-//         return result;
-//     }
-
-//     // Count the number of arguments
-//     while (arg_checker->value && arg_checker->type != PIPE && 
-//           (arg_checker->type != RED_IN && 
-//            arg_checker->type != RED_OUT &&
-//            arg_checker->type != APPEND &&
-//            arg_checker->type != HEREDOC))
-//     {
-//         arg_count++;
-//         arg_checker = arg_checker->next;
-//     }
-//     // Check if there are too many arguments
-//     if (arg_count > 1)
-//     {
-//         data->cd_executed = true;
-//         return err_msg(NULL, CD_ERR, 1);
-//     }
-// 	data->ignore_redirections = false;
-//     // Perform the directory change
-//     token = token->next;
-//     if (ft_strchr(token->value, '/') == NULL)
-//         result = change_to_relative_directory(token);
-//     else
-//         result = change_to_absolute_directory(token);
-
-//     if (result == SUCCESS)
-//         data->cd_executed = true;
-
-//     return result;
-// }

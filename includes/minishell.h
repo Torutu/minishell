@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 10:13:01 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/01 21:15:37 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 01:21:16 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@
 # define ERR_ARG "Wrong number of arguments, Karen\n"
 # define ERR_EXP "export: not a valid identifier\n"
 # define EXEC_ENV_NULL "envir"
-# define SYNTAX_EXIT ": exit: numeric argument required 😠\n"
+# define SYNTAX_EXIT "exit: numeric argument required 😠\n"
 # define NEW_LINE "newline"
 # define CD_ERR "cd: too many arguments"
-# define EXIT_ERR "exit: too many arguments"
+# define EXIT_ERR "exit: too many arguments\n"
 # define NO_FILE 100
 # define NULL_LINE 5
 # define DIRECTORY 69
@@ -76,7 +76,7 @@
 /*************************************************/
 /* global variable *******************************/
 /*************************************************/
-extern int	g_exit_code;
+extern int	g_mod;
 
 /*************************************************/
 /* structs ***************************************/

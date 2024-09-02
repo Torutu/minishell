@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:29:42 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/01 15:06:30 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 22:38:47 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,14 @@ void	close_fds(t_data *data)
 
 void	execution_with_path(t_data *data, char **array, char *path)
 {
+	struct stat	sb;
+
+	if (stat(array[0], &sb) == 0 && S_ISDIR(sb.st_mode))
+	{
+		err_msg(array[0], " is a directory", 126);
+		free_data(data, path, array);
+		exit(126);
+	}
 	if (execve(path, array, data->env) == -1)
 	{
 		err_msg(array[0], NO_EXEC, 127);
@@ -83,6 +91,14 @@ void	execution_with_path(t_data *data, char **array, char *path)
 
 void	execution_absolute_path(t_data *data, char **array)
 {
+	struct stat	sb;
+
+	if (stat(array[0], &sb) == 0 && S_ISDIR(sb.st_mode))
+	{
+		err_msg(array[0], " is a directory", 126);
+		free_data(data, NULL, array);
+		exit(126);
+	}
 	if (execve(array[0], array, data->env) == -1)
 	{
 		err_msg(array[0], NO_EXEC, 127);

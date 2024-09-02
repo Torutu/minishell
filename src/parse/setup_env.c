@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 03:25:26 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/01 17:08:26 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 00:24:28 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*extract_word(const char **ptr, int max_word_size)
 {
 	int		index;
 	char	*word;
-	dprintf(2, "max_word_size = %d\n", max_word_size);
+
 	word = (char *)malloc((max_word_size + 1) * sizeof(char));
 	index = 0;
 	if (!word)

@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:27:10 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/01 17:07:56 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 01:19:46 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef enum e_type
 	ENVVAR = 6,
 	RED_IN = 7,
 	RED_OUT = 8,
-	HEREDOC = 9,
+	HDOC = 9,
 	APPEND = 10,
 	TFILE = 11,
 	UNKNOWN = 404,
@@ -96,16 +96,27 @@ typedef struct s_index
 	int	j;
 }	t_index;
 
-void    print_args(char **cmd_a);
+void swap_type(t_token *a, t_token *b);
+void swap_value(t_token *a, t_token *b);
+void swap_path(t_token *a, t_token *b);
+void swap_echo(t_token *a, t_token *b);
+void swap_in_q(t_token *a, t_token *b);
+void swap_empty(t_token *a, t_token *b);
+
+void	free_before_exit(t_data *data, t_env **env_ll);
+
+void 	free_all_resources(t_env **env_ll, t_data *data);
+void	free_all_with_cmd(t_env **env_ll, t_data *data, char **cmd_with_args);
+void	free_dock(void **ptr);
+void	print_args(char **cmd_a);
 void	move_tokens_left(t_token *token);
 char	*ft_strncpy(char *s1, const char *s2, int n);
+
 int		ft_isnum_str(const char *str);
 void	signals(int sig);
-
 int		trip_execution_prepping(t_data *data, t_token *token, t_env **env_ll);
 int		tri_forking(t_data *data, t_env **env_ll, char ***all_cmds, pid_t pids);
-void	tri_child_execution(t_data *data, t_env **env_ll,
-			char **cmd_with_args, int child);
+void	tri_child_exe(t_data *data, t_env **env_ll,char **cmd, int child);
 char	***token_to_array(t_token *token);
 char	***free_cmd_array(char ***cmd_array);
 

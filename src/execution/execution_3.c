@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 12:04:17 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/01 20:34:20 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 22:14:04 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,65 +36,10 @@ void	cleanup_and_exit(t_data *data, t_env **env_ll, char **cmd_array,
 	exit(exit_code);
 }
 
-
-/**
- * The final execution function.
- * 
- * This function will check if the command is a built-in or not. If it is, it
- * will call the corresponding built-in function. If it is not, it will call
- * the execution_with_path() function to execute the command.
- * 
- * The function takes a t_data structure, a pointer to a linked list of
- * environment variables, and an array of strings as arguments.
- * 
- * If the command is not found, it will call the cleanup_and_exit() function
- * to free all the memory used and exit the program with an error message.
- * 
- * If the command is a built-in, the function will call the corresponding
- * built-in function and pass the arguments to it.
- * 
- * If the command is not a built-in, the function will call the
- * execution_with_path() function and pass the arguments to it.
- * 
- * The function does not return anything.
- */
-// void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array)
-// {
-// 	static char	*path;
-
-// 	if (cmd_array[0] == NULL)
-// 		exit (0);
-// 	if (check_path_unset(env_ll))
-// 		execution_absolute_path(data, cmd_array);
-// 	data->env = env_arr_updater(env_ll);
-// 	if (!data->env)
-// 		exit (1);
-// 	if (ft_strchr(cmd_array[0], '/') == NULL)
-// 	{
-// 		path = loop_path_for_binary(cmd_array[0], data->binary_paths);
-// 		if (!path)
-// 		{
-// 			err_msg(cmd_array[0], NO_EXEC, 127);
-// 			cleanup_and_exit(data, env_ll, cmd_array, 0);
-// 		}
-// 	}
-// 	free_tokens(data->token);
-// 	free_all_ll(env_ll);
-// 	if (!path)
-// 		execution_absolute_path(data, cmd_array);
-// 	execution_with_path(data, cmd_array, path);
-// }
-
 void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array)
 {
 	static char	*path;
-	struct stat	sb;
-	// Check if the command is a directory
-	if (stat(cmd_array[0], &sb) == 0 && S_ISDIR(sb.st_mode))
-	{
-		err_msg(cmd_array[0], " is a directory", 126);
-		cleanup_and_exit(data, env_ll, cmd_array, 126);
-	}
+
 	if (check_path_unset(env_ll))
 		execution_absolute_path(data, cmd_array);
 	data->env = env_arr_updater(env_ll);
@@ -116,15 +61,22 @@ void	ft_exec(t_data *data, t_env **env_ll, char **cmd_array)
 	execution_with_path(data, cmd_array, path);
 }
 
+// struct stat	sb;
+
+// if (stat(cmd_array[0], &sb) == 0 && S_ISDIR(sb.st_mode))
+// {
+// 	err_msg(cmd_array[0], " is a directory", 126);
+// 	cleanup_and_exit(data, env_ll, cmd_array, 126);
+// }
 
 int	tri_forking(t_data *data, t_env **env_ll, char ***all_cmds, pid_t pids)
 {
-	char sync_signal;
-	
+	char	sync_signal;
+
 	data->index = 0;
 	signals(2);
 	while (data->index < data->nb_cmds)
-	{	
+	{
 		if (data->piped == true && pipe(data->pipe_fd) == -1)
 			return (err_msg(NULL, "Broken pipe\n", 141));
 		pids = fork();
@@ -137,43 +89,38 @@ int	tri_forking(t_data *data, t_env **env_ll, char ***all_cmds, pid_t pids)
 		{
 			if (data->index > 0 && data->heredoc_exist == true)
 				read(data->sync_pipe[0], &sync_signal, 1);
-			tri_child_execution(data, env_ll, all_cmds[data->index], data->index);
+			tri_child_exe(data, env_ll, all_cmds[data->index], data->index);
 		}
 		else if (data->piped == true)
 			handle_pipefd_readend(data);
 		data->index++;
 	}
-	// while (data->index--)
-	// 	wait(&data->status);
 	return (data->status);
 }
 
-void	tri_child_execution(t_data *data, t_env **env_ll, char **cmd_with_args, int child)
+void	tri_child_exe(t_data *data, t_env **env_ll, char **cmd, int child)
 {
-	if (!cmd_with_args || !cmd_with_args[0])
+	if (!cmd || !cmd[0])
 	{
-		free_all_ll(env_ll);
-		free_data(data, NULL, NULL);
+		free_all_resources(env_ll, data);
 		exit(err_msg(NULL, "Invalid command", -1));
 	}
-	dup_fds(data, child, cmd_with_args);
-	if (ft_strncmp(cmd_with_args[0], "cd", 3) == 0 && data->cd_executed)
+	dup_fds(data, child, cmd);
+	if (ft_strncmp(cmd[0], "cd", 3) == 0 && data->cd_executed)
 	{
-		free_all_ll(env_ll);
-		free_data(data, NULL, NULL);
+		free_all_resources(env_ll, data);
 		exit(data->status);
 	}
 	if (data->redirections == true)
 	{
-		cmd_with_args = parse_instruction(data, cmd_with_args);
-		if (!cmd_with_args || !*cmd_with_args)
+		cmd = parse_instruction(data, cmd);
+		if (!cmd || !*cmd)
 		{
-			free_all_ll(env_ll);
-			free_data(data, NULL, cmd_with_args);
+			free_all_with_cmd(env_ll, data, cmd);
 			exit(0);
 		}
 	}
-	if (builtin_filter(data->token, cmd_with_args[0]) == true)
-		ft_builtin_exec(data, find_token_exec(data->token, cmd_with_args), env_ll);
-	ft_exec(data, env_ll, cmd_with_args);
+	if (builtin_filter(data->token, cmd[0]) == true)
+		ft_builtin_exec(data, find_token_exec(data->token, cmd), env_ll);
+	ft_exec(data, env_ll, cmd);
 }

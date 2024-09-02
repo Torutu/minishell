@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:32:14 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/30 01:20:17 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 00:17:12 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
  * the environment variables in a sorted manner using alphabetical_printer()
  * and frees the array.
  */
-int		print_export(t_env **env_ll)
+int	print_export(t_env **env_ll)
 {
 	char	**env_array;
 
@@ -64,8 +64,8 @@ void	alphabetical_printer(char **env_array)
 		{
 			if (env_array[i][0] == c)
 			{
-				printf("declare -x ");
-				printf("%s\n", env_array[i]);
+				ft_putstr_fd("declare -x ", 1);
+				ft_putendl_fd(env_array[i], 1);
 			}
 			i++;
 		}

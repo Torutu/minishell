@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:46:35 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/29 00:59:27 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 00:28:25 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,14 @@ void	cleanup_node(t_env *node, char **tmp_array)
 	}
 }
 
-char	***free_cmd_array(char ***cmd_array) // trip
+char	***free_cmd_array(char ***cmd_array)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-
 	if (!cmd_array)
 		return (NULL);
-
 	while (cmd_array[i])
 	{
 		j = 0;
@@ -64,4 +62,13 @@ char	***free_cmd_array(char ***cmd_array) // trip
 	}
 	free(cmd_array);
 	return (NULL);
+}
+
+void	free_dock(void **ptr)
+{
+	if (ptr && *ptr)
+	{
+		free(*ptr);
+		*ptr = NULL;
+	}
 }

@@ -1,4 +1,4 @@
-CC = gcc # CHANGE THIS
+CC = cc # CHANGE THIS
 
 #Directories
 SRC_DIR = src
@@ -21,6 +21,7 @@ SRC_FILES = main.c\
 			signals.c\
 			freeing.c\
 			freeing_1.c\
+			freeing_2.c\
 			ft_listnew.c\
 			ll_utils.c\
 			ll_utils2.c\
@@ -61,6 +62,7 @@ SRC_FILES = main.c\
 			src/parse/modify_str.c\
 			src/parse/modify_str_utils.c\
 			src/parse/helper.c\
+			src/parse/swap_tokens.c\
 
 # Object files
 OBJ_FILES = $(SRC_FILES:.c=.o)

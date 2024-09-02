@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 03:58:57 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/29 00:56:48 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 22:59:14 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	handle_heredoc(char *token, t_token *current_token)
 	if (ft_strncmp(token, "<<", 3) == 0 && current_token->in_q == false)
 	{
 		current_token->value = ft_strdup(token);
-		current_token->type = HEREDOC;
+		current_token->type = HDOC;
 		free_null(token);
 		return (0);
 	}

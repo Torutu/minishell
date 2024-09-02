@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 12:19:17 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/01 04:32:10 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 22:59:14 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	handle_flag_type(t_token *head)
 		if (head->value != NULL && head->value[0] != '\0')
 		{
 			if (head->type == RED_IN || head->type == RED_OUT
-				|| head->type == APPEND || head->type == HEREDOC)
+				|| head->type == APPEND || head->type == HDOC)
 				break ;
-			ft_putstr_fd(head->value,1);
+			ft_putstr_fd(head->value, 1);
 		}
 		head = head->next;
 		if (head != NULL && head->value != NULL && head->value[0] != '\0')
@@ -63,9 +63,9 @@ int	handle_arg_type(t_token *head)
 		if (head->value != NULL && head->value[0] != '\0')
 		{
 			if (head->type == RED_IN || head->type == RED_OUT
-				|| head->type == APPEND || head->type == HEREDOC)
+				|| head->type == APPEND || head->type == HDOC)
 				break ;
-			ft_putstr_fd(head->value,1);
+			ft_putstr_fd(head->value, 1);
 		}
 		head = head->next;
 		if (head != NULL && head->value != NULL && head->value[0] != '\0')
@@ -87,7 +87,6 @@ int	yodeling(t_token *token)
 	t_token	*head;
 
 	head = token;
-
 	while (head->value != NULL)
 	{
 		if (head->next->value == NULL)

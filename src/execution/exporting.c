@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:32:21 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/30 01:18:42 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 00:21:45 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
  * If the export command has no arguments, print the current environment
  * variables and return SUCCESS.
  *
- * @param token The token structure containing the arguments to the export command.
+ * @param token The token structure containing 
+ * the arguments to the export command.
  * @param env_ll The head of the environment linked list.
  *
  * @return 0 if the export command has no arguments, 1 otherwise.
@@ -46,8 +47,8 @@ int	no_args(t_token *token, t_env **env_ll)
  */
 int	handle_special_cases(t_token *token, t_env **env_ll)
 {
-	// if (if_redirection(token) == SUCCESS)
-	// 	return (SUCCESS);
+	if (if_redirection(token) == SUCCESS)
+		return (SUCCESS);
 	if (no_args(token, env_ll) == SUCCESS)
 		return (SUCCESS);
 	return (FAILURE);
@@ -67,7 +68,7 @@ int	is_valid_identifier(char *value)
 {
 	if (!ft_ischar(value[0]) && !(value[0] == '_'))
 	{
-		printf("ft_putshell: export: `%s': not a valid identifier\n", value);
+		printf(" export: `%s': not a valid identifier\n", value);
 		return (FAILURE);
 	}
 	return (SUCCESS);
@@ -116,11 +117,10 @@ int	process_token(t_env **env_ll, t_token *tmp_tok)
 /**
  * Handles the export built-in command.
  *
- * @param token The token structure containing the arguments to the export command.
+ * @param token The token structure containing
+ * the arguments to the export command.
  * @param env_ll The head of the environment linked list.
- *
  * @return 0 if the export command is successful, 1 otherwise.
- *
  * The export command sets environment variables. The only argument to
  * the export command is the name of the variable to be exported. The
  * value of the variable is taken from the environment linked list. If
@@ -138,7 +138,7 @@ int	export(t_token *token, t_env **env_ll)
 	tmp_tok = token->next;
 	while (tmp_tok != NULL && tmp_tok->value != NULL && tmp_tok->type != PIPE
 		&& tmp_tok->type != RED_IN && tmp_tok->type != RED_OUT
-		&& tmp_tok->type != HEREDOC && tmp_tok->type != APPEND)
+		&& tmp_tok->type != HDOC && tmp_tok->type != APPEND)
 	{
 		if (process_token(env_ll, tmp_tok) == FAILURE)
 			return (FAILURE);

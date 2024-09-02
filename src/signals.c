@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 10:37:35 by lstorey           #+#    #+#             */
-/*   Updated: 2024/09/01 20:10:30 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/01 22:45:42 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 */
 void	stasis_mode(int sig)
 {
-	g_exit_code = 1;
+	g_mod = 1;
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
@@ -40,7 +40,7 @@ void	stasis_mode(int sig)
  */
 void	exec_stream(int sig)
 {
-	g_exit_code = 1;
+	g_mod = 1;
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	(void)sig;
@@ -56,7 +56,7 @@ void	exec_stream(int sig)
  */
 void	holodoc(int sig)
 {
-	g_exit_code = 1;
+	g_mod = 1;
 	printf("\n");
 	clear_history();
 	signal(sig, SIG_DFL);
@@ -69,7 +69,8 @@ void	holodoc(int sig)
  * This function sets signal handlers based on the mode passed as argument.
  * The mode can be one of the following values:
  * 1: Stasis mode, where SIGINT is handled by stasis_mode and SIGQUIT is ignored.
- * 2: Execution mode, where SIGINT is handled by exec_stream and SIGQUIT is ignored.
+ * 2: Execution mode, where SIGINT is 
+ *    handled by exec_stream and SIGQUIT is ignored.
  * 3: Holodoc mode, where SIGINT is handled by holodoc and SIGQUIT is ignored.
  *
  * @param[in] sig The mode to set the signal handlers for.
