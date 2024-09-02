@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bposa <bposa@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 10:53:41 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/08/30 02:48:56 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/02 02:57:50 by bposa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	built_ins(t_data *data, t_token *token, t_env **env_ll)
 	else if (!ft_strncmp(token->value, "exit", 5))
 		status = get_the_hell_out(data, token, env_ll);
 	else if (!ft_strncmp(token->value, "echo", 5))
-		status = yodeling(data->token);
+		status = yodeling(token);
 	else if (!ft_strncmp(token->value, "cd", 3))
 		status = shell_cd(token, data);
 	else if (!ft_strncmp(token->value, "export", 7))

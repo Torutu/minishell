@@ -6,7 +6,7 @@
 /*   By: bposa <bposa@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 10:58:07 by fdessoy-          #+#    #+#             */
-/*   Updated: 2024/09/01 23:54:01 by bposa            ###   ########.fr       */
+/*   Updated: 2024/09/02 03:07:34 by bposa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,6 @@ int	trip_execution_prepping(t_data *data, t_token *token, t_env **env_ll)
 	cmd_a = token_to_array(token);
 	if (!cmd_a)
 		return (0);
-print_cmd_array(cmd_a);
 	if (pipe(data->sync_pipe) == -1)
 		return (err_msg(NULL, "Broken pipe\n", 141));
 	data->status = tri_forking(data, env_ll, cmd_a, pids);
@@ -175,28 +174,4 @@ print_cmd_array(cmd_a);
 	//g_exit_code = 0;
 	free_cmd_array(cmd_a);
 	return (WEXITSTATUS(data->status));
-}
-
-void print_cmd_array(char ***cmd_array)
-{
-    int i = 0;
-    int j;
-
-    if (!cmd_array)
-    {
-        printf("cmd_array is NULL\n");
-        return;
-    }
-
-    while (cmd_array[i])
-    {
-        printf("Command %d:\n", i + 1);
-        j = 0;
-        while (cmd_array[i][j])
-        {
-            printf("  Arg %d: %s\n", j + 1, cmd_array[i][j]);
-            j++;
-        }
-        i++;
-    }
 }
