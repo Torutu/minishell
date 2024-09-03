@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:23:49 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/03 01:30:48 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/03 02:54:20 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,44 +45,6 @@ void	setup(t_data *data)
 		data->status = 130;
 }
 
-void	swap_tokens(t_token *a, t_token *b)
-{
-	swap_type(a, b);
-	swap_value(a, b);
-	swap_echo(a, b);
-	swap_in_q(a, b);
-	swap_empty(a, b);
-}
-
-void	move_tokens_left(t_token *token)
-{
-	t_token	*cur;
-
-	cur = token;
-	while (cur && cur->value != NULL)
-	{
-		if (cur->type == TFILE && (cur->prev->type == RED_OUT
-				|| cur->prev->type == APPEND))
-		{
-			while (cur->value != NULL && cur->type != ARG)
-				cur = cur->next;
-			while (cur->value != NULL && cur->type == ARG
-				&& (cur->prev->type != RED_OUT && cur->prev->type != APPEND
-					&& cur->prev->type != HDOC) && cur->prev->type != PIPE
-				&& cur->type != PIPE && cur->prev->type != BUILTIN)
-			{
-				swap_tokens(cur, cur->prev);
-				cur = cur->prev;
-				if ((cur->type == ARG && cur->prev->type == ARG)
-					|| cur->prev->type == BUILTIN)
-					break ;
-			}
-		}
-		if (cur->value != NULL)
-			cur = cur->next;
-	}
-}
-
 /**
  * Reads a line from the user and sets up the data structure.
  * 
@@ -109,16 +71,14 @@ int	sniff_line(t_data *data)
 	setup(data);
 	line_tokenization(data);
 	if (data->status == 963)
-		return (free_retstatus(data->line_read, 963));
+		return (963);
 	data->status = 0;
 	g_mod = 0;
-	//free_null(data->line_read);
 	if (syntax_check(data->token) == FAILURE)
 	{
 		data->status = 2;
 		return (2);
 	}
-	//move_tokens_left(data->token);
 	data->piped = false;
 	data->heredoc_exist = false;
 	if (count_token(data->token, PIPE) >= 1)

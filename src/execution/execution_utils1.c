@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:29:42 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/03 02:29:50 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/03 02:51:04 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,52 +46,12 @@ void	close_fds(t_data *data)
 		close(data->sync_pipe[0]);
 }
 
-void	execution_with_path(t_data *data, char **array, char *path)
+void	handle_cat_without_args(t_data *data, char **array)
 {
-	struct stat	sb;
 	int	fd;
 
-	if (stat(array[0], &sb) == 0 && S_ISDIR(sb.st_mode))
-	{
-		err_msg(array[0], " is a directory", 126);
-		free_data(data, path, array);
-		exit(126);
-	}
-	if (!ft_strncmp(array[0], "cat",4) && array[1] == NULL && data->redirections == false)
-	{
-		if (!isatty(STDIN_FILENO))
-		{
-			fd = open("/dev/tty", O_RDONLY);
-			if (fd == -1) 
-				exit(1);
-			if (dup2(fd, STDIN_FILENO) == -1)
-			{
-				close(fd);
-				exit(1);
-			}
-			close(fd);
-		}
-	}
-	if (execve(path, array, data->env) == -1)
-	{
-		err_msg(array[0], NO_EXEC, 127);
-		free_data(data, path, array);
-		exit(127);
-	}
-}
-
-void	execution_absolute_path(t_data *data, char **array)
-{
-	struct stat	sb;
-	int fd;
-
-	if (stat(array[0], &sb) == 0 && S_ISDIR(sb.st_mode))
-	{
-		err_msg(array[0], " is a directory", 126);
-		free_data(data, NULL, array);
-		exit(126);
-	}
-	if (!ft_strncmp(array[0], "cat",4) && array[1] == NULL && data->redirections == false)
+	if (!ft_strncmp(array[0], "cat", 4) && array[1] == NULL
+		&& data->redirections == false)
 	{
 		if (!isatty(STDIN_FILENO))
 		{
@@ -106,6 +66,38 @@ void	execution_absolute_path(t_data *data, char **array)
 			close(fd);
 		}
 	}
+}
+
+void	execution_with_path(t_data *data, char **array, char *path)
+{
+	struct stat	sb;
+
+	if (stat(array[0], &sb) == 0 && S_ISDIR(sb.st_mode))
+	{
+		err_msg(array[0], " is a directory", 126);
+		free_data(data, path, array);
+		exit(126);
+	}
+	handle_cat_without_args(data, array);
+	if (execve(path, array, data->env) == -1)
+	{
+		err_msg(array[0], NO_EXEC, 127);
+		free_data(data, path, array);
+		exit(127);
+	}
+}
+
+void	execution_absolute_path(t_data *data, char **array)
+{
+	struct stat	sb;
+
+	if (stat(array[0], &sb) == 0 && S_ISDIR(sb.st_mode))
+	{
+		err_msg(array[0], " is a directory", 126);
+		free_data(data, NULL, array);
+		exit(126);
+	}
+	handle_cat_without_args(data, array);
 	if (execve(array[0], array, data->env) == -1)
 	{
 		err_msg(array[0], NO_EXEC, 127);

@@ -6,12 +6,20 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:38:16 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/03 02:32:59 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/03 03:10:58 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * Initialize heredoc_fds array to -1.
+ *
+ * @param data A pointer to the shell data structure containing information
+ * about the shell state.
+ *
+ * @return void
+ */
 static void	heredoc_fds_init(t_data *data)
 {
 	int	i;
@@ -39,9 +47,12 @@ void	ll_env(t_env **env_ll, char **env)
 }
 
 /**
- * This function loops through the linked list of environment variables to find
- * the PATH variable. When it finds it, it extracts the value of the PATH variable
- * and stores it in the data->bin field. It then resets the *env_ll pointer to the
+ * This function loops through the linked 
+ * list of environment variables to find
+ * the PATH variable. When it finds it, it 
+ * extracts the value of the PATH variable
+ * and stores it in the data->bin field. It
+ *  then resets the *env_ll pointer to the
  * start of the linked list.
  */
 void	find_bin(t_env **env_ll, t_data *data)

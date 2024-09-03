@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 10:37:35 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/03 02:29:18 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/03 02:49:28 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ void	signals(int sig)
 	{
 		signal(SIGINT, exec_stream);
 		signal(SIGQUIT, SIG_IGN);
-	}sig == 
-	if (3)
+	}
+	if (sig == 3)
 	{
 		signal(SIGINT, holodoc);
 		signal(SIGQUIT, SIG_IGN);

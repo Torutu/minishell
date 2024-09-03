@@ -6,7 +6,7 @@
 /*   By: walnaimi <walnaimi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 10:13:01 by walnaimi          #+#    #+#             */
-/*   Updated: 2024/09/03 02:33:44 by walnaimi         ###   ########.fr       */
+/*   Updated: 2024/09/03 03:01:28 by walnaimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,6 @@
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-
-/*************************************************/
-/* questionable libraries ************************/
-/*************************************************/
 # include <stdbool.h>
 # include <limits.h>
 
