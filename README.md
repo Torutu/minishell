@@ -10,7 +10,7 @@
 ## Contact: 
 
 Waleed
-- 42-email: walnaimi@student.hive.fi
+- 42-email: waleedalnaimi117@gmail.com
 - 42-profile: https://profile.intra.42.fr/users/walnaimi
 - discord: torutu.
 
