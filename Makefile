@@ -88,30 +88,28 @@ $(OBJ_DIR)/%.o: %.c
 
 $(NAME): $(OBJ_FILES) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT_LINK) -o $(NAME) $(O_FLAGS)
-	@echo -e "$(GREEN)[✔] Compiling minishell...\033[0m"
-	@echo -e "$(GREEN) ___  ____       _     _          _ _ \033[0m"
-	@echo -e "$(GREEN) |  \/  (_)     (_)   | |        | | | \033[0m"
-	@echo -e "$(GREEN) | .  . |_ _ __  _ ___| |__   ___| | | \033[0m"
-	@echo -e "$(GREEN) | |\/| | | '_ \| / __| '_ \ / _ \ | |\033[0m"
-	@echo -e "$(GREEN) | |  | | | | | | \__ \ | | |  __/ | | \033[0m"
-	@echo -e "$(GREEN) \_|  |_/_|_| |_|_|___/_| |_|\___|_|_| [WB] \033[0m"
+	@echo "$(GREEN)Compiling minishell...\033[0m"
+	@echo "$(GREEN)  _____ _     _     _       _ _ \033[0m"
+	@echo "$(GREEN) |     |_|___|_|___| |_ ___| | | \033[0m"
+	@echo "$(GREEN) | | | | |   | |_ -|   | -_| | | \033[0m"
+	@echo "$(GREEN) |_|_|_|_|_|_|_|___|_|_|___|_|_|\033[0m"
 
 $(LIBFT): $(LIBFT_MAKEFILE)
 	@$(MAKE) --no-print-directory -C $(LIBFT_DIR)
-	@echo -e "$(GREEN)[✔] Linking to libft Makefile...\033[0m"
+	@echo "$(GREEN)Linking to libft Makefile...\033[0m"
 
 $(LIBFT_MAKEFILE):
-	@echo -e "Creating symbolic link for libft Makefile..."
+	@echo "Creating symbolic link for libft Makefile..."
 	@ln -s $(CURDIR)/$(LIBFT_MAKEFILE) $(LIBFT_MAKEFILE)
 
 clean:
 	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) clean
-	@echo -e "$(YELLOW)removing obj files...\033[0m"
+	@echo "$(YELLOW)removing obj files...\033[0m"
 	@rm -rdf $(OBJ_DIR)
 
 fclean: clean
 	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) fclean
-	@echo -e "$(RED)removing executable...\033[0m"
+	@echo "$(RED)removing executable...\033[0m"
 	@rm -f $(NAME)
 
 re: fclean all

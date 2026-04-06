@@ -70,7 +70,7 @@ all:  $(NAME)
 
 $(NAME): $(OBJ)
 	@ar rc $(NAME) $(OBJ)
-	@echo "\033[1;34m[✨] Creating libft.a...\033[0m"
+	@echo "\033[1;34mCreating libft.a...\033[0m"
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(OBJ_DIR)

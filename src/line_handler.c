@@ -94,7 +94,7 @@ int	token_only_arg(t_data *data)
  */
 int	sniff_line(t_data *data)
 {
-	data->line_read = readline("[ft_putchar]> ");
+	data->line_read = readline("[ft_minishell]> ");
 	if (!data->line_read)
 		return (NULL_LINE);
 	if (*data->line_read)
